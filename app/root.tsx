@@ -9,6 +9,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { registerLicense } from "@syncfusion/ej2-base";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -41,8 +42,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+// reference link to generate license key: https://ej2.syncfusion.com/react/documentation/licensing/license-key-generation
+// reference link to register license key: https://ej2.syncfusion.com/react/documentation/licensing/license-key-registration
+// register syncfusion license to remove claim your free account banner.
+registerLicense(import.meta.env.VITE_SYNCFUSION_LICENSE_KEY);
+
 export default function App() {
-  return <Outlet />;
+  return (
+    <div className="flex flex-col w-full min-h-screen">
+      <Outlet />
+    </div>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

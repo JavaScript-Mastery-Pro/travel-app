@@ -9,12 +9,21 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@arcjet/remix": "1.0.0-beta.5",
+    "@google/genai": "^0.7.0",
     "@react-router/node": "^7.4.0",
     "@react-router/serve": "^7.4.0",
+    "@syncfusion/ej2-base": "^29.1.33",
+    "@syncfusion/ej2-react-grids": "^29.1.33",
+    "appwrite": "^17.0.1",
     "isbot": "^5.1.17",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.4.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
     "@react-router/dev": "^7.4.0",
@@ -22,6 +31,10 @@
     "@types/node": "^20",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-tailwindcss": "^3.18.0",
+    "prettier": "^3.5.3",
     "react-router-devtools": "^1.1.0",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.2",
