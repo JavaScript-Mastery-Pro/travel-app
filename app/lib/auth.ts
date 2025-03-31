@@ -5,8 +5,8 @@ export const loginWithGoogle = () => {
   try {
     account.createOAuth2Session(
       OAuthProvider.Google,
-      "http://localhost:5173",
-      "http://localhost:5173/login"
+      `${import.meta.env.VITE_BASE_URL}`,
+      `${import.meta.env.VITE_BASE_URL}/sign-in`
     );
   } catch (error) {
     console.error("Error during OAuth2 session creation:", error);
