@@ -26,8 +26,8 @@ export async function clientLoader() {
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Travel App" },
+    { name: "description", content: "Welcome to Travel App" },
   ];
 }
 

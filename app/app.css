@@ -1,11 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");
 @import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-buttons/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-react-grids/styles/material.css";
 @import "tailwindcss";
 
 @theme {
-  --font-sans:
-    "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --color-light-100: #ecf2ef;
+  --color-dark-100: #1f1f36;
+  --color-gray-100: #7f7e83;
+  --color-primary-100: #256ff1;
+  --background-image-auth: url("/assets/images/auth-img.webp");
+}
+@layer utilities {
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+  .p-28-bold {
+    @apply text-[20px] md:text-[28px] leading-[16px] md:leading-[20px] font-bold;
+  }
+  .p-28-semibold {
+    @apply text-[20px] md:text-[28px] leading-[16px] md:leading-[20px] font-semibold;
+  }
+
+  .p-18-bold {
+    @apply text-[14px] md:text-[18px] leading-[14px] md:leading-[16px] font-bold;
+  }
+  .p-18-semibold {
+    @apply text-[14px] md:text-[18px] leading-[14px] md:leading-[16px] font-semibold;
+  }
+  .p-18-regular {
+    @apply text-[14px] md:text-[18px] leading-[14px] md:leading-[16px] font-normal;
+  }
 }
 
 html,
@@ -15,4 +40,11 @@ body {
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
+  font-family: "Figtree", sans-serif;
+}
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
