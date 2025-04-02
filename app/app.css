@@ -1,14 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "../node_modules/@syncfusion/ej2-base/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-react-buttons/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-react-grids/styles/material.css";
 @import "tailwindcss";
 
 @theme {
+  --font-figtree: "Figtree", sans-serif;
+  --font-inter: "Inter", sans-serif;
   --color-light-100: #ecf2ef;
   --color-dark-100: #1f1f36;
   --color-gray-100: #7f7e83;
+  --color-gray-500: #667085;
+  --color-gray-700: #344054;
   --color-primary-100: #256ff1;
+  --color-light-200: #f9fbfc;
+  --color-light-300: #f2f4f7;
+  --color-success-50: #ecfdf3;
+  --color-success-500: #12b76a;
+  --color-success-700: #027a48;
   --background-image-auth: url("/assets/images/auth-img.webp");
 }
 @layer utilities {
@@ -31,15 +41,13 @@
   .p-18-regular {
     @apply text-[14px] md:text-[18px] leading-[14px] md:leading-[16px] font-normal;
   }
+  /* .user-row {
+    @apply odd:bg-light-200 !py-[18px];
+  } */
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
-
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
   font-family: "Figtree", sans-serif;
 }
 
@@ -47,4 +55,13 @@ body {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
+}
+
+.e-grid .e-rowcell {
+  padding-top: 18px !important;
+  padding-bottom: 18px !important;
+}
+.e-grid .e-headercell {
+  padding-top: 18px !important;
+  padding-bottom: 18px !important;
 }
