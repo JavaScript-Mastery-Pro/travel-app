@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { logoutUser } from "~/lib/auth";
+import { logoutUser } from "~/appwrite/auth";
 
 const Logout = () => {
   const navigate = useNavigate();

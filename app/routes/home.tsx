@@ -1,18 +1,18 @@
 import type { Route } from "./+types/home";
 import { Link, redirect } from "react-router";
 import Logout from "~/components/Logout";
-import { getUser } from "~/lib/auth";
+import { storeUserData } from "~/appwrite/auth";
+import { account } from "~/appwrite/client";
 
 // for loader reference link: https://reactrouter.com/start/framework/data-loading
-export async function clientLoader() {
-  try {
-    const user = await getUser();
 
+export async function clienLoader() {
+  try {
+    const user = await account.get();
     if (!user) {
-      console.log("User not logged in, redirecting to sign-in.");
       return redirect("/sign-in");
     }
-    return user;
+    await storeUserData();
   } catch (error) {
     console.error("Error in clientLoader:", error);
     return redirect("/sign-in");
