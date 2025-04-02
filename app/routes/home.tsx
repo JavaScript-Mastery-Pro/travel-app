@@ -1,23 +1,8 @@
 import type { Route } from "./+types/home";
-import { Link, redirect } from "react-router";
+import { Link } from "react-router";
 import Logout from "~/components/Logout";
-import { storeUserData } from "~/appwrite/auth";
-import { account } from "~/appwrite/client";
 
 // for loader reference link: https://reactrouter.com/start/framework/data-loading
-
-export async function clienLoader() {
-  try {
-    const user = await account.get();
-    if (!user) {
-      return redirect("/sign-in");
-    }
-    await storeUserData();
-  } catch (error) {
-    console.error("Error in clientLoader:", error);
-    return redirect("/sign-in");
-  }
-}
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -26,7 +11,7 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function Home({ loaderData }: Route.ComponentProps) {
+export default function Home() {
   return (
     <div className="flex flex-col gap-10">
       <h1 className="text-3xl font-bold">Welcome to Travel App</h1>

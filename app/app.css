@@ -3,6 +3,7 @@
 @import "../node_modules/@syncfusion/ej2-base/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-react-buttons/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-react-grids/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-navigations/styles/material.css";
 @import "tailwindcss";
 
 @theme {
@@ -22,6 +23,9 @@
   --background-image-auth: url("/assets/images/auth-img.webp");
 }
 @layer utilities {
+  .wrapper {
+    @apply w-full max-w-7xl mx-auto px-4 md:px-8;
+  }
   .flex-center {
     @apply flex justify-center items-center;
   }
@@ -57,11 +61,30 @@ body {
   -webkit-backdrop-filter: blur(2px);
 }
 
-.e-grid .e-rowcell {
-  padding-top: 18px !important;
-  padding-bottom: 18px !important;
+.e-grid,
+.e-table {
+  border-color: #eef9ff !important;
 }
-.e-grid .e-headercell {
+
+.e-grid .e-gridheader {
+  border-color: #eef9ff !important;
+}
+.e-grid,
+.e-grid .e-toolbar {
+  border-radius: 12px;
+}
+.e-grid .e-toolbar .e-toolbar-items {
+  border-radius: 12px 12px 0 0;
+}
+
+.e-grid .e-gridpager {
+  border-radius: 0 0 12px 12px;
+}
+.e-grid .e-row:nth-child(odd) {
+  background-color: #f9fbfc;
+}
+
+.e-grid .e-rowcell {
   padding-top: 18px !important;
   padding-bottom: 18px !important;
 }

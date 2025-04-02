@@ -1,7 +1,38 @@
 import { ID, OAuthProvider, Query } from "appwrite";
 import { account, database } from "~/appwrite/client";
 import { appwriteConfig } from "~/appwrite/config";
-import { adminClient } from "./server";
+import { redirect } from "react-router";
+
+export const getExistingUser = async (id: string) => {
+  const user = await database.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.userCollectionId,
+    [Query.equal("accountId", id)]
+  );
+  if (user.total === 0) {
+    console.error("User not found");
+    return false;
+  }
+  return true;
+};
+
+export const getAllUsers = async () => {
+  try {
+    const users = await database.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [Query.limit(10)]
+    );
+    if (users.total === 0) {
+      console.error("No users found");
+      return [];
+    }
+    return users.documents;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return [];
+  }
+};
 
 export const storeUserData = async () => {
   try {
@@ -17,26 +48,21 @@ export const storeUserData = async () => {
     }
     const profilePicture = await getGooglePicture(accessToken);
 
-    const { databases } = await adminClient();
-    const userExists = await databases.listDocuments(
+    const createdUser = await database.createDocument(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
-      [Query.equal("accountId", user.$id)]
+      ID.unique(),
+      {
+        accountId: user.$id,
+        email: user.email,
+        name: user.name,
+        imageUrl: profilePicture ?? null,
+        joinedAt: new Date().toISOString(),
+      }
     );
-
-    if (userExists.total === 0) {
-      const createdUser = await database.createDocument(
-        appwriteConfig.databaseId,
-        appwriteConfig.userCollectionId,
-        ID.unique(),
-        {
-          accountId: user.$id,
-          email: user.email,
-          name: user.name,
-          imageUrl: profilePicture ?? null,
-        }
-      );
-      return createdUser;
+    if (!createdUser.$id) {
+      console.error("Failed to create user document");
+      redirect("/sign-in");
     }
   } catch (error) {
     console.error("Error storing user data:", error);

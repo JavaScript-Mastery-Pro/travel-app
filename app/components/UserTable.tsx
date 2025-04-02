@@ -1,63 +1,13 @@
-import { getValue } from "@syncfusion/ej2-base";
 import {
   ColumnDirective,
   ColumnsDirective,
   GridComponent,
-  type RowDataBoundEventArgs,
 } from "@syncfusion/ej2-react-grids";
 
-interface UserData {
-  id: number;
-  name: string;
-  email: string;
-  dateJoined: string;
-  itineryCreated: number;
-  status: string;
-  img: string;
-}
-
-const data = [
-  {
-    id: 1,
-    name: "James Anderson",
-    email: "olivia@jsmastery.pro",
-    dateJoined: "Jan 6, 2022",
-    itineryCreated: 12,
-    status: "active",
-    img: "/assets/images/james.webp",
-  },
-  {
-    id: 2,
-    name: "Michael Johnson",
-    email: "phoenix@jsmastery.pro",
-    dateJoined: "Jan 6, 2022",
-    itineryCreated: 21,
-    status: "active",
-    img: "/assets/images/michael.webp",
-  },
-  {
-    id: 3,
-    name: "David Brown",
-    email: "lan@jsmastery.pro",
-    dateJoined: "Jan 6, 2022",
-    itineryCreated: 15,
-    status: "offline",
-    img: "/assets/images/david.webp",
-  },
-];
-export default function UserTable() {
-  const rowDataBound = (args: RowDataBoundEventArgs) => {
-    if (args.row) {
-      args.row.classList.add("user-row");
-    }
-  };
+export default function UserTable({ data }: { data: UserData[] }) {
   return (
     <section>
-      <GridComponent
-        dataSource={data}
-        gridLines="None"
-        rowDataBound={rowDataBound}
-      >
+      <GridComponent dataSource={data} gridLines="None">
         <ColumnsDirective>
           <ColumnDirective
             field="name"
