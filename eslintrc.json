@@ -14,6 +14,25 @@
         "maxEOF": 1
       }
     ],
-    "object-curly-newline": 0
+    "object-curly-newline": 0,
+    "no-undef": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
   }
 }

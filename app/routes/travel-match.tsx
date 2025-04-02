@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import type { Route } from "./+types/travel-match";
 import { GoogleGenAI } from "@google/genai";
 
 interface Suggestion {
@@ -25,12 +24,14 @@ export default function TravelMatch() {
         });
         let text = response.text;
 
+        console.log("Raw API Response:", text); // Log the raw response
+
         if (text) {
-          // Remove backticks
           text = text.replace(/^```json\n/, "").replace(/```$/, "");
 
           try {
             const parsedSuggestions: Suggestion[] = JSON.parse(text);
+            console.log("Parsed JSON:", parsedSuggestions); // Log the parsed JSON
             setSuggestions(
               parsedSuggestions.filter((s) => s.suggestion !== undefined)
             );
@@ -58,14 +59,16 @@ export default function TravelMatch() {
   }, []);
 
   if (loading) {
-    return <div className="text-white">Loading...</div>;
+    return <div className="text-black">Loading...</div>;
   }
 
   return (
     <div className="text-white">
       <ul>
         {suggestions.map((suggestion, index) => (
-          <li key={index}>{suggestion.suggestion}</li>
+          <li key={index} className="text-dark-100">
+            {suggestion.suggestion}
+          </li>
         ))}
       </ul>
     </div>
