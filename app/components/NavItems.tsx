@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLoaderData, useNavigate } from "react-router";
-import { getUser } from "~/appwrite/auth";
+import { getUser, logoutUser } from "~/appwrite/auth";
 import { sidebarItems } from "~/constants";
 
 const NavItems = () => {
@@ -67,15 +67,27 @@ const NavItems = () => {
             alt="user"
             className="size-10 rounded-full"
           />
-          <article className="flex flex-col gap-[2px] max-w-[115px] truncate">
-            <h2 className="text-sm md:text-base font-semibold text-dark-200">
+          <article className="flex flex-col gap-[2px] max-w-[115px]">
+            <h2 className="text-sm md:text-base font-semibold text-dark-200 truncate">
               {user?.name}
             </h2>
-            <p className="text-gray-100 text-xs md:text-sm font-normal truncate.s">
+            <p className="text-gray-100 text-xs md:text-sm font-normal truncate">
               {user?.email}
             </p>
           </article>
-          <img src="/assets/icons/logout.svg" alt="logout" className="size-6" />
+          <button
+            onClick={async () => {
+              await logoutUser();
+              navigate("/sign-in");
+            }}
+            className="cursor-pointer"
+          >
+            <img
+              src="/assets/icons/logout.svg"
+              alt="logout"
+              className="size-6"
+            />
+          </button>
         </footer>
       </div>
     </section>
