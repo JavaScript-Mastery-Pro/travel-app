@@ -30,7 +30,7 @@ export default function Dashboard() {
           <NavItems />
         </SidebarComponent>
       </aside>
-      <aside className="w-full bg-light-200 pt-12 lg:pt-10">
+      <aside className="w-full h-full bg-light-200 pt-12 lg:pt-10">
         <Outlet />
       </aside>
     </div>

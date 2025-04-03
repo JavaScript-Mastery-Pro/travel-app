@@ -9,12 +9,13 @@
 @theme {
   --font-figtree: "Figtree", sans-serif;
   --font-inter: "Inter", sans-serif;
-  --color-light-100: #ecf2ef;
   --color-dark-100: #1f1f36;
+  --color-dark-200: #141627;
   --color-gray-100: #7f7e83;
   --color-gray-500: #667085;
   --color-gray-700: #344054;
   --color-primary-100: #256ff1;
+  --color-light-100: #ecf2ef;
   --color-light-200: #f9fbfc;
   --color-light-300: #f2f4f7;
   --color-success-50: #ecfdf3;
@@ -53,6 +54,7 @@
 html,
 body {
   font-family: "Figtree", sans-serif;
+  background-color: #f9fbfc;
 }
 
 .glassmorphism {

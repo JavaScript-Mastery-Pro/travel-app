@@ -16,19 +16,12 @@ export default function UserTable({ data }: { data: UserData[] }) {
             textAlign="Left"
             template={(props: UserData) => {
               return (
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  {props.img && (
-                    <img
-                      src={props.img}
-                      alt="User"
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                        marginRight: "8px",
-                        borderRadius: "50%",
-                      }}
-                    />
-                  )}
+                <div className="flex items-center gap-1.5">
+                  <img
+                    src={props.img}
+                    alt="User"
+                    className="rounded-full size-8"
+                  />
                   <span>{props.name}</span>
                 </div>
               );

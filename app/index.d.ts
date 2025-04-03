@@ -7,3 +7,11 @@ declare interface UserData {
   status: string;
   img: string;
 }
+
+declare interface User {
+  id: string;
+  name: string;
+  email: string;
+  dateJoined: string;
+  img: string;
+}

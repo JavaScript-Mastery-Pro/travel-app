@@ -112,3 +112,29 @@ export const logoutUser = async () => {
     console.error("Error during logout:", error);
   }
 };
+
+export const getUser = async () => {
+  try {
+    const user = await account.get();
+    if (!user) {
+      console.error("User not found");
+      return redirect("/sign-in");
+    }
+    const userList = await database.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [
+        Query.equal("accountId", user.$id),
+        Query.select(["name", "email", "imageUrl", "joinedAt", "accountId"]),
+      ]
+    );
+    if (userList.documents.length === 0) {
+      console.error("User document not found");
+      return redirect("/sign-in");
+    }
+    return userList.documents[0];
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return null;
+  }
+};

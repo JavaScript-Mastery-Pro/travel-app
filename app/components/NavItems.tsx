@@ -1,9 +1,29 @@
-import { Link, NavLink } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, NavLink, useLoaderData, useNavigate } from "react-router";
+import { getUser } from "~/appwrite/auth";
 import { sidebarItems } from "~/constants";
 
 const NavItems = () => {
+  const [user, setUser] = useState<any>();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await getUser();
+        if (!userData) {
+          navigate("/sign-in");
+        }
+        setUser(userData);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    fetchUser();
+  }, [navigate]);
+
+  console.log(user?.name);
   return (
-    <section className="flex flex-col px-6">
+    <section className="flex flex-col px-6 h-full">
       <Link to="/">
         <header className="flex items-center gap-1.5 py-10 border-b border-light-100">
           <img
@@ -41,6 +61,22 @@ const NavItems = () => {
             </NavLink>
           ))}
         </nav>
+        <footer className="flex items-center gap-2.5 pb-8">
+          <img
+            src={user?.imageUrl || "/assets/images/david.webp"}
+            alt="user"
+            className="size-10 rounded-full"
+          />
+          <article className="flex flex-col gap-[2px] max-w-[115px] truncate">
+            <h2 className="text-sm md:text-base font-semibold text-dark-200">
+              {user?.name}
+            </h2>
+            <p className="text-gray-100 text-xs md:text-sm font-normal truncate.s">
+              {user?.email}
+            </p>
+          </article>
+          <img src="/assets/icons/logout.svg" alt="logout" className="size-6" />
+        </footer>
       </div>
     </section>
   );
