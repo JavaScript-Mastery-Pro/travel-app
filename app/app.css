@@ -3,17 +3,19 @@
 @import "../node_modules/@syncfusion/ej2-base/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-react-buttons/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-react-grids/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-navigations/styles/material.css";
 @import "tailwindcss";
 
 @theme {
   --font-figtree: "Figtree", sans-serif;
   --font-inter: "Inter", sans-serif;
-  --color-light-100: #ecf2ef;
   --color-dark-100: #1f1f36;
+  --color-dark-200: #141627;
   --color-gray-100: #7f7e83;
   --color-gray-500: #667085;
   --color-gray-700: #344054;
   --color-primary-100: #256ff1;
+  --color-light-100: #ecf2ef;
   --color-light-200: #f9fbfc;
   --color-light-300: #f2f4f7;
   --color-success-50: #ecfdf3;
@@ -22,6 +24,9 @@
   --background-image-auth: url("/assets/images/auth-img.webp");
 }
 @layer utilities {
+  .wrapper {
+    @apply w-full max-w-7xl mx-auto px-4 lg:px-8;
+  }
   .flex-center {
     @apply flex justify-center items-center;
   }
@@ -49,6 +54,7 @@
 html,
 body {
   font-family: "Figtree", sans-serif;
+  background-color: #f9fbfc;
 }
 
 .glassmorphism {
@@ -57,11 +63,35 @@ body {
   -webkit-backdrop-filter: blur(2px);
 }
 
+/* ======== css overrides for syncfusion ========= */
+.e-grid,
+.e-table {
+  border-color: #eef9ff !important;
+}
+
+.e-grid .e-gridheader {
+  border-color: #eef9ff !important;
+}
+.e-grid,
+.e-grid .e-toolbar {
+  border-radius: 12px;
+}
+.e-grid .e-toolbar .e-toolbar-items {
+  border-radius: 12px 12px 0 0;
+}
+
+.e-grid .e-gridpager {
+  border-radius: 0 0 12px 12px;
+}
+.e-grid .e-row:nth-child(odd) {
+  background-color: #f9fbfc;
+}
+
 .e-grid .e-rowcell {
   padding-top: 18px !important;
   padding-bottom: 18px !important;
 }
-.e-grid .e-headercell {
-  padding-top: 18px !important;
-  padding-bottom: 18px !important;
+
+.e-sidebar.e-left {
+  border-right: 1px solid #ecf2ef;
 }
