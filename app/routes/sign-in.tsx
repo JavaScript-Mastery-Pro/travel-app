@@ -37,7 +37,7 @@ export default function SignIn() {
           <ButtonComponent
             type="submit"
             iconCss="e-search-icon"
-            className="!bg-primary-100 !py-2.5 !px-4 !rounded-lg !flex !items-center !justify-center gap-1.5 !border-2 !border-light-100 !shadow-none"
+            className="buttonClass !h-11"
             onClick={async () => {
               await loginWithGoogle();
             }}
