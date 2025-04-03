@@ -34,7 +34,10 @@
     @apply text-[20px] md:text-[28px] leading-[16px] md:leading-[20px] font-bold;
   }
   .p-28-semibold {
-    @apply text-[20px] md:text-[28px] leading-[16px] md:leading-[20px] font-semibold;
+    @apply text-[20px] text-2xl md:text-[28px] leading-[16px] md:leading-[20px] font-semibold;
+  }
+  .p-24-semibold {
+    @apply text-lg md:text-2xl font-semibold;
   }
 
   .p-18-bold {
@@ -46,9 +49,12 @@
   .p-18-regular {
     @apply text-[14px] md:text-[18px] leading-[14px] md:leading-[16px] font-normal;
   }
-  /* .user-row {
-    @apply odd:bg-light-200 !py-[18px];
-  } */
+  .p-16-semibold {
+    @apply text-sm md:text-base font-semibold;
+  }
+  .buttonClass {
+    @apply !bg-primary-100 !px-4 !rounded-lg !flex !items-center !justify-center gap-1.5 !border-2 !border-light-100 !shadow-none;
+  }
 }
 
 html,
@@ -69,20 +75,15 @@ body {
   border-color: #eef9ff !important;
 }
 
-.e-grid .e-gridheader {
-  border-color: #eef9ff !important;
-}
-.e-grid,
-.e-grid .e-toolbar {
-  border-radius: 12px;
-}
-.e-grid .e-toolbar .e-toolbar-items {
-  border-radius: 12px 12px 0 0;
+.e-control {
+  border-radius: 12px !important;
 }
 
-.e-grid .e-gridpager {
-  border-radius: 0 0 12px 12px;
+.e-grid .e-gridheader {
+  border-color: #eef9ff !important;
+  border-radius: 12px 12px 0 0 !important;
 }
+
 .e-grid .e-row:nth-child(odd) {
   background-color: #f9fbfc;
 }

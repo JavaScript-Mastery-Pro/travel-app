@@ -6,7 +6,12 @@ import {
 
 export default function UserTable({ data }: { data: UserData[] }) {
   return (
-    <section>
+    <section className="flex flex-col gap-6">
+      <header className="flex justify-between gap-2 w-full">
+        <h1 className="p-24-semibold text-dark-100">
+          View and Manage All Users
+        </h1>
+      </header>
       <GridComponent dataSource={data} gridLines="None">
         <ColumnsDirective>
           <ColumnDirective
