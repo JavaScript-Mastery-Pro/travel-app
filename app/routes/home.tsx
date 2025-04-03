@@ -13,7 +13,7 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10 wrapper">
       <h1 className="text-3xl font-bold">Welcome to Travel App</h1>
       <Logout />
       <Link to="/travel-match">

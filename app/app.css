@@ -24,7 +24,7 @@
 }
 @layer utilities {
   .wrapper {
-    @apply w-full max-w-7xl mx-auto px-4 md:px-8;
+    @apply w-full max-w-7xl mx-auto px-4 lg:px-8;
   }
   .flex-center {
     @apply flex justify-center items-center;
@@ -61,6 +61,7 @@ body {
   -webkit-backdrop-filter: blur(2px);
 }
 
+/* ======== css overrides for syncfusion ========= */
 .e-grid,
 .e-table {
   border-color: #eef9ff !important;
@@ -87,4 +88,8 @@ body {
 .e-grid .e-rowcell {
   padding-top: 18px !important;
   padding-bottom: 18px !important;
+}
+
+.e-sidebar.e-left {
+  border-right: 1px solid #ecf2ef;
 }
