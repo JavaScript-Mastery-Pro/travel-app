@@ -4,6 +4,7 @@
 @import "../node_modules/@syncfusion/ej2-react-buttons/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-react-grids/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-react-navigations/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-splitbuttons/styles/material.css";
 @import "tailwindcss";
 
 @theme {
@@ -34,7 +35,10 @@
     @apply text-[20px] md:text-[28px] leading-[16px] md:leading-[20px] font-bold;
   }
   .p-28-semibold {
-    @apply text-[20px] md:text-[28px] leading-[16px] md:leading-[20px] font-semibold;
+    @apply text-[20px] text-2xl md:text-[28px] leading-[16px] md:leading-[20px] font-semibold;
+  }
+  .p-24-semibold {
+    @apply text-lg md:text-2xl font-semibold;
   }
 
   .p-18-bold {
@@ -46,9 +50,12 @@
   .p-18-regular {
     @apply text-[14px] md:text-[18px] leading-[14px] md:leading-[16px] font-normal;
   }
-  /* .user-row {
-    @apply odd:bg-light-200 !py-[18px];
-  } */
+  .p-16-semibold {
+    @apply text-sm md:text-base font-semibold;
+  }
+  .buttonClass {
+    @apply !bg-primary-100 !px-4 !rounded-lg !flex !items-center !justify-center gap-1.5 !border-2 !border-light-100 !shadow-none;
+  }
 }
 
 html,
@@ -69,20 +76,15 @@ body {
   border-color: #eef9ff !important;
 }
 
-.e-grid .e-gridheader {
-  border-color: #eef9ff !important;
-}
-.e-grid,
-.e-grid .e-toolbar {
-  border-radius: 12px;
-}
-.e-grid .e-toolbar .e-toolbar-items {
-  border-radius: 12px 12px 0 0;
+.e-control {
+  border-radius: 12px !important;
 }
 
-.e-grid .e-gridpager {
-  border-radius: 0 0 12px 12px;
+.e-grid .e-gridheader {
+  border-color: #eef9ff !important;
+  border-radius: 12px 12px 0 0 !important;
 }
+
 .e-grid .e-row:nth-child(odd) {
   background-color: #f9fbfc;
 }
@@ -94,4 +96,26 @@ body {
 
 .e-sidebar.e-left {
   border-right: 1px solid #ecf2ef;
+}
+.e-dropdown-btn {
+  border-radius: 6px;
+  border: 1px solid #f0fef9;
+  background: #ffffff;
+  box-shadow:
+    0px 0px 3px 0px rgba(16, 24, 40, 0.1),
+    0px 0px 2px 0px rgba(16, 24, 40, 0.06);
+  height: 40px;
+}
+
+.e-dropdown-popup ul {
+  border-radius: 8px;
+  border: 1px solid #eaecf0;
+  background: #fff;
+  box-shadow:
+    0px 12px 16px -4px rgba(16, 24, 40, 0.1),
+    0px 4px 20px -2px rgba(16, 24, 40, 0.2);
+}
+.e-dropdown-popup ul .e-item {
+  padding-left: 36px;
+  padding-right: 36px;
 }

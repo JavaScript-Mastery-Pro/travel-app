@@ -1,4 +1,4 @@
-import { UserTable } from "~/components";
+import { Header, UserTable } from "~/components";
 import type { Route } from "./+types/all-users";
 import { getAllUsers } from "~/appwrite/auth";
 import { formatDate } from "~/lib/utils";
@@ -19,8 +19,13 @@ export async function loader() {
 
 export default function AllUsers({ loaderData }: Route.ComponentProps) {
   return (
-    <main className="w-full min-h-screen wrapper ">
-      <h1>All users</h1>
+    <main className="w-full min-h-screen wrapper flex flex-col gap-10">
+      <Header
+        title="Manage Users"
+        description="Filter, sort, and access detailed user profiles"
+        ctaText="Add new user"
+        ctaUrl="/all-users"
+      />
       <UserTable data={loaderData} />
     </main>
   );

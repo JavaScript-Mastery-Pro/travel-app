@@ -32,6 +32,9 @@ importers:
       '@syncfusion/ej2-react-navigations':
         specifier: ^29.1.34
         version: 29.1.34
+      '@syncfusion/ej2-react-splitbuttons':
+        specifier: ^29.1.33
+        version: 29.1.33
       appwrite:
         specifier: ^17.0.1
         version: 17.0.1
@@ -1095,6 +1098,9 @@ packages:
 
   '@syncfusion/ej2-react-navigations@29.1.34':
     resolution: {integrity: sha512-o1XiQy3ysOFKfuvRR3bKagnWHh36QIlNJg3GHrB6c4NvjFVYl7wtNpIljriOl/doF4zqx5dQgo+ByVNN6StIdg==}
+
+  '@syncfusion/ej2-react-splitbuttons@29.1.33':
+    resolution: {integrity: sha512-yK3XU7JTUXa6PJlMpe9+SB4NHfe7I+hl+QDip3HB6Td7qdIaTzlaat4g/ritcWO3qxyBn4qCPP5WKufNq2l07w==}
 
   '@syncfusion/ej2-splitbuttons@29.1.33':
     resolution: {integrity: sha512-ScZpb7fiBOd/55AkpFZPvcFrTs6MiEkUFtH8vtqrV1G9cmgCJ8zl+6QbJjAtCOsWYEWPA70Qh5JKppMXJWkhGw==}
@@ -4385,6 +4391,12 @@ snapshots:
       '@syncfusion/ej2-base': 29.1.33
       '@syncfusion/ej2-navigations': 29.1.34
       '@syncfusion/ej2-react-base': 29.1.33
+
+  '@syncfusion/ej2-react-splitbuttons@29.1.33':
+    dependencies:
+      '@syncfusion/ej2-base': 29.1.33
+      '@syncfusion/ej2-react-base': 29.1.33
+      '@syncfusion/ej2-splitbuttons': 29.1.33
 
   '@syncfusion/ej2-splitbuttons@29.1.33':
     dependencies:
