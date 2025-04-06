@@ -10,6 +10,8 @@ export default [
     index("routes/home.tsx"),
     route("travel-match", "routes/travel-match.tsx"),
     route("all-users", "routes/all-users.tsx"),
+    route("destinations", "routes/destinations.tsx"),
+    route("destinations/create", "routes/create-destination.tsx"),
   ]),
   route("sign-in", "routes/sign-in.tsx"),
 ] satisfies RouteConfig;

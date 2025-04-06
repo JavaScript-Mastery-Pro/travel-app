@@ -12,6 +12,7 @@
   --font-inter: "Inter", sans-serif;
   --color-dark-100: #1f1f36;
   --color-dark-200: #141627;
+  --color-dark-300: #101828;
   --color-gray-100: #7f7e83;
   --color-gray-500: #667085;
   --color-gray-700: #344054;
@@ -19,14 +20,21 @@
   --color-light-100: #ecf2ef;
   --color-light-200: #f9fbfc;
   --color-light-300: #f2f4f7;
+  --color-light-400: #ebeeed;
   --color-success-50: #ecfdf3;
   --color-success-500: #12b76a;
   --color-success-700: #027a48;
   --background-image-auth: url("/assets/images/auth-img.webp");
+  --shadow-100:
+    0px 1px 3px 0px rgba(16, 24, 40, 0.1),
+    0px 1px 2px 0px rgba(16, 24, 40, 0.06);
 }
 @layer utilities {
   .wrapper {
     @apply w-full max-w-7xl mx-auto px-4 lg:px-8;
+  }
+  .wrapper-md {
+    @apply w-full max-w-3xl px-4 lg:px-8 mx-auto;
   }
   .flex-center {
     @apply flex justify-center items-center;

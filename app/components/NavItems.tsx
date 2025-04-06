@@ -21,7 +21,6 @@ const NavItems = () => {
     fetchUser();
   }, [navigate]);
 
-  console.log(user?.name);
   return (
     <section className="flex flex-col px-6 h-full">
       <Link to="/">
