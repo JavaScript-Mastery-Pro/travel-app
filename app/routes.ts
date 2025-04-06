@@ -12,6 +12,7 @@ export default [
     route("all-users", "routes/all-users.tsx"),
     route("destinations", "routes/destinations.tsx"),
     route("destinations/create", "routes/create-destination.tsx"),
+    route("itinerary", "routes/ai-itinerary.tsx"),
   ]),
   route("sign-in", "routes/sign-in.tsx"),
 ] satisfies RouteConfig;

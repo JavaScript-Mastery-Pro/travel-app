@@ -14,6 +14,7 @@
   --color-dark-200: #141627;
   --color-dark-300: #101828;
   --color-gray-100: #7f7e83;
+  --color-gray-200: #eaecf0;
   --color-gray-500: #667085;
   --color-gray-700: #344054;
   --color-primary-100: #256ff1;
@@ -63,6 +64,12 @@
   }
   .buttonClass {
     @apply !bg-primary-100 !px-4 !rounded-lg !flex !items-center !justify-center gap-1.5 !border-2 !border-light-100 !shadow-none;
+  }
+  .formLabel {
+    @apply text-sm font-normal text-gray-100;
+  }
+  .formInput {
+    @apply p-3.5 border border-light-400 rounded-xl text-base text-dark-300 font-medium;
   }
 }
 
