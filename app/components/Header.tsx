@@ -4,8 +4,8 @@ import { Link } from "react-router";
 interface HeaderProps {
   title: string;
   description: string;
-  ctaText: string;
-  ctaUrl: string;
+  ctaText?: string;
+  ctaUrl?: string;
 }
 
 const Header = ({ title, description, ctaText, ctaUrl }: HeaderProps) => {
@@ -19,12 +19,14 @@ const Header = ({ title, description, ctaText, ctaUrl }: HeaderProps) => {
           {description}
         </p>
       </article>
-      <Link to={ctaUrl}>
-        <ButtonComponent type="button" className="buttonClass !h-11">
-          <img src="/assets/icons/plus.svg" alt="google" className="size-5" />
-          <span className="p-16-semibold text-white">{ctaText}</span>
-        </ButtonComponent>
-      </Link>
+      {ctaText && ctaUrl && (
+        <Link to={ctaUrl}>
+          <ButtonComponent type="button" className="buttonClass !h-11">
+            <img src="/assets/icons/plus.svg" alt="google" className="size-5" />
+            <span className="p-16-semibold text-white">{ctaText}</span>
+          </ButtonComponent>
+        </Link>
+      )}
     </header>
   );
 };
