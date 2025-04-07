@@ -1,7 +1,13 @@
+import { getUser } from "~/appwrite/auth";
 import type { Route } from "./+types/home";
 import { Link } from "react-router";
+import { Header } from "~/components";
 
 // for loader reference link: https://reactrouter.com/start/framework/data-loading
+export async function clientLoader() {
+  const user = await getUser();
+  return user;
+}
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -10,20 +16,16 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function Home() {
+export default function Home({ loaderData }: Route.ComponentProps) {
+  const user = loaderData;
   return (
-    <div className="flex flex-col gap-10 wrapper">
-      <h1 className="text-3xl font-bold">Welcome to Travel App</h1>
-      <Link to="/travel-match">
-        <button className="bg-cyan-300 text-black px-4 py-2 rounded-lg cursor-pointer">
-          Travel Match
-        </button>
-      </Link>
-      <Link to="/all-users">
-        <button className="bg-cyan-300 text-black px-4 py-2 rounded-lg cursor-pointer">
-          All Users
-        </button>
-      </Link>
-    </div>
+    <main className="flex flex-col gap-10 w-full wrapper pb-20">
+      <Header
+        title={`Welcome ${user?.name} 👋`}
+        description="Track activity, trends, and popular destinations in real time"
+        ctaText="Create an itinerary"
+        ctaUrl="/itinerary"
+      />
+    </main>
   );
 }
