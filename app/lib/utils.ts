@@ -32,3 +32,17 @@ export function parseMarkdownToJson(markdownText: string): any {
     return null;
   }
 }
+
+export function parseTripData(jsonString: string): TripData | null {
+  try {
+    const data: TripData = JSON.parse(jsonString);
+    return data;
+  } catch (error) {
+    console.error("Failed to parse trip data:", error);
+    return null;
+  }
+}
+
+export function getFirstWord(input: string): string {
+  return input.trim().split(/\s+/)[0] || "";
+}

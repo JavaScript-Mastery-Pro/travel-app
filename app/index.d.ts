@@ -35,3 +35,29 @@ declare interface SelectProps {
   className?: string;
   placeholder: string;
 }
+
+declare interface PillProps {
+  text: string;
+  bgColor?: string;
+  textColor?: string;
+}
+
+type Activity = {
+  time: string;
+  description: string;
+};
+
+type DayPlan = {
+  day: number;
+  location: string;
+  activities: Activity[];
+};
+
+type TripData = {
+  trip_name: string;
+  duration: number;
+  budget: string;
+  travel_style: string;
+  interests: string[];
+  itinerary: DayPlan[];
+};
