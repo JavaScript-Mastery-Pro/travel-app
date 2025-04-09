@@ -29,6 +29,10 @@
   --shadow-100:
     0px 1px 3px 0px rgba(16, 24, 40, 0.1),
     0px 1px 2px 0px rgba(16, 24, 40, 0.06);
+  --shadow-200:
+    0px 12px 16px -4px rgba(16, 24, 40, 0.1),
+    0px 4px 20px -2px rgba(16, 24, 40, 0.2);
+  --shadow-300: 0px 2px 30px 0px rgba(0, 0, 0, 0.05);
 }
 @layer utilities {
   .wrapper {
@@ -69,7 +73,7 @@
     @apply text-sm font-normal text-gray-100;
   }
   .formInput {
-    @apply p-3.5 border border-light-400 rounded-xl text-base text-dark-300 font-medium;
+    @apply p-3.5 border border-light-400 rounded-xl text-base text-dark-300 font-normal;
   }
 }
 
@@ -133,4 +137,18 @@ body {
 .e-dropdown-popup ul .e-item {
   padding-left: 36px;
   padding-right: 36px;
+}
+
+/* select overrides */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("/assets/icons/arrow-down.svg");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px;
+}
+select option {
+  background-color: dodgerblue;
 }
