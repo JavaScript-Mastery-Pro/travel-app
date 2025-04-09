@@ -15,3 +15,23 @@ declare interface User {
   dateJoined: string;
   img: string;
 }
+
+declare interface CountryListItem {
+  name: string;
+  coordinates: [number, number];
+  flag: string;
+  openStreetMap?: string;
+}
+
+declare interface DropdownItem {
+  name: string;
+}
+
+declare interface SelectProps {
+  data: CountryListItem[] | DropdownItem[];
+  onValueChange: (value: string) => void;
+  id: string;
+  label: string;
+  className?: string;
+  placeholder: string;
+}
