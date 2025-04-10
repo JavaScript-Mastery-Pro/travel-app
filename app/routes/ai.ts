@@ -18,9 +18,10 @@ export async function action({ request }: ActionFunctionArgs) {
     Interests: '${interests}'
     Travel Style: '${travelStyle}'
     Group Type: '${groupType}'
-    Return the itinerary in a clean, non-markdown JSON format with the following structure:
+    Return the itinerary and lowest estimated price in a clean, non-markdown JSON format with the following structure:
     {
     "trip_name": "A descriptive title for the trip",
+    "estimated_price": "Lowest average price for the trip in USD, e.g.$price",
     "duration": ${numberOfDays},
     "budget": "${budget}",
     "travel_style": "${travelStyle}",

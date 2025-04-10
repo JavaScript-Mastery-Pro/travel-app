@@ -10,8 +10,8 @@ interface HeaderProps {
 
 const Header = ({ title, description, ctaText, ctaUrl }: HeaderProps) => {
   return (
-    <header className="flex justify-between w-full">
-      <article className="flex flex-col gap-3.5">
+    <header className="flex flex-col gap-5 md:flex-row justify-between w-full">
+      <article className="flex flex-col gap-3.5 w-full">
         <h1 className="text-xl md:text-2xl font-semibold text-dark-100">
           {title}
         </h1>
@@ -23,7 +23,7 @@ const Header = ({ title, description, ctaText, ctaUrl }: HeaderProps) => {
         <Link to={ctaUrl}>
           <ButtonComponent type="button" className="buttonClass !h-11">
             <img src="/assets/icons/plus.svg" alt="google" className="size-5" />
-            <span className="p-16-semibold text-white">{ctaText}</span>
+            <span className="p-16-semibold text-white ">{ctaText}</span>
           </ButtonComponent>
         </Link>
       )}

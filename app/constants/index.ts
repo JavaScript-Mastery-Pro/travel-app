@@ -6,12 +6,6 @@ export const sidebarItems = [
     href: "/",
   },
   {
-    id: 2,
-    icon: "/assets/icons/destination.svg",
-    label: "Destinations",
-    href: "/destinations",
-  },
-  {
     id: 3,
     icon: "/assets/icons/users.svg",
     label: "All Users",

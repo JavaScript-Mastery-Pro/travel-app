@@ -1,40 +1,21 @@
-import { useEffect, useState } from "react";
 import { Link, NavLink, useLoaderData, useNavigate } from "react-router";
-import { getUser, logoutUser } from "~/appwrite/auth";
+import { logoutUser } from "~/appwrite/auth";
 import { sidebarItems } from "~/constants";
 
-const NavItems = () => {
-  const [user, setUser] = useState<any>();
+const NavItems = ({ handleClick }: { handleClick?: () => void }) => {
+  const user = useLoaderData();
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const userData = await getUser();
-        if (!userData) {
-          navigate("/sign-in");
-        }
-        setUser(userData);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-    fetchUser();
-  }, [navigate]);
-
   return (
     <section className="flex flex-col px-6 h-full">
-      <Link to="/">
-        <header className="flex items-center gap-1.5 py-10 border-b border-light-100">
-          <img
-            src="/assets/icons/logo.svg"
-            alt="Logo"
-            className="size-[30px]"
-          />
+      <Link
+        to="/"
+        className="flex items-center gap-1.5 py-10 border-b border-light-100"
+      >
+        <img src="/assets/icons/logo.svg" alt="Logo" className="size-[30px]" />
 
-          <h1 className="text-base md:text-2xl font-bold text-dark-100">
-            Tourvisto
-          </h1>
-        </header>
+        <h1 className="text-base md:text-2xl font-bold text-dark-100">
+          Tourvisto
+        </h1>
       </Link>
 
       <div className="flex flex-col justify-between h-full">
@@ -48,6 +29,7 @@ const NavItems = () => {
                       ? "bg-primary-100 text-white"
                       : "text-dark-200 hover:bg-primary-100 hover:text-white"
                   }`}
+                  onClick={handleClick ? handleClick : undefined}
                 >
                   <img
                     src={item.icon}

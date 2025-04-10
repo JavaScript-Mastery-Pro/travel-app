@@ -44,6 +44,9 @@
   .flex-center {
     @apply flex justify-center items-center;
   }
+  .p-40-semibold {
+    @apply text-3xl md:text-[40px] md:leading-[44px] font-semibold;
+  }
   .p-28-bold {
     @apply text-[20px] md:text-[28px] leading-[16px] md:leading-[20px] font-bold;
   }
@@ -67,13 +70,19 @@
     @apply text-sm md:text-base font-semibold;
   }
   .buttonClass {
-    @apply !bg-primary-100 !px-4 !rounded-lg !flex !items-center !justify-center gap-1.5 !border-2 !border-light-100 !shadow-none;
+    @apply !bg-primary-100 !px-4 !rounded-lg !flex !items-center !justify-center !gap-1.5 !border-2 !border-light-100 !shadow-none !w-full md:!w-[240px];
   }
   .formLabel {
     @apply text-sm font-normal text-gray-100;
   }
   .formInput {
     @apply p-3.5 border border-light-400 rounded-xl text-base text-dark-300 font-normal;
+  }
+  .comboBox-popup {
+    @apply absolute z-10 top-24 bg-white border border-gray-200 rounded-xl shadow-200 h-[250px] w-full md:max-w-[660px] overflow-hidden;
+  }
+  .tripCard-pill {
+    @apply bg-white py-1 px-2.5 w-fit rounded-[20px] absolute top-2.5 right-4 text-dark-100 text-sm font-semibold;
   }
 }
 
@@ -115,6 +124,10 @@ body {
 
 .e-sidebar.e-left {
   border-right: 1px solid #ecf2ef;
+}
+.e-btn,
+.e-css.e-btn {
+  text-transform: none;
 }
 .e-dropdown-btn {
   border-radius: 6px;

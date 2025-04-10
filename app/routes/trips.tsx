@@ -3,6 +3,13 @@ import { Header, TripCard } from "~/components";
 import type { Route } from "./+types/trips";
 import { parseTripData } from "~/lib/utils";
 
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "All Trips" },
+    { name: "description", content: "Explore Your Favorite Trip" },
+  ];
+}
+
 export async function loader() {
   const allTrips = await getAllTrips();
   if (allTrips.length === 0) {
@@ -21,7 +28,6 @@ export async function loader() {
 
 export default function Trips({ loaderData }: Route.ComponentProps) {
   const allTrips = Array.isArray(loaderData) ? loaderData : loaderData.trips;
-  console.log(allTrips);
   return (
     <main className="flex flex-col gap-10 pb-20 wrapper">
       <Header
@@ -41,6 +47,7 @@ export default function Trips({ loaderData }: Route.ComponentProps) {
               imageUrl={trip.imageUrls[0]}
               location={trip.tripDetail?.itinerary[0].location ?? ""}
               tags={[trip.interest, trip.travelStyle]}
+              price={trip.tripDetail?.estimated_price ?? ""}
             />
           ))}
         </div>

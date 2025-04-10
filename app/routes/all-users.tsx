@@ -3,6 +3,13 @@ import type { Route } from "./+types/all-users";
 import { getAllUsers } from "~/appwrite/auth";
 import { formatDate } from "~/lib/utils";
 
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "All Users" },
+    { name: "description", content: "See all users info." },
+  ];
+}
+
 export async function loader() {
   const users = await getAllUsers();
   const mappedUsers: UserData[] = users.map((user) => ({

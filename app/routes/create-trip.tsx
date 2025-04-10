@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
 import {
   LayerDirective,
@@ -7,7 +8,7 @@ import {
 } from "@syncfusion/ej2-react-maps";
 
 import { Header, SelectDropdown } from "~/components";
-import type { Route } from "./+types/ai-itinerary";
+import type { Route } from "./+types/create-trip";
 import {
   budgetOptions,
   groupTypes,
@@ -15,7 +16,13 @@ import {
   travelStyles,
 } from "~/constants";
 import { world_map } from "~/world_map";
-import { useNavigate } from "react-router";
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Create Trip" },
+    { name: "description", content: "Create a Personalized Trip" },
+  ];
+}
 
 export async function loader() {
   const response = await fetch("https://restcountries.com/v3.1/all");
@@ -83,13 +90,10 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
   return (
     <main className="flex flex-col gap-10 pb-20 wrapper">
       <Header
-        title="Itineraries"
+        title="Add a New Trip"
         description="View and edit AI-generated travel plans"
       />
-      <section className="flex flex-col gap-5 mt-2.5 wrapper-md">
-        <h1 className="p-24-semibold text-dark-100">
-          Add a New Travel Destination
-        </h1>
+      <section className="mt-2.5 wrapper-md">
         <form
           className="flex flex-col gap-6 py-6 bg-white border border-light-200 rounded-xl shadow-100"
           onSubmit={handleSubmit}
@@ -99,7 +103,7 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
             onValueChange={setcountry}
             id="country"
             label="Country"
-            placeholder={countries[0].flag + " " + countries[0].name}
+            placeholder="Select a Country"
           />
           <div className="flex flex-col gap-2.5 w-full px-6">
             <label htmlFor="duration" className="formLabel">
@@ -116,10 +120,9 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
           <SelectDropdown
             id="groupType"
             label="Group Type"
-            placeholder="Select s group type"
+            placeholder="Select group type"
             data={groupTypes}
             onValueChange={setGroupType}
-            className="!text-gray-100"
           />
           <SelectDropdown
             id="travelStyle"
@@ -127,7 +130,6 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
             placeholder="Select travel style"
             data={travelStyles}
             onValueChange={setTravelStyle}
-            className="!text-gray-100"
           />
           <SelectDropdown
             id="interest"
@@ -135,7 +137,6 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
             placeholder="Select your travel style"
             data={interests}
             onValueChange={setInterest}
-            className="!text-gray-100"
           />
           <SelectDropdown
             id="budget"
@@ -143,7 +144,6 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
             placeholder="Select your budget preference"
             data={budgetOptions}
             onValueChange={setBudget}
-            className="!text-gray-100"
           />
           <div className="w-full flex flex-col gap-2.5 px-6">
             <label htmlFor="location" className="formLabel">
@@ -169,6 +169,7 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
             <ButtonComponent
               type="submit"
               className="buttonClass !h-12 !w-full"
+              disabled={loading}
             >
               <img
                 src="/assets/icons/magic-star.svg"

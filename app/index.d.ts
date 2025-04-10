@@ -32,7 +32,6 @@ declare interface SelectProps {
   onValueChange: (value: string) => void;
   id: string;
   label: string;
-  className?: string;
   placeholder: string;
 }
 
@@ -55,9 +54,19 @@ type DayPlan = {
 
 type TripData = {
   trip_name: string;
+  estimated_price: string;
   duration: number;
   budget: string;
   travel_style: string;
   interests: string[];
   itinerary: DayPlan[];
 };
+
+declare interface TripCardProps {
+  tripName: string;
+  location: string;
+  imageUrl: string;
+  tags: string[];
+  id: string;
+  price: string;
+}

@@ -1,15 +1,26 @@
 import type { Route } from "./+types/sign-in";
 import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
-import { Link } from "react-router";
+import { Link, redirect } from "react-router";
 import { loginWithGoogle } from "~/appwrite/auth";
+import { account } from "~/appwrite/client";
 
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "Sign In" },
-    { name: "description", content: "Welcome to Travel App" },
+    { name: "description", content: "Sign in to Explore the app" },
   ];
 }
-
+export async function clientLoader() {
+  try {
+    const user = await account.get();
+    if (user.$id) {
+      return redirect("/");
+    }
+  } catch (error) {
+    return null;
+  }
+  return null;
+}
 export default function SignIn() {
   return (
     <main className="w-full h-screen flex bg-auth bg-cover bg-no-repeat">
@@ -25,7 +36,7 @@ export default function SignIn() {
             </Link>
             <h1 className="p-28-bold text-dark-100">Tourvisto</h1>
           </header>
-          <article className="mt-9 mb-[60px] flex flex-col gap-3">
+          <article className="mt-9 mb-[30px] flex flex-col gap-3">
             <h2 className="p-28-semibold text-dark-100 text-center">
               Start Your Travel Journey
             </h2>

@@ -36,31 +36,6 @@ export default function UserTable({ data }: { data: UserData[] }) {
   };
   return (
     <section className="flex flex-col gap-6">
-      <header className="flex justify-between gap-2 w-full">
-        <h1 className="p-24-semibold text-dark-100">
-          View and Manage All Users
-        </h1>
-        <DropDownButtonComponent
-          id="element"
-          items={items}
-          cssClass="e-caret-hide"
-          // @ts-ignore
-          ref={(scope) => {
-            ddb = scope as DropDownButtonComponent;
-          }}
-          open={onOpen}
-          select={onSelect}
-        >
-          <figure className="flex-center gap-2">
-            <img
-              src="/assets/icons/filter.svg"
-              alt="filter"
-              className="size-5"
-            />
-            <span className="text-sm font-semibold text-dark-200">Filter</span>
-          </figure>
-        </DropDownButtonComponent>
-      </header>
       <GridComponent dataSource={data} gridLines="None">
         <ColumnsDirective>
           <ColumnDirective
