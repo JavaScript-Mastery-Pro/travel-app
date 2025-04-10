@@ -16,4 +16,5 @@ export default [
     route("trips/create", "routes/ai-itinerary.tsx"),
   ]),
   route("sign-in", "routes/sign-in.tsx"),
+  route("api/create-trip", "routes/ai.ts"),
 ] satisfies RouteConfig;
