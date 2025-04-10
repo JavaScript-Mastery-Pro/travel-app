@@ -21,7 +21,10 @@ const Header = ({ title, description, ctaText, ctaUrl }: HeaderProps) => {
       </article>
       {ctaText && ctaUrl && (
         <Link to={ctaUrl}>
-          <ButtonComponent type="button" className="buttonClass !h-11">
+          <ButtonComponent
+            type="button"
+            className="buttonClass !h-11 !w-full md:!w-[240px]"
+          >
             <img src="/assets/icons/plus.svg" alt="google" className="size-5" />
             <span className="p-16-semibold text-white ">{ctaText}</span>
           </ButtonComponent>

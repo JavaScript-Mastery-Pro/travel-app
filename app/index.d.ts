@@ -52,14 +52,27 @@ type DayPlan = {
   activities: Activity[];
 };
 
+type Location = {
+  city: string;
+  coordinates: [number, number];
+  openStreetMap: string;
+};
+
 type TripData = {
   trip_name: string;
+  trip_description: string;
   estimated_price: string;
   duration: number;
   budget: string;
   travel_style: string;
-  interests: string[];
+  interests: string;
+  group_type: string;
+  country: string;
+  imageUrls: string[];
   itinerary: DayPlan[];
+  best_time_to_visit: string[];
+  weather_info: string[];
+  location: Location;
 };
 
 declare interface TripCardProps {
