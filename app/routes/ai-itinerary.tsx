@@ -14,8 +14,8 @@ import {
   interests,
   travelStyles,
 } from "~/constants";
-import { generateTravelPlan } from "~/lib/ai";
 import { world_map } from "~/world_map";
+import { useNavigate } from "react-router";
 
 export async function loader() {
   const response = await fetch("https://restcountries.com/v3.1/all");
@@ -31,6 +31,7 @@ export async function loader() {
 }
 
 export default function AiItinerary({ loaderData }: Route.ComponentProps) {
+  const navigate = useNavigate();
   const countries: CountryListItem[] = loaderData;
   const [country, setcountry] = useState(countries[0].name);
   const [travelStyle, setTravelStyle] = useState("Adventure");
@@ -43,15 +44,25 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
     event.preventDefault();
     setLoading(true);
     try {
-      const response = await generateTravelPlan(
-        country,
-        duration,
-        travelStyle,
-        interest,
-        budget,
-        groupType
-      );
-      console.log("return data", JSON.stringify(response?.id, null, 2));
+      const response = await fetch("/api/create-trip", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          country,
+          numberOfDays: duration,
+          travelStyle,
+          interests: interest,
+          budget,
+          groupType,
+        }),
+      });
+      const result = await response.json();
+      console.log("return data", JSON.stringify(result?.id, null, 2));
+      if (result?.id) {
+        navigate(`/trips/${result?.id}`);
+      } else {
+        console.error("Failed to generate itinerary");
+      }
     } catch (error) {
       console.error("Error generating itinerary:", error);
     } finally {

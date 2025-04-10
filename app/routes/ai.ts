@@ -1,35 +1,31 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { parseMarkdownToJson } from "./utils";
 import { database } from "~/appwrite/client";
 import { appwriteConfig } from "~/appwrite/config";
 import { ID } from "appwrite";
+import { parseMarkdownToJson } from "~/lib/utils";
+import { data, type ActionFunctionArgs } from "react-router";
 
-export const generateTravelPlan = async (
-  country: string,
-  numberOfDays: number,
-  travelStyle: string,
-  interests: string,
-  budget: string,
-  groupType: string
-) => {
+export async function action({ request }: ActionFunctionArgs) {
+  const { country, numberOfDays, travelStyle, interests, budget, groupType } =
+    await request.json();
   const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
   try {
     const textModel = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const prompt = `Generate a ${numberOfDays}-day travel itinerary for ${country} based on the following user information:
-Budget: '${budget}'
-Interests: '${interests}'
-Travel Style: '${travelStyle}'
-Group Type: '${groupType}'
-Return the itinerary in a clean, non-markdown JSON format with the following structure:
-{
-  "trip_name": "A descriptive title for the trip",
-  "duration": ${numberOfDays},
-  "budget": "${budget}",
-  "travel_style": "${travelStyle}",
-  "interests": ["interest1", "interest2", ...],
-  "itinerary": [
+    Budget: '${budget}'
+    Interests: '${interests}'
+    Travel Style: '${travelStyle}'
+    Group Type: '${groupType}'
+    Return the itinerary in a clean, non-markdown JSON format with the following structure:
+    {
+    "trip_name": "A descriptive title for the trip",
+    "duration": ${numberOfDays},
+    "budget": "${budget}",
+    "travel_style": "${travelStyle}",
+    "interests": ["interest1", "interest2", ...],
+    "itinerary": [
     {
       "day": 1,
       "location": "City/Region Name",
@@ -40,14 +36,13 @@ Return the itinerary in a clean, non-markdown JSON format with the following str
       ]
     },
     ...
-  ]
-}`;
+    ]
+    }`;
 
     const textResult = await textModel.generateContent([prompt]);
     const textResponse = textResult.response.text();
     const itinerary = parseMarkdownToJson(textResponse);
 
-    // Fetch images from Unsplash
     const unsplashApiKey = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
     const unsplashUrl = `https://api.unsplash.com/search/photos?query=${country} ${interests} ${travelStyle}&client_id=${unsplashApiKey}`;
 
@@ -71,11 +66,9 @@ Return the itinerary in a clean, non-markdown JSON format with the following str
       }
     );
 
-    return {
-      id: result.$id,
-    };
+    return data({ id: result.$id });
   } catch (error) {
     console.error("Error generating travel plan:", error);
     return null;
   }
-};
+}
