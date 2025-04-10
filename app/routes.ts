@@ -9,10 +9,8 @@ export default [
   layout("routes/dashboard.tsx", [
     index("routes/home.tsx"),
     route("all-users", "routes/all-users.tsx"),
-    route("destinations", "routes/destinations.tsx"),
-    route("destinations/create", "routes/create-destination.tsx"),
     route("trips", "routes/trips.tsx"),
-    route("trips/create", "routes/ai-itinerary.tsx"),
+    route("trips/create", "routes/create-trip.tsx"),
     route("trips/:tripId", "routes/trip-detail.tsx"),
   ]),
   route("sign-in", "routes/sign-in.tsx"),

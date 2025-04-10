@@ -1,4 +1,3 @@
-import { Query } from "appwrite";
 import { database } from "./client";
 import { appwriteConfig } from "./config";
 
@@ -13,15 +12,16 @@ export const getAllTrips = async () => {
   }
   return allTrips.documents;
 };
-// [
-//     Query.select([
-//       "interest",
-//       "$id",
-//       "travelStyles",
-//       "budget",
-//       "groupType",
-//       "tripDetail",
-//       "imageUrls",
-//       "owner",
-//     ]),
-// ]
+
+export const getTripById = async (tripId: string) => {
+  const trip = await database.getDocument(
+    appwriteConfig.databaseId,
+    appwriteConfig.itineraryCollectionId,
+    tripId
+  );
+  if (!trip.$id) {
+    console.error("Trip not found");
+    return null;
+  }
+  return trip;
+};

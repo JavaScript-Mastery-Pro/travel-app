@@ -7,15 +7,16 @@ const SelectDropdown = ({
   id,
   label,
   placeholder,
-  className,
 }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const [selectedValue, setSelectedValue] = useState<string | null>(
     data.find((item) => item.name === placeholder)?.name || placeholder
   );
+  const [searchTerm, setSearchTerm] = useState("");
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   useClickOutside(dropdownRef, () => {
     setIsOpen(false);
@@ -29,19 +30,19 @@ const SelectDropdown = ({
       ArrowDown: () => {
         event.preventDefault();
         setFocusedIndex((prev) =>
-          prev === null || prev === data.length - 1 ? 0 : prev + 1
+          prev === null || prev === filteredData.length - 1 ? 0 : prev + 1
         );
       },
       ArrowUp: () => {
         event.preventDefault();
         setFocusedIndex((prev) =>
-          prev === null || prev === 0 ? data.length - 1 : prev - 1
+          prev === null || prev === 0 ? filteredData.length - 1 : prev - 1
         );
       },
       Enter: () => {
         event.preventDefault();
         if (focusedIndex !== null) {
-          const selectedItem = data[focusedIndex];
+          const selectedItem = filteredData[focusedIndex];
           const value =
             "flag" in selectedItem
               ? `${selectedItem.flag} ${selectedItem.name}`
@@ -58,7 +59,10 @@ const SelectDropdown = ({
   };
 
   useEffect(() => {
-    if (isOpen) setFocusedIndex(null);
+    if (isOpen) {
+      setFocusedIndex(null);
+      searchInputRef.current?.focus();
+    }
   }, [isOpen]);
 
   const handleItemClick = (item: (typeof data)[number], index: number) => {
@@ -67,6 +71,10 @@ const SelectDropdown = ({
     onValueChange(item.name);
     setIsOpen(false);
   };
+
+  const filteredData = data.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div
@@ -78,10 +86,13 @@ const SelectDropdown = ({
       <label htmlFor={id} className="formLabel">
         {label}
       </label>
-      <input type="hidden" name={id} value={selectedValue ?? ""} />
       <button
         type="button"
-        className={`relative formInput w-full text-start ${className}`}
+        className={`relative formInput w-full text-start ${
+          selectedValue && selectedValue !== placeholder
+            ? "text-dark-100"
+            : "!text-gray-100"
+        }`}
         onClick={() => setIsOpen(!isOpen)}
       >
         {selectedValue || placeholder}
@@ -95,9 +106,19 @@ const SelectDropdown = ({
       </button>
 
       {isOpen && (
-        <div className="absolute z-10 top-24 bg-white border border-gray-200 rounded-xl shadow-200 h-[250px] w-full md:max-w-[660px] overflow-y-scroll">
+        <div className="comboBox-popup">
+          <div className="sticky top-0 bg-white z-20 rounded-t-xl">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full p-2 rounded-t-xl  focus:outline-none border-b border-gray-200"
+              ref={searchInputRef}
+            />
+          </div>
           <ul className="flex flex-col gap-2.5 max-h-[250px] overflow-y-scroll">
-            {data.map((item, index) => (
+            {filteredData.map((item, index) => (
               <li
                 key={item.name}
                 className={`w-full text-start p-2 hover:bg-gray-200 ${

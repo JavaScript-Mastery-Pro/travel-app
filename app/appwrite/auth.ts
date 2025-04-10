@@ -11,9 +11,9 @@ export const getExistingUser = async (id: string) => {
   );
   if (user.total === 0) {
     console.error("User not found");
-    return false;
+    return null;
   }
-  return true;
+  return user.documents[0];
 };
 
 export const getAllUsers = async () => {

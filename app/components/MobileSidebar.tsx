@@ -1,5 +1,6 @@
 import { SidebarComponent } from "@syncfusion/ej2-react-navigations";
 import NavItems from "./NavItems";
+import { Link } from "react-router";
 
 const MobileSidebar = () => {
   let sidebarObj: SidebarComponent;
@@ -7,10 +8,24 @@ const MobileSidebar = () => {
     sidebarObj.toggle();
   };
   return (
-    <div className="lg:hidden flex flex-col gap-5">
-      <button onClick={buttonClick} className="fixed left-4 top-5">
-        <img src="/assets/icons/menu.svg" alt="Menu" className="size-7" />
-      </button>
+    <div className="lg:hidden flex flex-col gap-5 wrapper">
+      <header className="flex justify-between items-center border-b border-light-100">
+        <Link to="/" className="flex items-center gap-1.5 py-10 ">
+          <img
+            src="/assets/icons/logo.svg"
+            alt="Logo"
+            className="size-[30px]"
+          />
+
+          <h1 className="text-base md:text-2xl font-bold text-dark-100">
+            Tourvisto
+          </h1>
+        </Link>
+
+        <button onClick={buttonClick} className="">
+          <img src="/assets/icons/menu.svg" alt="Menu" className="size-7" />
+        </button>
+      </header>
       <SidebarComponent
         width={270}
         // @ts-ignore
@@ -20,7 +35,7 @@ const MobileSidebar = () => {
         showBackdrop={true}
         type="over"
       >
-        <NavItems />
+        <NavItems handleClick={buttonClick} />
       </SidebarComponent>
     </div>
   );
