@@ -21,11 +21,31 @@ export async function action({ request }: ActionFunctionArgs) {
     Return the itinerary and lowest estimated price in a clean, non-markdown JSON format with the following structure:
     {
     "trip_name": "A descriptive title for the trip",
+    "trip_description": "A brief description of the trip and its highlights not exceeding 100 words",
     "estimated_price": "Lowest average price for the trip in USD, e.g.$price",
     "duration": ${numberOfDays},
     "budget": "${budget}",
     "travel_style": "${travelStyle}",
-    "interests": ["interest1", "interest2", ...],
+    "country": "${country}",
+    "interests": ${interests},
+    "group_type": "${groupType}",
+    "best_time_to_visit": [
+      'season(from month to month)": reason to visit',
+      'season(from month to month)": reason to visit',
+      'season(from month to month)": reason to visit',
+      'season(from month to month)": "reason to visit',
+    ],
+    "weather_info": [
+      'season: temperature range in Celsius(temperature range in Fahrenheit)',
+      'season: temperature range in Celsius(temperature range in Fahrenheit)',
+      'season: temperature range in Celsius(temperature range in Fahrenheit)',
+      'season: temperature range in Celsius(temperature range in Fahrenheit)',
+    ],
+    "location": {
+      "city": "name of the city or region",
+      "coordinates": [latitude, longitude],
+      "openStreetMap": "link to open street map",
+    },
     "itinerary": [
     {
       "day": 1,

@@ -13,12 +13,12 @@ const TripCard = ({
   return (
     <Link
       to={`/trips/${id}`}
-      className="shadow-300 bg-white rounded-[20px] flex-col md:max-w-[270px] w-full relative"
+      className="shadow-300 bg-white rounded-[20px] flex-col w-full relative"
     >
       <img
         src={imageUrl}
         alt="image"
-        className="w-full h-[160px] aspect-[7/4] rounded-t-xl"
+        className="w-full h-[160px] aspect-[7/4] rounded-t-xl "
       />
       <article className="flex flex-col gap-3 mt-4 pl-[18px] pr-3.5">
         <h2 className="text-sm md:text-lg font-semibold text-dark-100 line-clamp-2">

@@ -38,7 +38,7 @@ export default function Trips({ loaderData }: Route.ComponentProps) {
       />
       <section className="flex flex-col gap-5 mt-2.5">
         <h1 className="p-24-semibold text-dark-100">Manage Created Trips</h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-7">
           {allTrips.map((trip) => (
             <TripCard
               key={trip.$id}

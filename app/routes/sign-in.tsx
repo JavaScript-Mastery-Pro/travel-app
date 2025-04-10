@@ -48,7 +48,7 @@ export default function SignIn() {
           <ButtonComponent
             type="submit"
             iconCss="e-search-icon"
-            className="buttonClass !h-11"
+            className="buttonClass !h-11 !w-full"
             onClick={async () => {
               await loginWithGoogle();
             }}
