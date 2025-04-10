@@ -74,7 +74,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
         title={`Welcome ${user?.name} 👋`}
         description="Track activity, trends, and popular destinations in real time"
         ctaText="Create an itinerary"
-        ctaUrl="/itinerary"
+        ctaUrl="/trips/create"
       />
       {/* <section className="flex gap-6">
         <aside className="h-[340px]">

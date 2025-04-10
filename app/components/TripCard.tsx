@@ -19,7 +19,7 @@ const TripCard = ({
 }: TripCardProps) => {
   return (
     <Link
-      to={`trips/${id}`}
+      to={`/trips/${id}`}
       className="shadow-300 bg-white rounded-[20px] flex-col px-[18px] py-5 max-w-[270px] w-full"
     >
       <img
