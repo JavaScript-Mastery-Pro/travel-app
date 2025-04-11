@@ -24,7 +24,7 @@ export async function loader() {
   return mappedUsers;
 }
 
-export default function AllUsers({ loaderData }: Route.ComponentProps) {
+const AllUsers = ({ loaderData }: Route.ComponentProps) => {
   return (
     <main className="w-full min-h-screen wrapper flex flex-col gap-10">
       <Header
@@ -34,4 +34,6 @@ export default function AllUsers({ loaderData }: Route.ComponentProps) {
       <UserTable data={loaderData} />
     </main>
   );
-}
+};
+
+export default AllUsers;

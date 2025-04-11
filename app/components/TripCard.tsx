@@ -18,7 +18,7 @@ const TripCard = ({
       <img
         src={imageUrl}
         alt="image"
-        className="w-full h-[160px] aspect-[7/4] rounded-t-xl "
+        className="w-full h-[160px] rounded-t-xl object-cover aspect-video"
       />
       <article className="flex flex-col gap-3 mt-4 pl-[18px] pr-3.5">
         <h2 className="text-sm md:text-lg font-semibold text-dark-100 line-clamp-2">

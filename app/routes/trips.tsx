@@ -23,7 +23,7 @@ export async function loader() {
   return trips;
 }
 
-export default function Trips({ loaderData }: Route.ComponentProps) {
+const Trips = ({ loaderData }: Route.ComponentProps) => {
   const allTrips = Array.isArray(loaderData) ? loaderData : loaderData.trips;
   return (
     <main className="flex flex-col gap-10 pb-20 wrapper">
@@ -54,4 +54,6 @@ export default function Trips({ loaderData }: Route.ComponentProps) {
       </section>
     </main>
   );
-}
+};
+
+export default Trips;

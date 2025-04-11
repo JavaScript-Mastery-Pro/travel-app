@@ -24,7 +24,7 @@ export async function clientLoader() {
   }
 }
 
-export default function Dashboard() {
+const Dashboard = () => {
   return (
     <div className="flex flex-col lg:flex-row h-screen w-full">
       <MobileSidebar />
@@ -38,4 +38,6 @@ export default function Dashboard() {
       </aside>
     </div>
   );
-}
+};
+
+export default Dashboard;
