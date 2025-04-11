@@ -1,22 +1,19 @@
-declare interface UserData {
+declare interface BaseUser {
   id: string;
   name: string;
   email: string;
   dateJoined: string;
-  itineryCreated: number;
+  img: string;
+}
+
+declare interface UserData extends BaseUser {
+  itineraryCreated: number; // fixed typo from itineryCreated
   status: "user" | "admin";
-  img: string;
 }
 
-declare interface User {
-  id: string;
-  name: string;
-  email: string;
-  dateJoined: string;
-  img: string;
-}
+declare type User = BaseUser;
 
-declare interface CountryListItem {
+declare interface Country {
   name: string;
   coordinates: [number, number];
   flag: string;
@@ -28,7 +25,7 @@ declare interface DropdownItem {
 }
 
 declare interface SelectProps {
-  data: CountryListItem[] | DropdownItem[];
+  data: Country[] | DropdownItem[];
   onValueChange: (value: string) => void;
   id: string;
   label: string;
@@ -58,57 +55,60 @@ declare interface Location {
   openStreetMap: string;
 }
 
-declare interface TripData {
-  trip_name: string;
-  trip_description: string;
-  estimated_price: string;
+declare interface Trip {
+  id: string;
+  name: string;
+  description: string;
+  estimatedPrice: string;
   duration: number;
   budget: string;
-  travel_style: string;
+  travelStyle: string;
   interests: string;
-  group_type: string;
+  groupType: string;
   country: string;
   imageUrls: string[];
   itinerary: DayPlan[];
-  best_time_to_visit: string[];
-  weather_info: string[];
+  bestTimeToVisit: string[];
+  weatherInfo: string[];
   location: Location;
-}
-
-declare interface Trips {
-  tripDetail: TripData;
-  imageUrls: string[];
-  $id: string;
+  payment_link: string;
 }
 
 declare interface TripCardProps {
-  tripName: string;
+  id: string;
+  name: string;
   location: string;
   imageUrl: string;
   tags: string[];
-  id: string;
   price: string;
 }
 
-declare interface StatsCardType {
+declare interface StatsCard {
   headerTitle: string;
   total: number;
   lastMonthCount: number;
-  thisMonthCount: number;
+  currentMonthCount: number;
 }
 
 declare interface TrendResult {
   trend: "increment" | "decrement" | "no change";
   percentage: number;
 }
+
 declare interface DashboardStats {
   totalUsers: number;
-  usersJoinedThisMonth: number;
-  usersJoinedLastMonth: number;
-  usersWithRoleUser: number;
-  usersWithRoleUserThisMonth: number;
-  usersWithRoleUserLastMonth: number;
+  usersJoined: {
+    currentMonth: number;
+    lastMonth: number;
+  };
+  userRole: {
+    total: number;
+    currentMonth: number;
+    lastMonth: number;
+  };
   totalTrips: number;
-  tripsCreatedThisMonth: number;
-  tripsCreatedLastMonth: number;
+  tripsCreated: {
+    currentMonth: number;
+    lastMonth: number;
+  };
 }

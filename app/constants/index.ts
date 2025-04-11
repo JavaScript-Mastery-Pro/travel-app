@@ -1,3 +1,5 @@
+import type { ItemModel } from "@syncfusion/ej2-react-navigations";
+
 export const sidebarItems = [
   {
     id: 1,

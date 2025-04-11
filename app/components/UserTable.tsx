@@ -3,28 +3,8 @@ import {
   ColumnsDirective,
   GridComponent,
 } from "@syncfusion/ej2-react-grids";
-import {
-  DropDownButtonComponent,
-  type ItemModel,
-} from "@syncfusion/ej2-react-splitbuttons";
 
-export default function UserTable({ data }: { data: UserData[] }) {
-  let ddb: DropDownButtonComponent;
-  const items: ItemModel[] = [
-    {
-      text: "Date (ascending)",
-    },
-    {
-      text: "Date (descending)",
-    },
-    {
-      text: "Name (ascending)",
-    },
-    {
-      text: "Name (descending)",
-    },
-  ];
-
+const UserTable = ({ data }: { data: UserData[] }) => {
   return (
     <section className="flex flex-col gap-6">
       <GridComponent dataSource={data} gridLines="None">
@@ -91,4 +71,6 @@ export default function UserTable({ data }: { data: UserData[] }) {
       </GridComponent>
     </section>
   );
-}
+};
+
+export default UserTable;

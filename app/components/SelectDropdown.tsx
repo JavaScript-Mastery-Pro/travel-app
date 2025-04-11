@@ -10,7 +10,7 @@ const SelectDropdown = ({
 }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-  const [selectedValue, setSelectedValue] = useState<string | null>(
+  const [selectedValue, setSelectedValue] = useState(
     data.find((item) => item.name === placeholder)?.name || placeholder
   );
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,7 +26,7 @@ const SelectDropdown = ({
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!isOpen) return;
 
-    const keyActions: Record<string, () => void> = {
+    const actions: Record<string, () => void> = {
       ArrowDown: () => {
         event.preventDefault();
         setFocusedIndex((prev) =>
@@ -41,21 +41,12 @@ const SelectDropdown = ({
       },
       Enter: () => {
         event.preventDefault();
-        if (focusedIndex !== null) {
-          const selectedItem = filteredData[focusedIndex];
-          const value =
-            "flag" in selectedItem
-              ? `${selectedItem.flag} ${selectedItem.name}`
-              : selectedItem.name;
-          setSelectedValue(value);
-          onValueChange(selectedItem.name);
-          setIsOpen(false);
-        }
+        if (focusedIndex !== null) selectItem(filteredData[focusedIndex]);
       },
       Escape: () => setIsOpen(false),
     };
 
-    keyActions[event.key]?.();
+    actions[event.key]?.();
   };
 
   useEffect(() => {
@@ -65,7 +56,7 @@ const SelectDropdown = ({
     }
   }, [isOpen]);
 
-  const handleItemClick = (item: (typeof data)[number], index: number) => {
+  const selectItem = (item: (typeof data)[number]) => {
     const value = "flag" in item ? `${item.flag} ${item.name}` : item.name;
     setSelectedValue(value);
     onValueChange(item.name);
@@ -113,7 +104,7 @@ const SelectDropdown = ({
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full p-2 rounded-t-xl  focus:outline-none border-b border-gray-200"
+              className="w-full p-2 rounded-t-xl focus:outline-none border-b border-gray-200"
               ref={searchInputRef}
             />
           </div>
@@ -124,7 +115,7 @@ const SelectDropdown = ({
                 className={`w-full text-start p-2 hover:bg-gray-200 ${
                   focusedIndex === index ? "bg-gray-200" : ""
                 }`}
-                onClick={() => handleItemClick(item, index)}
+                onClick={() => selectItem(item)}
                 ref={(el) => {
                   if (focusedIndex === index && el) {
                     el.scrollIntoView({ behavior: "smooth", block: "nearest" });
