@@ -3,6 +3,7 @@ import { getTripById } from "~/appwrite/trips";
 import { Header, Pill } from "~/components";
 import type { Route } from "./+types/trip-detail";
 import { parseTripData } from "~/lib/utils";
+import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
 
 export function meta() {
   return [
@@ -33,6 +34,7 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
   // Parse the stored trip detail and get the flattened model
   const tripData = parseTripData(loaderData?.tripDetail);
 
+  const paymentLink = loaderData?.payment_link;
   const {
     name,
     duration,
@@ -185,6 +187,12 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
           </section>
         ))}
       </section>
+      <a href={paymentLink} className="flex wrapper-md">
+        <ButtonComponent type="submit" className="buttonClass !h-12 !w-full">
+          <span className="p-16-semibold text-white">Pay and join trip</span>
+          <span className="price-pill">{estimatedPrice}</span>
+        </ButtonComponent>
+      </a>
     </main>
   );
 };

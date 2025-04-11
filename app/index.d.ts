@@ -71,6 +71,7 @@ declare interface Trip {
   bestTimeToVisit: string[];
   weatherInfo: string[];
   location: Location;
+  payment_link: string;
 }
 
 declare interface TripCardProps {

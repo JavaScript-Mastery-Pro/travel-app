@@ -4,6 +4,8 @@ import { appwriteConfig } from "~/appwrite/config";
 import { ID } from "appwrite";
 import { parseMarkdownToJson } from "~/lib/utils";
 import { data, type ActionFunctionArgs } from "react-router";
+import { createProduct } from "~/lib/stripe";
+import { parseTripData } from "~/lib/utils";
 
 export async function action({ request }: ActionFunctionArgs) {
   const { country, numberOfDays, travelStyle, interests, budget, groupType } =
@@ -85,6 +87,30 @@ export async function action({ request }: ActionFunctionArgs) {
       }
     );
 
+    const tripDetail = parseTripData(result.tripDetail) as Trip;
+    const tripPrice = parseInt(tripDetail.estimatedPrice.replace("$", ""), 10);
+    const paymentLink = await createProduct(
+      tripDetail.name,
+      tripDetail.description,
+      imageUrls,
+      tripPrice,
+      result.$id
+    );
+
+    console.log(result.$id);
+
+    console.log("updating payment link");
+    const updatedPaymentLink = await database.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.itineraryCollectionId,
+      result.$id,
+      {
+        payment_link: paymentLink.url,
+      }
+    );
+    console.log("updated payment link");
+    console.log(updatedPaymentLink);
+    console.log(paymentLink);
     return data({ id: result.$id });
   } catch (error) {
     console.error("Error generating travel plan:", error);
