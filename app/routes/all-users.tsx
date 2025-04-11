@@ -30,8 +30,6 @@ export default function AllUsers({ loaderData }: Route.ComponentProps) {
       <Header
         title="Manage Users"
         description="Filter, sort, and access detailed user profiles"
-        ctaText="Add new user"
-        ctaUrl="/all-users"
       />
       <UserTable data={loaderData} />
     </main>

@@ -6,7 +6,6 @@ import {
 import {
   DropDownButtonComponent,
   type ItemModel,
-  type OpenCloseMenuEventArgs,
 } from "@syncfusion/ej2-react-splitbuttons";
 
 export default function UserTable({ data }: { data: UserData[] }) {
@@ -26,14 +25,6 @@ export default function UserTable({ data }: { data: UserData[] }) {
     },
   ];
 
-  const onOpen = (args: OpenCloseMenuEventArgs) => {
-    const elem = args.element.parentElement as HTMLElement;
-    elem.style.left = elem.offsetLeft - 100 + "px";
-  };
-  const onSelect = (args: OpenCloseMenuEventArgs) => {
-    const elem = args.element.parentElement as HTMLElement;
-    console.log(elem.innerText);
-  };
   return (
     <section className="flex flex-col gap-6">
       <GridComponent dataSource={data} gridLines="None">

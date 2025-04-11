@@ -64,7 +64,6 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
         }),
       });
       const result = await response.json();
-      console.log("return data", JSON.stringify(result?.id, null, 2));
       if (result?.id) {
         navigate(`/trips/${result?.id}`);
       } else {
