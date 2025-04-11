@@ -6,7 +6,6 @@ import {
   LayersDirective,
   MapsComponent,
 } from "@syncfusion/ej2-react-maps";
-
 import { Header, SelectDropdown } from "~/components";
 import {
   budgetOptions,
@@ -14,7 +13,7 @@ import {
   interests,
   travelStyles,
 } from "~/constants";
-import { world_map } from "~/world_map";
+import { world_map } from "~/constants/world_map";
 import type { Route } from "./+types/create-trip";
 
 export function meta() {
@@ -32,13 +31,22 @@ export async function loader() {
     coordinates: country.latlng,
     flag: country.flag,
     openStreetMap: country.maps?.openStreetMaps,
-  })) as CountryListItem[];
+  })) as Country[];
 }
 
-const CreatTrip = ({ loaderData }: Route.ComponentProps) => {
+interface TripFormData {
+  country: string;
+  travelStyle: string;
+  interest: string;
+  budget: string;
+  duration: number;
+  groupType: string;
+}
+
+const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
   const navigate = useNavigate();
-  const countries = loaderData;
-  const [formData, setFormData] = useState({
+  const countries = loaderData as Country[];
+  const [formData, setFormData] = useState<TripFormData>({
     country: countries[0]?.name || "",
     travelStyle: "Adventure",
     interest: "Historical Sites",
@@ -48,7 +56,7 @@ const CreatTrip = ({ loaderData }: Route.ComponentProps) => {
   });
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (key: keyof typeof formData, value: string | number) =>
+  const handleChange = (key: keyof TripFormData, value: string | number) =>
     setFormData({ ...formData, [key]: value });
 
   interface CreateTripResponse {
@@ -72,9 +80,11 @@ const CreatTrip = ({ loaderData }: Route.ComponentProps) => {
         }),
       });
       const result: CreateTripResponse = await response.json();
-      result?.id
-        ? navigate(`/trips/${result.id}`)
-        : console.error("Failed to generate itinerary");
+      if (result?.id) {
+        navigate(`/trips/${result.id}`);
+      } else {
+        console.error("Failed to generate itinerary");
+      }
     } catch (error) {
       console.error("Error generating itinerary:", error);
     } finally {
@@ -87,7 +97,7 @@ const CreatTrip = ({ loaderData }: Route.ComponentProps) => {
       country: formData.country,
       color: "#EA382E",
       coordinates:
-        countries.find((c: CountryListItem) => c.name === formData.country)
+        countries.find((c: Country) => c.name === formData.country)
           ?.coordinates || [],
     },
   ];
@@ -104,7 +114,7 @@ const CreatTrip = ({ loaderData }: Route.ComponentProps) => {
           onSubmit={handleSubmit}
         >
           <SelectDropdown
-            data={countries || []} // Ensure data is always an array
+            data={countries}
             onValueChange={(value) => handleChange("country", value)}
             id="country"
             label="Country"
@@ -117,12 +127,21 @@ const CreatTrip = ({ loaderData }: Route.ComponentProps) => {
             <input
               id="duration"
               name="duration"
-              onChange={(e) => handleChange("duration", e.target.value)}
+              type="number"
+              value={formData.duration}
+              onChange={(e) => handleChange("duration", Number(e.target.value))}
               placeholder="Enter number of days (e.g., 5, 12)"
               className="formInput placeholder:text-gray-100"
             />
           </div>
-          {["groupType", "travelStyle", "interest", "budget"].map((key) => (
+          {(
+            [
+              "groupType",
+              "travelStyle",
+              "interest",
+              "budget",
+            ] as (keyof TripFormData)[]
+          ).map((key) => (
             <SelectDropdown
               key={key}
               id={key}
@@ -131,19 +150,16 @@ const CreatTrip = ({ loaderData }: Route.ComponentProps) => {
                 .replace(/^./, (str) => str.toUpperCase())}
               placeholder={`Select ${key}`}
               data={
-                {
-                  groupType: groupTypes,
-                  travelStyle: travelStyles,
-                  interest: interests,
-                  budget: budgetOptions,
-                }[key] || []
+                (
+                  {
+                    groupType: groupTypes,
+                    travelStyle: travelStyles,
+                    interest: interests,
+                    budget: budgetOptions,
+                  } as Record<keyof TripFormData, DropdownItem[]>
+                )[key] || []
               }
-              onValueChange={(value) =>
-                handleChange(
-                  key as "travelStyle" | "interest" | "budget" | "groupType",
-                  value
-                )
-              }
+              onValueChange={(value) => handleChange(key, value)}
             />
           ))}
           <div className="w-full flex flex-col gap-2.5 px-6">
@@ -185,4 +201,4 @@ const CreatTrip = ({ loaderData }: Route.ComponentProps) => {
   );
 };
 
-export default CreatTrip;
+export default CreateTrip;

@@ -5,18 +5,23 @@ import { getUsersAndTripsStats } from "~/appwrite/dashboard";
 import { getAllTrips } from "~/appwrite/trips";
 import { parseTripData } from "~/lib/utils";
 
-// for loader reference link: https://reactrouter.com/start/framework/data-loading
 export async function clientLoader() {
   const [user, dashboardStats, trips] = await Promise.all([
     getUser(),
     getUsersAndTripsStats(),
     getAllTrips(),
   ]);
-  const allTrips = trips.map((trip) => ({
-    tripDetail: parseTripData(trip.tripDetail),
-    imageUrls: trip.imageUrls || [],
-    $id: trip.$id,
-  }));
+
+  // Flatten trip data and map legacy keys to our new model.
+  const allTrips = trips.map((trip) => {
+    const tripData = parseTripData(trip.tripDetail);
+    return {
+      id: trip.$id,
+      ...tripData,
+      imageUrls: trip.imageUrls ?? [],
+    };
+  });
+
   return {
     user,
     dashboardStats,
@@ -34,7 +39,7 @@ export function meta({}: Route.MetaArgs) {
 const Home = ({ loaderData }: Route.ComponentProps) => {
   const user = loaderData.user as User | null;
   const dashboardStats = loaderData.dashboardStats as DashboardStats;
-  const allTrips = Array.isArray(loaderData) ? loaderData : loaderData.allTrips;
+  const allTrips = loaderData.allTrips as Trip[];
 
   return (
     <main className="flex flex-col gap-10 w-full wrapper pb-20">
@@ -48,21 +53,21 @@ const Home = ({ loaderData }: Route.ComponentProps) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
           <StatsCard
             headerTitle="Total Users"
-            total={dashboardStats?.totalUsers}
-            thisMonthCount={dashboardStats.usersJoinedThisMonth}
-            lastMonthCount={dashboardStats.usersJoinedLastMonth}
+            total={dashboardStats.totalUsers}
+            currentMonthCount={dashboardStats.usersJoined.currentMonth}
+            lastMonthCount={dashboardStats.usersJoined.lastMonth}
           />
           <StatsCard
             headerTitle="Total Trips"
-            total={dashboardStats?.totalTrips}
-            thisMonthCount={dashboardStats.tripsCreatedThisMonth}
-            lastMonthCount={dashboardStats.tripsCreatedLastMonth}
+            total={dashboardStats.totalTrips}
+            currentMonthCount={dashboardStats.tripsCreated.currentMonth}
+            lastMonthCount={dashboardStats.tripsCreated.lastMonth}
           />
           <StatsCard
             headerTitle="Active Users Today"
-            total={dashboardStats?.usersWithRoleUser}
-            thisMonthCount={dashboardStats.usersWithRoleUserThisMonth}
-            lastMonthCount={dashboardStats.usersWithRoleUserLastMonth}
+            total={dashboardStats.userRole.total}
+            currentMonthCount={dashboardStats.userRole.currentMonth}
+            lastMonthCount={dashboardStats.userRole.lastMonth}
           />
         </div>
         <section className="flex flex-col gap-5 mt-2.5">
@@ -72,16 +77,13 @@ const Home = ({ loaderData }: Route.ComponentProps) => {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-7">
             {allTrips.slice(0, 4).map((trip) => (
               <TripCard
-                key={trip.$id}
-                id={trip.$id}
-                tripName={trip.tripDetail?.trip_name ?? ""}
+                key={trip.id}
+                id={trip.id}
+                name={trip.name}
                 imageUrl={trip.imageUrls[0]}
-                location={trip.tripDetail?.itinerary[0].location ?? ""}
-                tags={[
-                  trip.tripDetail?.interests ?? "",
-                  trip.tripDetail?.travel_style ?? "",
-                ]}
-                price={trip.tripDetail?.estimated_price ?? ""}
+                location={trip.itinerary?.[0]?.location ?? ""}
+                tags={[trip.interests, trip.travelStyle]}
+                price={trip.estimatedPrice}
               />
             ))}
           </div>

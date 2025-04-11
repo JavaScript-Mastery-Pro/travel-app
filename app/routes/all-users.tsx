@@ -18,7 +18,7 @@ export async function loader() {
     email: user.email,
     img: user.imageUrl,
     dateJoined: formatDate(user.joinedAt),
-    itineryCreated: 21,
+    itineraryCreated: 21,
     status: user.status,
   }));
   return mappedUsers;
