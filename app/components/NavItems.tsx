@@ -5,6 +5,12 @@ import { sidebarItems } from "~/constants";
 const NavItems = ({ handleClick }: { handleClick?: () => void }) => {
   const user = useLoaderData();
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logoutUser();
+    navigate("/sign-in");
+  };
+
   return (
     <section className="flex flex-col px-6 h-full">
       <Link
@@ -12,7 +18,6 @@ const NavItems = ({ handleClick }: { handleClick?: () => void }) => {
         className="flex items-center gap-1.5 py-10 border-b border-light-100"
       >
         <img src="/assets/icons/logo.svg" alt="Logo" className="size-[30px]" />
-
         <h1 className="text-base md:text-2xl font-bold text-dark-100">
           Tourvisto
         </h1>
@@ -20,28 +25,31 @@ const NavItems = ({ handleClick }: { handleClick?: () => void }) => {
 
       <div className="flex flex-col justify-between h-full">
         <nav className="flex flex-col gap-3.5 pt-9">
-          {sidebarItems.map((item) => (
-            <NavLink key={item.id} to={item.href}>
+          {sidebarItems.map(({ id, href, icon, label }) => (
+            <NavLink key={id} to={href}>
               {({ isActive }: { isActive: boolean }) => (
                 <div
-                  className={`group flex items-center text-xs md:text-lg font-normal cursor-pointer text-gray-100 gap-2.5 py-[18px] px-3.5 rounded-lg ${
+                  className={`group flex items-center text-xs md:text-lg font-normal cursor-pointer gap-2.5 py-[18px] px-3.5 rounded-lg ${
                     isActive
                       ? "bg-primary-100 text-white"
                       : "text-dark-200 hover:bg-primary-100 hover:text-white"
                   }`}
-                  onClick={handleClick ? handleClick : undefined}
+                  onClick={handleClick}
                 >
                   <img
-                    src={item.icon}
-                    alt={item.label}
-                    className={`group-hover:brightness-0 size-5 group-hover:invert ${isActive ? "text-white brightness-0 invert" : "text-dark-200 "}`}
+                    src={icon}
+                    alt={label}
+                    className={`group-hover:brightness-0 size-5 group-hover:invert ${
+                      isActive ? "brightness-0 invert" : "text-dark-200"
+                    }`}
                   />
-                  {item.label}
+                  {label}
                 </div>
               )}
             </NavLink>
           ))}
         </nav>
+
         <footer className="flex items-center gap-2.5 pb-8">
           <img
             src={user?.imageUrl || "/assets/images/david.webp"}
@@ -56,13 +64,7 @@ const NavItems = ({ handleClick }: { handleClick?: () => void }) => {
               {user?.email}
             </p>
           </article>
-          <button
-            onClick={async () => {
-              await logoutUser();
-              navigate("/sign-in");
-            }}
-            className="cursor-pointer"
-          >
+          <button onClick={handleLogout} className="cursor-pointer">
             <img
               src="/assets/icons/logout.svg"
               alt="logout"

@@ -8,7 +8,6 @@ import {
 } from "@syncfusion/ej2-react-maps";
 
 import { Header, SelectDropdown } from "~/components";
-import type { Route } from "./+types/create-trip";
 import {
   budgetOptions,
   groupTypes,
@@ -16,8 +15,9 @@ import {
   travelStyles,
 } from "~/constants";
 import { world_map } from "~/world_map";
+import type { Route } from "./+types/create-trip";
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return [
     { title: "Create Trip" },
     { name: "description", content: "Create a Personalized Trip" },
@@ -27,27 +27,35 @@ export function meta({}: Route.MetaArgs) {
 export async function loader() {
   const response = await fetch("https://restcountries.com/v3.1/all");
   const data = await response.json();
-
-  const countriesList: CountryListItem[] = data.map((country: any) => ({
+  return data.map((country: any) => ({
     name: country.name.common,
     coordinates: country.latlng,
     flag: country.flag,
     openStreetMap: country.maps?.openStreetMaps,
-  }));
-  return countriesList;
+  })) as CountryListItem[];
 }
 
-export default function AiItinerary({ loaderData }: Route.ComponentProps) {
+const CreatTrip = ({ loaderData }: Route.ComponentProps) => {
   const navigate = useNavigate();
-  const countries: CountryListItem[] = loaderData;
-  const [country, setcountry] = useState(countries[0].name);
-  const [travelStyle, setTravelStyle] = useState("Adventure");
-  const [interest, setInterest] = useState("Historical Sites");
-  const [budget, setBudget] = useState("Budget");
-  const [duration, setDuration] = useState(5);
-  const [groupType, setGroupType] = useState("Solo");
+  const countries = loaderData;
+  const [formData, setFormData] = useState({
+    country: countries[0]?.name || "",
+    travelStyle: "Adventure",
+    interest: "Historical Sites",
+    budget: "Budget",
+    duration: 5,
+    groupType: "Solo",
+  });
   const [loading, setLoading] = useState(false);
-  const handleSubmit = async (event: React.FormEvent) => {
+
+  const handleChange = (key: keyof typeof formData, value: string | number) =>
+    setFormData({ ...formData, [key]: value });
+
+  interface CreateTripResponse {
+    id?: string;
+  }
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
     try {
@@ -55,20 +63,18 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          country,
-          numberOfDays: duration,
-          travelStyle,
-          interests: interest,
-          budget,
-          groupType,
+          country: formData.country,
+          numberOfDays: formData.duration,
+          travelStyle: formData.travelStyle,
+          interests: formData.interest,
+          budget: formData.budget,
+          groupType: formData.groupType,
         }),
       });
-      const result = await response.json();
-      if (result?.id) {
-        navigate(`/trips/${result?.id}`);
-      } else {
-        console.error("Failed to generate itinerary");
-      }
+      const result: CreateTripResponse = await response.json();
+      result?.id
+        ? navigate(`/trips/${result.id}`)
+        : console.error("Failed to generate itinerary");
     } catch (error) {
       console.error("Error generating itinerary:", error);
     } finally {
@@ -76,13 +82,13 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
     }
   };
 
-  const mapData: object[] = [
+  const mapData = [
     {
-      country: country,
+      country: formData.country,
       color: "#EA382E",
-      coordinates: [
-        countries.find((c) => c.name === country)?.coordinates || [],
-      ],
+      coordinates:
+        countries.find((c: CountryListItem) => c.name === formData.country)
+          ?.coordinates || [],
     },
   ];
 
@@ -98,8 +104,8 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
           onSubmit={handleSubmit}
         >
           <SelectDropdown
-            data={countries}
-            onValueChange={setcountry}
+            data={countries || []} // Ensure data is always an array
+            onValueChange={(value) => handleChange("country", value)}
             id="country"
             label="Country"
             placeholder="Select a Country"
@@ -111,39 +117,35 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
             <input
               id="duration"
               name="duration"
-              onChange={(e) => setDuration(Number(e.target.value))}
+              onChange={(e) => handleChange("duration", e.target.value)}
               placeholder="Enter number of days (e.g., 5, 12)"
               className="formInput placeholder:text-gray-100"
             />
           </div>
-          <SelectDropdown
-            id="groupType"
-            label="Group Type"
-            placeholder="Select group type"
-            data={groupTypes}
-            onValueChange={setGroupType}
-          />
-          <SelectDropdown
-            id="travelStyle"
-            label="Travel Style"
-            placeholder="Select travel style"
-            data={travelStyles}
-            onValueChange={setTravelStyle}
-          />
-          <SelectDropdown
-            id="interest"
-            label="Interests"
-            placeholder="Select your travel style"
-            data={interests}
-            onValueChange={setInterest}
-          />
-          <SelectDropdown
-            id="budget"
-            label="Budget Estimate"
-            placeholder="Select your budget preference"
-            data={budgetOptions}
-            onValueChange={setBudget}
-          />
+          {["groupType", "travelStyle", "interest", "budget"].map((key) => (
+            <SelectDropdown
+              key={key}
+              id={key}
+              label={key
+                .replace(/([A-Z])/g, " $1")
+                .replace(/^./, (str) => str.toUpperCase())}
+              placeholder={`Select ${key}`}
+              data={
+                {
+                  groupType: groupTypes,
+                  travelStyle: travelStyles,
+                  interest: interests,
+                  budget: budgetOptions,
+                }[key] || []
+              }
+              onValueChange={(value) =>
+                handleChange(
+                  key as "travelStyle" | "interest" | "budget" | "groupType",
+                  value
+                )
+              }
+            />
+          ))}
           <div className="w-full flex flex-col gap-2.5 px-6">
             <label htmlFor="location" className="formLabel">
               Location on map
@@ -155,11 +157,8 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
                   dataSource={mapData}
                   shapePropertyPath="name"
                   shapeDataPath="country"
-                  shapeSettings={{
-                    colorValuePath: "color",
-                    fill: "#E5E5E5",
-                  }}
-                ></LayerDirective>
+                  shapeSettings={{ colorValuePath: "color", fill: "#E5E5E5" }}
+                />
               </LayersDirective>
             </MapsComponent>
           </div>
@@ -171,9 +170,9 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
               disabled={loading}
             >
               <img
-                src="/assets/icons/magic-star.svg"
+                src={`/assets/icons/${loading ? "loader.svg" : "magic-star.svg"}`}
                 alt="magic star"
-                className="size-5"
+                className={`size-5 ${loading ? "animate-spin" : ""}`}
               />
               <span className="p-16-semibold text-white">
                 {loading ? "Generating..." : "Generate Itinerary"}
@@ -184,4 +183,6 @@ export default function AiItinerary({ loaderData }: Route.ComponentProps) {
       </section>
     </main>
   );
-}
+};
+
+export default CreatTrip;

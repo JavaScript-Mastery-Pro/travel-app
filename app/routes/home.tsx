@@ -1,59 +1,9 @@
-import {
-  Category,
-  ChartComponent,
-  Inject,
-  SeriesCollectionDirective,
-  SeriesDirective,
-  StackingColumnSeries,
-  type AxisModel,
-} from "@syncfusion/ej2-react-charts";
-
 import type { Route } from "./+types/home";
 import { getUser } from "~/appwrite/auth";
 import { Header, StatsCard, TripCard } from "~/components";
 import { getUsersAndTripsStats } from "~/appwrite/dashboard";
 import { getAllTrips } from "~/appwrite/trips";
 import { parseTripData } from "~/lib/utils";
-// import { chartOneData } from "~/constants";
-
-export const chartOneData: object[] = [
-  {
-    x: "Jan",
-    y1: 0.5,
-    y2: 1.5,
-    y3: 0.7,
-  },
-  {
-    x: "Feb",
-    y1: 0.8,
-    y2: 1.2,
-    y3: 0.9,
-  },
-  {
-    x: "Mar",
-    y1: 1.2,
-    y2: 1.8,
-    y3: 1.5,
-  },
-  {
-    x: "Apr",
-    y1: 1.5,
-    y2: 2.0,
-    y3: 1.8,
-  },
-  {
-    x: "May",
-    y1: 1.8,
-    y2: 2.5,
-    y3: 2.0,
-  },
-  {
-    x: "Jun",
-    y1: 2.0,
-    y2: 2.8,
-    y3: 2.5,
-  },
-];
 
 // for loader reference link: https://reactrouter.com/start/framework/data-loading
 export async function clientLoader() {
@@ -81,7 +31,7 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function Home({ loaderData }: Route.ComponentProps) {
+const Home = ({ loaderData }: Route.ComponentProps) => {
   const user = loaderData.user as User | null;
   const dashboardStats = loaderData.dashboardStats as DashboardStats;
   const allTrips = Array.isArray(loaderData) ? loaderData : loaderData.allTrips;
@@ -139,4 +89,6 @@ export default function Home({ loaderData }: Route.ComponentProps) {
       </section>
     </main>
   );
-}
+};
+
+export default Home;

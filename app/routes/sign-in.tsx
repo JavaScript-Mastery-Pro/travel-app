@@ -21,7 +21,7 @@ export async function clientLoader() {
   }
   return null;
 }
-export default function SignIn() {
+const SignIn = () => {
   return (
     <main className="w-full h-screen flex bg-auth bg-cover bg-no-repeat">
       <section className="size-full glassmorphism flex-center px-6">
@@ -66,4 +66,6 @@ export default function SignIn() {
       </section>
     </main>
   );
-}
+};
+
+export default SignIn;
