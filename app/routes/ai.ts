@@ -78,12 +78,9 @@ export async function action({ request }: ActionFunctionArgs) {
       appwriteConfig.itineraryCollectionId,
       ID.unique(),
       {
-        interest: interests,
-        budget: budget,
-        travelStyles: travelStyle,
-        groupType: groupType,
-        imageUrls: imageUrls,
         tripDetail: JSON.stringify(itinerary),
+        createdAt: new Date().toISOString(),
+        imageUrls: imageUrls,
       }
     );
 

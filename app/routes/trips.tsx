@@ -18,10 +18,7 @@ export async function loader() {
   const trips = allTrips.map((trip) => ({
     tripDetail: parseTripData(trip.tripDetail),
     imageUrls: trip.imageUrls || [],
-    interest: trip.interest,
     $id: trip.$id,
-    travelStyle: trip.travelStyles,
-    groupType: trip.groupType,
   }));
   return trips;
 }
@@ -46,7 +43,10 @@ export default function Trips({ loaderData }: Route.ComponentProps) {
               tripName={trip.tripDetail?.trip_name ?? ""}
               imageUrl={trip.imageUrls[0]}
               location={trip.tripDetail?.itinerary[0].location ?? ""}
-              tags={[trip.interest, trip.travelStyle]}
+              tags={[
+                trip.tripDetail?.interests ?? "",
+                trip.tripDetail?.travel_style ?? "",
+              ]}
               price={trip.tripDetail?.estimated_price ?? ""}
             />
           ))}

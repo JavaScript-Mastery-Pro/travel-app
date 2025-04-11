@@ -4,7 +4,7 @@ declare interface UserData {
   email: string;
   dateJoined: string;
   itineryCreated: number;
-  status: string;
+  status: "user" | "admin";
   img: string;
 }
 
@@ -41,24 +41,24 @@ declare interface PillProps {
   textColor?: string;
 }
 
-type Activity = {
+declare interface Activity {
   time: string;
   description: string;
-};
+}
 
-type DayPlan = {
+declare interface DayPlan {
   day: number;
   location: string;
   activities: Activity[];
-};
+}
 
-type Location = {
+declare interface Location {
   city: string;
   coordinates: [number, number];
   openStreetMap: string;
-};
+}
 
-type TripData = {
+declare interface TripData {
   trip_name: string;
   trip_description: string;
   estimated_price: string;
@@ -73,7 +73,13 @@ type TripData = {
   best_time_to_visit: string[];
   weather_info: string[];
   location: Location;
-};
+}
+
+declare interface Trips {
+  tripDetail: TripData;
+  imageUrls: string[];
+  $id: string;
+}
 
 declare interface TripCardProps {
   tripName: string;
@@ -82,4 +88,27 @@ declare interface TripCardProps {
   tags: string[];
   id: string;
   price: string;
+}
+
+declare interface StatsCardType {
+  headerTitle: string;
+  total: number;
+  lastMonthCount: number;
+  thisMonthCount: number;
+}
+
+declare interface TrendResult {
+  trend: "increment" | "decrement" | "no change";
+  percentage: number;
+}
+declare interface DashboardStats {
+  totalUsers: number;
+  usersJoinedThisMonth: number;
+  usersJoinedLastMonth: number;
+  usersWithRoleUser: number;
+  usersWithRoleUserThisMonth: number;
+  usersWithRoleUserLastMonth: number;
+  totalTrips: number;
+  tripsCreatedThisMonth: number;
+  tripsCreatedLastMonth: number;
 }
