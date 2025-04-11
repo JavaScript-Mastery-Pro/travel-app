@@ -73,6 +73,7 @@ declare interface TripData {
   best_time_to_visit: string[];
   weather_info: string[];
   location: Location;
+  payment_link: string;
 }
 
 declare interface Trips {

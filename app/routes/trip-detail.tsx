@@ -31,6 +31,7 @@ const InfoPill = ({ text, image }: { text: string; image: string }) => (
 const TripDetail = ({ loaderData }: Route.ComponentProps) => {
   const imageUrls = loaderData?.imageUrls || [];
   const tripDetail = parseTripData(loaderData?.tripDetail);
+  const paymentLink = loaderData?.payment_link;
   const {
     trip_name,
     duration,
@@ -187,12 +188,12 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
           </section>
         ))}
       </section>
-      <article className="flex wrapper-md">
+      <a href={paymentLink} className="flex wrapper-md">
         <ButtonComponent type="submit" className="buttonClass !h-12 !w-full">
           <span className="p-16-semibold text-white">Pay and join trip</span>
-          <span className="price-pill">{tripDetail?.estimated_price}</span>
+          <span className="price-pill">{estimated_price}</span>
         </ButtonComponent>
-      </article>
+      </a>
     </main>
   );
 };

@@ -26,6 +26,12 @@ export const createProduct = async (
     metadata: {
       tripId,
     },
+    after_completion: {
+      type: "redirect",
+      redirect: {
+        url: `${process.env.VITE_BASE_URL}/payment-success`,
+      },
+    },
   });
   return paymentLink;
 };

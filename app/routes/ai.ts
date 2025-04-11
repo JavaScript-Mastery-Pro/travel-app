@@ -97,15 +97,19 @@ export async function action({ request }: ActionFunctionArgs) {
       result.$id
     );
 
-    // await database.updateDocument(
-    //   appwriteConfig.databaseId,
-    //   appwriteConfig.itineraryCollectionId,
-    //   result.$id,
-    //   {
-    //     stripePaymentLink: paymentLink.url,
-    //   }
-    // );
+    console.log(result.$id);
 
+    console.log("updating payment link");
+    const updatedPaymentLink = await database.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.itineraryCollectionId,
+      result.$id,
+      {
+        payment_link: paymentLink.url,
+      }
+    );
+    console.log("updated payment link");
+    console.log(updatedPaymentLink);
     console.log(paymentLink);
     return data({ id: result.$id });
   } catch (error) {
