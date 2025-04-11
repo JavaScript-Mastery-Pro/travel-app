@@ -3,6 +3,7 @@ import { getTripById } from "~/appwrite/trips";
 import { Header, Pill } from "~/components";
 import type { Route } from "./+types/trip-detail";
 import { parseTripData } from "~/lib/utils";
+import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -25,7 +26,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export default function TripDetail({ loaderData }: Route.ComponentProps) {
   const trip = loaderData;
   const tripDetail = parseTripData(trip?.tripDetail);
-  console.log("tripDetail", tripDetail);
+
   return (
     <main className="flex flex-col gap-10 pb-20 wrapper">
       <Header
@@ -67,18 +68,18 @@ export default function TripDetail({ loaderData }: Route.ComponentProps) {
         </section>
         <section className="flex gap-3 md:gap-5 items-center flex-wrap">
           <Pill
-            text={trip?.travelStyles}
+            text={tripDetail?.travel_style!}
             bgColor="bg-pink-50"
             textColor="text-pink-500"
           />
           <Pill
-            text={trip?.groupType}
+            text={tripDetail?.group_type!}
             bgColor="bg-primary-50"
             textColor="text-primary-500"
           />
-          <Pill text={trip?.budget} />
+          <Pill text={tripDetail?.budget!} />
           <Pill
-            text={trip?.interest}
+            text={tripDetail?.interests!}
             bgColor="bg-navy-50"
             textColor="text-navy-500"
           />
@@ -176,6 +177,12 @@ export default function TripDetail({ loaderData }: Route.ComponentProps) {
           </div>
         </section>
       </section>
+      <article className="flex wrapper-md">
+        <ButtonComponent type="submit" className="buttonClass !h-12 !w-full">
+          <span className="p-16-semibold text-white">Pay and join trip</span>
+          <span className="price-pill">{tripDetail?.estimated_price}</span>
+        </ButtonComponent>
+      </article>
     </main>
   );
 }

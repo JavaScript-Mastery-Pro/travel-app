@@ -97,6 +97,9 @@
   .tripCard-pill {
     @apply bg-white py-1 px-2.5 w-fit rounded-[20px] absolute top-2.5 right-4 text-dark-100 text-sm font-semibold;
   }
+  .price-pill {
+    @apply bg-white py-0.5 px-2.5 w-fit rounded-[20px] top-2.5 right-4 text-dark-100 text-sm font-semibold;
+  }
 }
 
 html,
