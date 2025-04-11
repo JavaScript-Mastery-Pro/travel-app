@@ -21,7 +21,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 
 const InfoPill = ({ text, image }: { text: string; image: string }) => (
   <figure className="flex items-center gap-1.5">
-    <img src={image} alt="infoImage" className="size-5" />
+    <img src={image} alt="info icon" className="size-5" />
     <figcaption className="text-sm md:text-lg font-normal truncate text-gray-100">
       {text}
     </figcaption>
@@ -30,52 +30,47 @@ const InfoPill = ({ text, image }: { text: string; image: string }) => (
 
 const TripDetail = ({ loaderData }: Route.ComponentProps) => {
   const imageUrls = loaderData?.imageUrls || [];
-  const tripDetail = parseTripData(loaderData?.tripDetail);
+
+  // Parse the stored trip detail and get the flattened model
+  const tripData = parseTripData(loaderData?.tripDetail);
+
   const paymentLink = loaderData?.payment_link;
   const {
-    trip_name,
+    name,
     duration,
     itinerary,
-    travel_style,
-    group_type,
+    travelStyle,
+    groupType,
     budget,
     interests,
-    estimated_price,
-    trip_description,
-    best_time_to_visit,
-    weather_info,
+    estimatedPrice,
+    description,
+    bestTimeToVisit,
+    weatherInfo,
     country,
-  } = tripDetail || {};
+  } = tripData || {};
 
   const pillItems = [
-    {
-      text: travel_style,
-      bg: "bg-pink-50",
-      textColor: "text-pink-500",
-    },
-    {
-      text: group_type,
-      bg: "bg-primary-50",
-      textColor: "text-primary-500",
-    },
+    { text: travelStyle, bg: "bg-pink-50", textColor: "text-pink-500" },
+    { text: groupType, bg: "bg-primary-50", textColor: "text-primary-500" },
     { text: budget },
     { text: interests, bg: "bg-navy-50", textColor: "text-navy-500" },
   ];
 
   const visitTimeAndWeatherInfo = [
-    { title: "Best Time to Visit:", items: best_time_to_visit },
-    { title: "Weather Info:", items: weather_info },
+    { title: "Best Time to Visit:", items: bestTimeToVisit },
+    { title: "Weather Info:", items: weatherInfo },
   ];
 
   return (
     <main className="flex flex-col gap-10 pb-20 wrapper">
       <Header
-        title="Trips"
+        title="Trip Details"
         description="View and edit AI-generated travel plans"
       />
       <section className="flex flex-col gap-9 mt-2.5 wrapper-md">
         <header className="flex flex-col gap-6 overflow-hidden">
-          <h1 className="p-40-semibold text-dark-100">{trip_name}</h1>
+          <h1 className="p-40-semibold text-dark-100">{name}</h1>
           <div className="flex items-center gap-5">
             <InfoPill
               text={`${duration} day plan`}
@@ -93,12 +88,16 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
           </div>
         </header>
         <section className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-7 mt-1">
-          {imageUrls?.map((url: string, idx: number) => (
+          {imageUrls.map((url: string, idx: number) => (
             <img
               key={idx}
               src={url}
               alt="trip"
-              className={`w-full rounded-xl object-cover ${idx === 0 ? "md:col-span-2 md:row-span-2 h-[330px]" : "md:row-span-1 h-[150px]"}`}
+              className={`w-full rounded-xl object-cover ${
+                idx === 0
+                  ? "md:col-span-2 md:row-span-2 h-[330px]"
+                  : "md:row-span-1 h-[150px]"
+              }`}
             />
           ))}
         </section>
@@ -135,29 +134,29 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
         <section className="flex justify-between gap-5">
           <article className="flex flex-col gap-4">
             <h1 className="text-xl md:text-3xl text-dark-100 font-semibold">
-              {duration}-Day {country} {travel_style} Trip
+              {duration}-Day {country} {travelStyle} Trip
             </h1>
             <p className="text-base md:text-2xl text-gray-100 font-normal">
-              {budget}, {group_type} and {interests}
+              {budget}, {groupType} and {interests}
             </p>
           </article>
           <h2 className="text-sm md:text-xl font-normal text-dark-100">
-            {estimated_price}
+            {estimatedPrice}
           </h2>
         </section>
         <p className="text-sm md:text-lg font-normal text-dark-400">
-          {trip_description}
+          {description}
         </p>
         <ul className="flex flex-col gap-9">
-          {tripDetail?.itinerary.map((dayPlan: DayPlan, index: number) => (
+          {itinerary?.map((dayPlan: DayPlan, index: number) => (
             <li key={index} className="flex flex-col gap-4">
               <h1 className="text-base md:text-xl font-semibold text-dark-400">
                 Day {dayPlan.day}: {dayPlan.location}
               </h1>
               <ul className="flex flex-col gap-3">
-                {dayPlan.activities.map((activity: any, index: number) => (
+                {dayPlan.activities.map((activity: any, idx: number) => (
                   <li
-                    key={index}
+                    key={idx}
                     className="flex justify-between gap-7 text-sm md:text-lg font-normal text-dark-400 !list-disc"
                   >
                     <span className="flex-shrink-0">{activity.time}</span>
@@ -191,7 +190,7 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
       <a href={paymentLink} className="flex wrapper-md">
         <ButtonComponent type="submit" className="buttonClass !h-12 !w-full">
           <span className="p-16-semibold text-white">Pay and join trip</span>
-          <span className="price-pill">{estimated_price}</span>
+          <span className="price-pill">{estimatedPrice}</span>
         </ButtonComponent>
       </a>
     </main>

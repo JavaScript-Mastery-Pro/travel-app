@@ -10,18 +10,26 @@ export function meta({}: Route.MetaArgs) {
     { name: "description", content: "Sign in to Explore the app" },
   ];
 }
+
 export async function clientLoader() {
   try {
     const user = await account.get();
-    if (user.$id) {
-      return redirect("/");
-    }
+    if (user.$id) return redirect("/");
   } catch (error) {
-    return null;
+    console.error("Error fetching user:", error);
   }
   return null;
 }
+
 const SignIn = () => {
+  const handleSignIn = async () => {
+    try {
+      await loginWithGoogle();
+    } catch (error) {
+      console.error("Sign in failed:", error);
+    }
+  };
+
   return (
     <main className="w-full h-screen flex bg-auth bg-cover bg-no-repeat">
       <section className="size-full glassmorphism flex-center px-6">
@@ -46,12 +54,10 @@ const SignIn = () => {
             </p>
           </article>
           <ButtonComponent
-            type="submit"
+            type="button"
             iconCss="e-search-icon"
             className="buttonClass !h-11 !w-full"
-            onClick={async () => {
-              await loginWithGoogle();
-            }}
+            onClick={handleSignIn}
           >
             <img
               src="/assets/icons/google.svg"

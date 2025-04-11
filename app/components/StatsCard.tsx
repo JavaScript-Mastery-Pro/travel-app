@@ -4,10 +4,10 @@ const StatsCard = ({
   headerTitle,
   total,
   lastMonthCount,
-  thisMonthCount,
-}: StatsCardType) => {
+  currentMonthCount,
+}: StatsCard) => {
   const { trend, percentage } = calculateTrendPercentage(
-    thisMonthCount,
+    currentMonthCount,
     lastMonthCount
   );
   const isDecrement = trend === "decrement";
