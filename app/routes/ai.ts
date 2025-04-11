@@ -87,11 +87,11 @@ export async function action({ request }: ActionFunctionArgs) {
       }
     );
 
-    const tripData = parseTripData(result.tripDetail) as TripData;
-    const tripPrice = parseInt(tripData.estimated_price.replace("$", ""), 10);
+    const tripDetail = parseTripData(result.tripDetail) as Trip;
+    const tripPrice = parseInt(tripDetail.estimatedPrice.replace("$", ""), 10);
     const paymentLink = await createProduct(
-      tripData.trip_name,
-      tripData.trip_description,
+      tripDetail.name,
+      tripDetail.description,
       imageUrls,
       tripPrice,
       result.$id
