@@ -33,6 +33,7 @@ export function parseMarkdownToJson(markdownText: string): any {
   }
 }
 
+// this function takes a string input and returns json object (as appwrite only supports string data type , tripdetail is stored in object)
 export function parseTripData(jsonString: string): TripData | null {
   try {
     const data: TripData = JSON.parse(jsonString);
@@ -43,10 +44,8 @@ export function parseTripData(jsonString: string): TripData | null {
   }
 }
 
-export function getFirstWord(input: string | null | undefined): string {
-  if (!input) {
-    return "";
-  }
+// This function takes a string input and returns the first word from it.
+export function getFirstWord(input: string): string {
   return input.trim().split(/\s+/)[0] || "";
 }
 
