@@ -19,7 +19,7 @@ export async function loader() {
     img: user.imageUrl,
     dateJoined: formatDate(user.joinedAt),
     itineryCreated: 21,
-    status: "active",
+    status: user.status,
   }));
   return mappedUsers;
 }

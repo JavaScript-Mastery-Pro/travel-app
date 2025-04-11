@@ -82,13 +82,13 @@ export default function UserTable({ data }: { data: UserData[] }) {
             template={(props: UserData) => {
               return (
                 <article
-                  className={`flex-center gap-1 w-[65px] py-[2px]  rounded-2xl mix-blend-multiply ${props.status === "active" ? " bg-success-50" : "bg-light-300"}`}
+                  className={`flex-center gap-1 w-[65px] py-[2px]  rounded-2xl mix-blend-multiply ${props.status === "user" ? " bg-success-50" : "bg-light-300"}`}
                 >
                   <div
-                    className={`size-1.5 rounded-full ${props.status === "active" ? "bg-success-500" : "bg-gray-500"}`}
+                    className={`size-1.5 rounded-full ${props.status === "user" ? "bg-success-500" : "bg-gray-500"}`}
                   />
                   <h3
-                    className={`font-inter text-xs font-medium ${props.status === "active" ? "text-success-700" : "text-gray-500"}`}
+                    className={`font-inter text-xs font-medium ${props.status === "user" ? "text-success-700" : "text-gray-500"}`}
                   >
                     {props.status}
                   </h3>

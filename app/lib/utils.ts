@@ -43,6 +43,32 @@ export function parseTripData(jsonString: string): TripData | null {
   }
 }
 
-export function getFirstWord(input: string): string {
+export function getFirstWord(input: string | null | undefined): string {
+  if (!input) {
+    return "";
+  }
   return input.trim().split(/\s+/)[0] || "";
 }
+
+export const calculateTrendPercentage = (
+  countOfThisMonth: number,
+  countOfLastMonth: number
+): TrendResult => {
+  if (countOfLastMonth === 0) {
+    if (countOfThisMonth === 0) {
+      return { trend: "no change", percentage: 0 };
+    }
+    return { trend: "increment", percentage: 100 };
+  }
+
+  const change = countOfThisMonth - countOfLastMonth;
+  const percentage = Math.abs((change / countOfLastMonth) * 100);
+
+  if (change > 0) {
+    return { trend: "increment", percentage };
+  } else if (change < 0) {
+    return { trend: "decrement", percentage };
+  } else {
+    return { trend: "no change", percentage: 0 };
+  }
+};
