@@ -96,10 +96,6 @@ export async function action({ request }: ActionFunctionArgs) {
       tripPrice,
       result.$id
     );
-
-    console.log(result.$id);
-
-    console.log("updating payment link");
     const updatedPaymentLink = await database.updateDocument(
       appwriteConfig.databaseId,
       appwriteConfig.itineraryCollectionId,
@@ -108,9 +104,7 @@ export async function action({ request }: ActionFunctionArgs) {
         payment_link: paymentLink.url,
       }
     );
-    console.log("updated payment link");
-    console.log(updatedPaymentLink);
-    console.log(paymentLink);
+
     return data({ id: result.$id });
   } catch (error) {
     console.error("Error generating travel plan:", error);
