@@ -1,9 +1,10 @@
 import { redirect, type LoaderFunctionArgs } from "react-router";
+import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
+
 import { getTripById } from "~/appwrite/trips";
 import { Header, Pill } from "~/components";
 import type { Route } from "./+types/trip-detail";
 import { parseTripData } from "~/lib/utils";
-import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
 
 export function meta() {
   return [

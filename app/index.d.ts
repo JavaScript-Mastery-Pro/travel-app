@@ -7,7 +7,7 @@ declare interface BaseUser {
 }
 
 declare interface UserData extends BaseUser {
-  itineraryCreated: number; // fixed typo from itineryCreated
+  itineraryCreated: number | string;
   status: "user" | "admin";
 }
 
@@ -111,4 +111,8 @@ declare interface DashboardStats {
     currentMonth: number;
     lastMonth: number;
   };
+}
+
+declare interface CreateTripResponse {
+  id?: string;
 }

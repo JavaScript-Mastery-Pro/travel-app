@@ -13,12 +13,13 @@ export function meta({}: Route.MetaArgs) {
 export async function loader() {
   const users = await getAllUsers();
   const mappedUsers: UserData[] = users.map((user) => ({
-    id: user.$id,
+    id: user.accountId,
     name: user.name,
     email: user.email,
     img: user.imageUrl,
     dateJoined: formatDate(user.joinedAt),
-    itineraryCreated: 21,
+    itineraryCreated:
+      user.itineraryCount === 0 ? "not available" : user.itineraryCount,
     status: user.status,
   }));
   return mappedUsers;

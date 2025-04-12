@@ -19,14 +19,36 @@ export const getExistingUser = async (id: string) => {
 
 export const getAllUsers = async () => {
   try {
-    const { documents, total } = await database.listDocuments(
+    const { documents: users, total } = await database.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
       [Query.limit(10)]
     );
-    return total > 0 ? documents : [];
+
+    if (total === 0) return [];
+
+    const usersWithItineraryCount = await Promise.all(
+      users.map(async (user) => {
+        const { total: itineraryCount } = await database.listDocuments(
+          appwriteConfig.databaseId,
+          appwriteConfig.itineraryCollectionId,
+          [Query.equal("users", user.$id)]
+        );
+        return {
+          accountId: user.accountId,
+          name: user.name,
+          email: user.email,
+          imageUrl: user.imageUrl,
+          joinedAt: user.joinedAt,
+          status: user.status,
+          itineraryCount,
+        };
+      })
+    );
+
+    return usersWithItineraryCount;
   } catch (error) {
-    console.error("Error fetching users:", error);
+    console.error("Error fetching users with itinerary count:", error);
     return [];
   }
 };

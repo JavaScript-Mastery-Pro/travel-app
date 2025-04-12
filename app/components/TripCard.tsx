@@ -38,7 +38,12 @@ const TripCard = ({
       </article>
       <div className="flex gap-2 mt-5 pl-[18px] pr-3.5 pb-5">
         {tags.map((tag, index) => (
-          <Pill key={index} text={getFirstWord(tag)} />
+          <Pill
+            key={index}
+            text={getFirstWord(tag)}
+            bgColor={index === 1 ? "bg-pink-50" : undefined}
+            textColor={index === 1 ? "text-pink-500" : undefined}
+          />
         ))}
       </div>
       <article className="tripCard-pill">{price}</article>

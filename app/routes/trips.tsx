@@ -1,10 +1,9 @@
 import { getAllTrips } from "~/appwrite/trips";
 import { Header, TripCard } from "~/components";
-import type { Route } from "./+types/trips";
 import { parseTripData } from "~/lib/utils";
-import { useLoaderData } from "react-router";
+import type { Route } from "./+types/trips";
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return [
     { title: "All Trips" },
     { name: "description", content: "Explore Your Favorite Trip" },
@@ -12,23 +11,15 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export async function loader() {
-  const allTrips = await getAllTrips();
-
-  const trips = allTrips.map((trip) => {
-    const tripData = parseTripData(trip.tripDetail);
-
-    return {
-      id: trip.$id,
-      ...tripData,
-      imageUrls: trip.imageUrls ?? [],
-    };
-  });
-  return { trips };
+  return (await getAllTrips()).map(({ $id, tripDetail, imageUrls }) => ({
+    id: $id,
+    tripData: parseTripData(tripDetail),
+    imageUrls: imageUrls ?? [],
+  }));
 }
 
-const Trips = () => {
-  const { trips } = useLoaderData();
-
+const Trips = ({ loaderData }: Route.ComponentProps) => {
+  const trips = loaderData;
   return (
     <main className="flex flex-col gap-10 pb-20 wrapper">
       <Header
@@ -40,15 +31,15 @@ const Trips = () => {
       <section className="flex flex-col gap-5 mt-2.5">
         <h1 className="p-24-semibold text-dark-100">Manage Created Trips</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-7">
-          {trips.map((trip: Trip) => (
+          {trips.map(({ id, tripData, imageUrls }) => (
             <TripCard
-              key={trip.id}
-              id={trip.id}
-              name={trip.name}
-              imageUrl={trip.imageUrls[0]}
-              location={trip.itinerary?.[0]?.location ?? ""}
-              tags={[trip.interests, trip.travelStyle]}
-              price={trip.estimatedPrice}
+              key={id}
+              id={id}
+              name={tripData?.name ?? ""}
+              imageUrl={imageUrls[0]}
+              location={tripData?.itinerary?.[0]?.location ?? ""}
+              tags={[tripData?.interests ?? "", tripData?.travelStyle ?? ""]}
+              price={tripData?.estimatedPrice ?? ""}
             />
           ))}
         </div>
