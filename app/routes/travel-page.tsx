@@ -1,20 +1,30 @@
-import { Link } from "react-router";
+import { Link, type LoaderFunctionArgs } from "react-router";
 import { getUser } from "~/appwrite/auth";
 import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
 import { Header, TripCard } from "~/components";
 import { getAllTrips } from "~/appwrite/trips";
 import { cn, parseTripData } from "~/lib/utils";
 import type { Route } from "./+types/travel-page";
+import { PagerComponent } from "@syncfusion/ej2-react-grids";
+import { useState } from "react";
 
-export async function clientLoader() {
-  const [user, trips] = await Promise.all([getUser(), getAllTrips()]);
+export async function clientLoader({ request }: LoaderFunctionArgs) {
+  const url = new URL(request.url);
+  const page = parseInt(url.searchParams.get("page") || "1", 10);
+  const limit = 8;
+  const offset = (page - 1) * limit;
+  const [user, trips] = await Promise.all([
+    getUser(),
+    getAllTrips(limit, offset),
+  ]);
   return {
     user,
-    allTrips: trips.map(({ $id, tripDetail, imageUrls }) => ({
+    allTrips: trips.allTrips.map(({ $id, tripDetail, imageUrls }) => ({
       id: $id,
       ...parseTripData(tripDetail),
       imageUrls: imageUrls ?? [],
     })),
+    total: trips.total,
   };
 }
 
@@ -66,6 +76,14 @@ const FeaturedDestination = ({
 
 const TravelPage = ({ loaderData }: Route.ComponentProps) => {
   const allTrips = loaderData.allTrips as Trip[];
+  const url = new URL(window.location.href);
+  const initialPage = parseInt(url.searchParams.get("page") || "1", 10);
+  const [currentPage, setCurrentPage] = useState(initialPage);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.location.search = `?page=${page}`;
+  };
   return (
     <main className="flex flex-col">
       <section className="bg-hero bg-origin-content bg-cover">
@@ -166,6 +184,12 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
             />
           ))}
         </div>
+        <PagerComponent
+          totalRecordsCount={loaderData.total}
+          pageSize={8}
+          currentPage={currentPage}
+          click={(args) => handlePageChange(args.currentPage)}
+        />
       </section>
     </main>
   );

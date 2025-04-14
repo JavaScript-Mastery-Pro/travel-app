@@ -1,16 +1,30 @@
+import { Query } from "appwrite";
 import { database } from "./client";
 import { appwriteConfig } from "./config";
+import type { Models } from "appwrite";
 
-export const getAllTrips = async () => {
+type GetAllTripsResponse = {
+  allTrips: Models.Document[];
+  total: number;
+};
+
+export const getAllTrips = async (
+  limit: number,
+  offset: number
+): Promise<GetAllTripsResponse> => {
   const allTrips = await database.listDocuments(
     appwriteConfig.databaseId,
-    appwriteConfig.itineraryCollectionId
+    appwriteConfig.itineraryCollectionId,
+    [Query.limit(limit), Query.offset(offset)]
   );
   if (allTrips.total === 0) {
     console.error("No trips found");
-    return [];
+    return { allTrips: [], total: 0 };
   }
-  return allTrips.documents;
+  return {
+    allTrips: allTrips.documents,
+    total: allTrips.total,
+  };
 };
 
 export const getTripById = async (tripId: string) => {
