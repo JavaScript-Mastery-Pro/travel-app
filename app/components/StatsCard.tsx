@@ -13,9 +13,9 @@ const StatsCard = ({
   const isDecrement = trend === "decrement";
 
   return (
-    <article className="p-6 flex flex-col gap-6 bg-white shadow-400 rounded-20 text-dark-100">
+    <article className="stats-card">
       <h1 className="text-base font-medium">{headerTitle}</h1>
-      <div className="flex flex-row md:flex-col-reverse xl:flex-row xl:items-center gap-3 justify-between">
+      <div className="content">
         <div className="flex flex-col gap-4">
           <h2 className="text-4xl font-semibold">{total}</h2>
           <div className="flex items-center gap-2">
