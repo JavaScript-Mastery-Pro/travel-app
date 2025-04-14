@@ -25,9 +25,9 @@ const PaymentSuccess = ({ loaderData }: Route.ComponentProps) => {
       particleCount: 200, // Number of confetti pieces
       angle: 45, // Direction of the confetti burst (90 degrees is top)
       spread: 45, // Spread of the confetti burst
-      origin: { x: 0.1, y: 1 }, // Center of the screen
+      origin: { x: 0, y: 1 }, // Center of the screen
       colors: ["#ff0", "#ff7f00", "#ff0044", "#4c94f4", "#f4f4f4"], // Confetti colors
-      decay: 0.94, // Gravity decay of the confetti
+      decay: 0.95, // Gravity decay of the confetti
     });
     confetti({
       particleCount: 200,
@@ -35,7 +35,7 @@ const PaymentSuccess = ({ loaderData }: Route.ComponentProps) => {
       spread: 45,
       origin: { x: 1, y: 1 },
       colors: ["#ff0", "#ff7f00", "#ff0044", "#4c94f4", "#f4f4f4"],
-      decay: 0.94,
+      decay: 0.95,
     });
   };
 
@@ -50,7 +50,7 @@ const PaymentSuccess = ({ loaderData }: Route.ComponentProps) => {
             Your payment has been processed - enjoy your trip!
           </p>
         </article>
-        <Link to={`/trips/${loaderData?.tripId}`}>
+        <Link to={`/travel/${loaderData?.tripId}`}>
           <ButtonComponent
             type="button"
             className="buttonClass !h-11 !w-full md:!w-[240px]"
