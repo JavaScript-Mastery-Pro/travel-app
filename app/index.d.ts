@@ -116,3 +116,12 @@ declare interface DashboardStats {
 declare interface CreateTripResponse {
   id?: string;
 }
+
+declare interface DestinationProps {
+  containerClass?: string;
+  bigCard?: boolean;
+  activityCount: number;
+  rating: number;
+  bgImage: string;
+  title: string;
+}
