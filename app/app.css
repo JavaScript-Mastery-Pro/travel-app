@@ -130,6 +130,15 @@
       @apply flex flex-row md:flex-col-reverse xl:flex-row xl:items-center gap-3 justify-between;
     }
   }
+  .sign-in-card {
+    @apply flex bg-white flex-col border border-light-100 md:max-w-[510px] rounded-[20px] py-10 px-6 w-full;
+    header {
+      @apply flex items-center gap-1.5 justify-center;
+    }
+    article {
+      @apply mt-9 mb-[30px] flex flex-col gap-3;
+    }
+  }
 }
 
 html,

@@ -33,18 +33,18 @@ const SignIn = () => {
   return (
     <main className="w-full h-screen flex bg-auth bg-cover bg-no-repeat">
       <section className="size-full glassmorphism flex-center px-6">
-        <div className="flex bg-white flex-col border border-light-100 md:max-w-[510px] rounded-[20px] py-10 px-6 w-full">
-          <header className="flex items-center gap-1.5 justify-center">
+        <div className="sign-in-card">
+          <header className="header">
             <Link to="/">
               <img
                 src="/assets/icons/logo.svg"
                 alt="logo"
-                className="w-[30px] h-[30px]"
+                className="size-[30px]"
               />
             </Link>
             <h1 className="p-28-bold text-dark-100">Tourvisto</h1>
           </header>
-          <article className="mt-9 mb-[30px] flex flex-col gap-3">
+          <article>
             <h2 className="p-28-semibold text-dark-100 text-center">
               Start Your Travel Journey
             </h2>
