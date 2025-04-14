@@ -3,7 +3,7 @@ import { getUser } from "~/appwrite/auth";
 import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
 import { Header, TripCard } from "~/components";
 import { getAllTrips } from "~/appwrite/trips";
-import { parseTripData } from "~/lib/utils";
+import { cn, parseTripData } from "~/lib/utils";
 import type { Route } from "./+types/travel-page";
 
 export async function clientLoader() {
@@ -27,7 +27,11 @@ const FeaturedDestination = ({
   bgImage,
 }: DestinationProps) => (
   <section
-    className={`rounded-[14px] ${bgImage} bg-cover bg-center size-full min-w-[280px] ${containerClass}`}
+    className={cn(
+      "rounded-[14px]  bg-cover bg-center size-full min-w-[280px]",
+      containerClass,
+      bgImage
+    )}
   >
     <div className="linear-gradient(39deg, rgba(3, 3, 3, 0.54) -3.66%, rgba(6, 6, 6, 0.00) 45.57%) h-full">
       <article className="flex flex-col justify-between gap-3.5 p-[30px] min-h-[230px] h-full">
@@ -120,16 +124,27 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
             </div>
           </article>
           <div className="flex flex-col gap-[30px]">
-            {["Spain", "Italy", "Germany"].map((country, i) => (
-              <FeaturedDestination
-                key={country}
-                containerClass="w-full h-[240px]"
-                bgImage={`bg-[url('/assets/images/card-img-${i + 4}.png')]`}
-                title={`${country} Tour`}
-                rating={[3.8, 4.2, 4.0][i]}
-                activityCount={[150, 200, 180][i]}
-              />
-            ))}
+            <FeaturedDestination
+              containerClass="w-full h-[240px]"
+              bgImage={`bg-[url('/assets/images/card-img-4.png')]`}
+              title="Spain Tour"
+              rating={3.8}
+              activityCount={150}
+            />
+            <FeaturedDestination
+              containerClass="w-full h-[240px]"
+              bgImage={`bg-[url('/assets/images/card-img-5.png')]`}
+              title="Japan Tour"
+              rating={4.0}
+              activityCount={200}
+            />
+            <FeaturedDestination
+              containerClass="w-full h-[240px]"
+              bgImage={`bg-[url('/assets/images/card-img-6.png')]`}
+              title="Italy Tour"
+              rating={3.2}
+              activityCount={130}
+            />
           </div>
         </div>
       </section>
