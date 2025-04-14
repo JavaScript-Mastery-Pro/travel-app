@@ -28,12 +28,12 @@ export async function clientLoader() {
     await Promise.all([
       getUser(),
       getUsersAndTripsStats(),
-      getAllTrips(),
+      getAllTrips(4, 0),
       getUserGrowthPerDay(),
       getTripsByTravelStyle(),
     ]);
 
-  const allTrips = trips.map((trip) => {
+  const allTrips = trips.allTrips.map((trip) => {
     const tripData = parseTripData(trip.tripDetail);
     return {
       id: trip.$id,
@@ -115,7 +115,7 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
         <section className="flex flex-col gap-5 mt-2.5">
           <h1 className="text-xl font-semibold text-dark-100">Trips</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-7">
-            {allTrips.slice(0, 4).map((trip) => (
+            {allTrips.map((trip) => (
               <TripCard
                 key={trip.id}
                 id={trip.id}
