@@ -95,6 +95,9 @@
   .buttonClass {
     @apply !bg-primary-100 !px-4 !rounded-lg !flex !items-center !justify-center !gap-1.5 !shadow-none;
   }
+  .buttonClass-secondary {
+    @apply !bg-white !px-4 !rounded-lg !flex !items-center !justify-center !gap-1.5 !shadow-sm;
+  }
   .formLabel {
     @apply text-sm font-normal text-gray-100;
   }
