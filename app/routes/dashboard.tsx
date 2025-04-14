@@ -12,7 +12,6 @@ export async function clientLoader() {
     getAllTrips(),
   ]);
 
-  // Flatten trip data and map legacy keys to our new model.
   const allTrips = trips.map((trip) => {
     const tripData = parseTripData(trip.tripDetail);
     return {

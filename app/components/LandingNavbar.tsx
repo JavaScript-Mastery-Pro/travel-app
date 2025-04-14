@@ -8,7 +8,7 @@ const LandingNavbar = () => {
 
   return (
     <nav
-      className={`${location.pathname === `/travel/${params.tripId}` ? "bg-white" : "bg-transparent"} w-full fixed`}
+      className={`${location.pathname === `/travel/${params.tripId}` ? "bg-white" : "glassmorphism"} w-full fixed`}
     >
       <header className="flex justify-between gap-4  items-center wrapper ">
         <Link to="/" className="flex items-center gap-1.5 py-10">
