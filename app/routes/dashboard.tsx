@@ -1,4 +1,4 @@
-import type { Route } from "./+types/home";
+import type { Route } from "./+types/dashboard";
 import { getUser } from "~/appwrite/auth";
 import { Header, StatsCard, TripCard } from "~/components";
 import { getUsersAndTripsStats } from "~/appwrite/dashboard";
@@ -36,7 +36,7 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-const Home = ({ loaderData }: Route.ComponentProps) => {
+const Dashboard = ({ loaderData }: Route.ComponentProps) => {
   const user = loaderData.user as User | null;
   const dashboardStats = loaderData.dashboardStats as DashboardStats;
   const allTrips = loaderData.allTrips as Trip[];
@@ -93,4 +93,4 @@ const Home = ({ loaderData }: Route.ComponentProps) => {
   );
 };
 
-export default Home;
+export default Dashboard;
