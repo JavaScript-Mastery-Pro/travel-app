@@ -1,4 +1,5 @@
 import { Link, useLoaderData, useLocation, useParams } from "react-router";
+import { cn } from "~/lib/utils";
 
 const LandingNavbar = () => {
   const user = useLoaderData();
@@ -8,7 +9,12 @@ const LandingNavbar = () => {
 
   return (
     <nav
-      className={`${location.pathname === `/travel/${params.tripId}` ? "bg-white" : "glassmorphism"} w-full fixed`}
+      className={cn(
+        location.pathname === `/travel/${params.tripId}`
+          ? "bg-white"
+          : "glassmorphism",
+        "w-full fixed"
+      )}
     >
       <header className="flex justify-between gap-4  items-center wrapper ">
         <Link to="/" className="flex items-center gap-1.5 py-10">

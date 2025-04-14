@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import useClickOutside from "../lib/useClickOutside";
+import { cn } from "~/lib/utils";
 
 const SelectDropdown = ({
   data,
@@ -112,9 +113,10 @@ const SelectDropdown = ({
             {filteredData.map((item, index) => (
               <li
                 key={item.name}
-                className={`w-full text-start p-2 hover:bg-gray-200 ${
+                className={cn(
+                  "w-full text-start p-2 hover:bg-gray-200",
                   focusedIndex === index ? "bg-gray-200" : ""
-                }`}
+                )}
                 onClick={() => selectItem(item)}
                 ref={(el) => {
                   if (focusedIndex === index && el) {
