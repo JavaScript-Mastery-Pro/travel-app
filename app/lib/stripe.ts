@@ -5,24 +5,24 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 export const createProduct = async (
-  tripName: string,
-  tripDescription: string,
-  tripImages: string[],
-  tripPrice: number,
+  name: string,
+  description: string,
+  images: string[],
+  price: number,
   tripId: string
 ) => {
   const product = await stripe.products.create({
-    name: tripName,
-    description: tripDescription,
-    images: tripImages,
+    name: name,
+    description: description,
+    images: images,
   });
-  const price = await stripe.prices.create({
+  const priceObject = await stripe.prices.create({
     product: product.id,
-    unit_amount: tripPrice * 100,
+    unit_amount: price * 100,
     currency: "usd",
   });
   const paymentLink = await stripe.paymentLinks.create({
-    line_items: [{ price: price.id, quantity: 1 }],
+    line_items: [{ price: priceObject.id, quantity: 1 }],
     metadata: {
       tripId,
     },

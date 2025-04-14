@@ -1,4 +1,4 @@
-import { redirect, type LoaderFunctionArgs } from "react-router";
+import { Link, redirect, type LoaderFunctionArgs } from "react-router";
 import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
 
 import { getTripById } from "~/appwrite/trips";
@@ -29,7 +29,7 @@ const InfoPill = ({ text, image }: { text: string; image: string }) => (
   </figure>
 );
 
-const TripDetail = ({ loaderData }: Route.ComponentProps) => {
+const TravelDetail = ({ loaderData }: Route.ComponentProps) => {
   const imageUrls = loaderData?.imageUrls || [];
 
   // Parse the stored trip detail and get the flattened model
@@ -64,11 +64,18 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
   ];
 
   return (
-    <main className="flex flex-col gap-10 pb-20 wrapper">
-      <Header
-        title="Trip Details"
-        description="View and edit AI-generated travel plans"
-      />
+    <main className="flex flex-col md:flex-row gap-10 pb-20 wrapper pt-40">
+      <Link
+        to="/"
+        className="flex-center gap-2.5 py-3 px-[30px] boder-gray-200 rounded-lg shadow-500 bg-white h-[50px] w-[240px]"
+      >
+        <img
+          src="/assets/icons/arrow-left.svg"
+          alt="back icon"
+          className="size-[17px]"
+        />
+        <span className="text-base font-semibold text-dark-100">Go back</span>
+      </Link>
       <section className="flex flex-col gap-9 mt-2.5 wrapper-md">
         <header className="flex flex-col gap-6 overflow-hidden">
           <h1 className="p-40-semibold text-dark-100">{name}</h1>
@@ -187,15 +194,15 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
             </div>
           </section>
         ))}
+        <a href={paymentLink} className="flex wrapper-md">
+          <ButtonComponent type="submit" className="buttonClass !h-12 !w-full">
+            <span className="p-16-semibold text-white">Pay and join trip</span>
+            <span className="price-pill">{estimatedPrice}</span>
+          </ButtonComponent>
+        </a>
       </section>
-      <a href={paymentLink} className="flex wrapper-md">
-        <ButtonComponent type="submit" className="buttonClass !h-12 !w-full">
-          <span className="p-16-semibold text-white">Pay and join trip</span>
-          <span className="price-pill">{estimatedPrice}</span>
-        </ButtonComponent>
-      </a>
     </main>
   );
 };
 
-export default TripDetail;
+export default TravelDetail;

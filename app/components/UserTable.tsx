@@ -40,7 +40,7 @@ const UserTable = ({ data }: { data: UserData[] }) => {
             textAlign="Left"
           />
           <ColumnDirective
-            field="itineryCreated"
+            field="itineraryCreated"
             headerText="Itinerary Created"
             width="130"
             textAlign="Left"

@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 import Pill from "./Pill";
 import { getFirstWord } from "~/lib/utils";
@@ -11,9 +11,10 @@ const TripCard = ({
   tags,
   price,
 }: TripCardProps) => {
+  const path = useLocation();
   return (
     <Link
-      to={`/trips/${id}`}
+      to={path.pathname === "/" ? `/travel/${id}` : `/trips/${id}`}
       className="shadow-300 bg-white rounded-[20px] flex-col w-full relative"
     >
       <img
@@ -38,7 +39,12 @@ const TripCard = ({
       </article>
       <div className="flex gap-2 mt-5 pl-[18px] pr-3.5 pb-5">
         {tags.map((tag, index) => (
-          <Pill key={index} text={getFirstWord(tag)} />
+          <Pill
+            key={index}
+            text={getFirstWord(tag)}
+            bgColor={index === 1 ? "bg-pink-50" : undefined}
+            textColor={index === 1 ? "text-pink-500" : undefined}
+          />
         ))}
       </div>
       <article className="tripCard-pill">{price}</article>

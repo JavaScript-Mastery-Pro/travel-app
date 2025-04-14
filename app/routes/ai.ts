@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { database } from "~/appwrite/client";
+import { account, database } from "~/appwrite/client";
 import { appwriteConfig } from "~/appwrite/config";
 import { ID } from "appwrite";
 import { parseMarkdownToJson } from "~/lib/utils";
@@ -18,26 +18,26 @@ export async function action({ request }: ActionFunctionArgs) {
     const prompt = `Generate a ${numberOfDays}-day travel itinerary for ${country} based on the following user information:
     Budget: '${budget}'
     Interests: '${interests}'
-    Travel Style: '${travelStyle}'
-    Group Type: '${groupType}'
+    TravelStyle: '${travelStyle}'
+    GroupType: '${groupType}'
     Return the itinerary and lowest estimated price in a clean, non-markdown JSON format with the following structure:
     {
-    "trip_name": "A descriptive title for the trip",
-    "trip_description": "A brief description of the trip and its highlights not exceeding 100 words",
-    "estimated_price": "Lowest average price for the trip in USD, e.g.$price",
+    "name": "A descriptive title for the trip",
+    "description": "A brief description of the trip and its highlights not exceeding 100 words",
+    "estimatedPrice": "Lowest average price for the trip in USD, e.g.$price",
     "duration": ${numberOfDays},
     "budget": "${budget}",
-    "travel_style": "${travelStyle}",
+    "travelStyle": "${travelStyle}",
     "country": "${country}",
     "interests": ${interests},
-    "group_type": "${groupType}",
-    "best_time_to_visit": [
+    "groupType": "${groupType}",
+    "bestTimeToVisit": [
       '🌸 Season (from month to month): reason to visit',
       '☀️ Season (from month to month): reason to visit',
       '🍁 Season (from month to month): reason to visit',
       '❄️ Season (from month to month): reason to visit'
     ],
-    "weather_info": [
+    "weatherInfo": [
       '☀️ Season: temperature range in Celsius (temperature range in Fahrenheit)',
       '🌦️ Season: temperature range in Celsius (temperature range in Fahrenheit)',
       '🌧️ Season: temperature range in Celsius (temperature range in Fahrenheit)',
@@ -96,10 +96,6 @@ export async function action({ request }: ActionFunctionArgs) {
       tripPrice,
       result.$id
     );
-
-    console.log(result.$id);
-
-    console.log("updating payment link");
     const updatedPaymentLink = await database.updateDocument(
       appwriteConfig.databaseId,
       appwriteConfig.itineraryCollectionId,
@@ -108,9 +104,7 @@ export async function action({ request }: ActionFunctionArgs) {
         payment_link: paymentLink.url,
       }
     );
-    console.log("updated payment link");
-    console.log(updatedPaymentLink);
-    console.log(paymentLink);
+
     return data({ id: result.$id });
   } catch (error) {
     console.error("Error generating travel plan:", error);

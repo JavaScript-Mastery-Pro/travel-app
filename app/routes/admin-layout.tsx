@@ -8,20 +8,21 @@ import { MobileSidebar, NavItems } from "~/components";
 export async function clientLoader() {
   try {
     const user = await account.get();
-    if (!user.$id) return redirect("/sign-in");
+    if (!user?.$id) return redirect("/sign-in");
 
     const existingUser = await getExistingUser(user.$id);
+    if (existingUser?.status === "user") {
+      return redirect("/");
+    }
 
-    if (existingUser?.$id) return existingUser;
-
-    return await storeUserData();
+    return existingUser?.$id ? existingUser : await storeUserData();
   } catch (error) {
     console.error("Error in clientLoader:", error);
     return redirect("/sign-in");
   }
 }
 
-const Dashboard = () => (
+const AdminLayout = () => (
   <div className="flex flex-col lg:flex-row h-screen w-full">
     <MobileSidebar />
     <aside className="w-full max-w-[270px] hidden lg:block">
@@ -35,4 +36,4 @@ const Dashboard = () => (
   </div>
 );
 
-export default Dashboard;
+export default AdminLayout;

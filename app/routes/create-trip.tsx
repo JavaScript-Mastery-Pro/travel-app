@@ -59,10 +59,6 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
   const handleChange = (key: keyof TripFormData, value: string | number) =>
     setFormData({ ...formData, [key]: value });
 
-  interface CreateTripResponse {
-    id?: string;
-  }
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
@@ -127,8 +123,6 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
             <input
               id="duration"
               name="duration"
-              type="number"
-              value={formData.duration}
               onChange={(e) => handleChange("duration", Number(e.target.value))}
               placeholder="Enter number of days (e.g., 5, 12)"
               className="formInput placeholder:text-gray-100"
