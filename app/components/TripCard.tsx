@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 import Pill from "./Pill";
 import { getFirstWord } from "~/lib/utils";
@@ -11,9 +11,10 @@ const TripCard = ({
   tags,
   price,
 }: TripCardProps) => {
+  const path = useLocation();
   return (
     <Link
-      to={`/trips/${id}`}
+      to={path.pathname === "/" ? `/travel/${id}` : `/trips/${id}`}
       className="shadow-300 bg-white rounded-[20px] flex-col w-full relative"
     >
       <img
