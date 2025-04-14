@@ -7,7 +7,7 @@ import {
 
 export default [
   layout("routes/admin-layout.tsx", [
-    route("dashboard", "routes/home.tsx"),
+    route("dashboard", "routes/dashboard.tsx"),
     route("all-users", "routes/all-users.tsx"),
     route("trips", "routes/trips.tsx"),
     route("trips/create", "routes/create-trip.tsx"),
