@@ -1,5 +1,6 @@
 import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
 import { Link, useLocation } from "react-router";
+import { cn } from "~/lib/utils";
 
 interface HeaderProps {
   title: string;
@@ -14,12 +15,22 @@ const Header = ({ title, description, ctaText, ctaUrl }: HeaderProps) => {
     <header className="flex flex-col gap-5 md:flex-row justify-between w-full">
       <article className="flex flex-col gap-3.5 w-full">
         <h1
-          className={`text-dark-100 ${location.pathname === "/" ? "text-2xl md:text-4xl font-bold" : "text-xl md:text-2xl font-semibold"}`}
+          className={cn(
+            "text-dark-100",
+            location.pathname === "/"
+              ? "text-2xl md:text-4xl font-bold"
+              : "text-xl md:text-2xl font-semibold"
+          )}
         >
           {title}
         </h1>
         <p
-          className={`text-gray-100 font-normal ${location.pathname === "/" ? "text-base md:text-lg" : "text-sm md:text-lg"}`}
+          className={cn(
+            "text-gray-100 font-normal",
+            location.pathname === "/"
+              ? "text-base md:text-lg"
+              : "text-sm md:text-lg"
+          )}
         >
           {description}
         </p>

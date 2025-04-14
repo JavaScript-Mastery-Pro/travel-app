@@ -4,7 +4,7 @@ import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
 import { getTripById } from "~/appwrite/trips";
 import { Header, Pill } from "~/components";
 import type { Route } from "./+types/trip-detail";
-import { parseTripData } from "~/lib/utils";
+import { cn, parseTripData } from "~/lib/utils";
 
 export function meta() {
   return [
@@ -101,11 +101,12 @@ const TravelDetail = ({ loaderData }: Route.ComponentProps) => {
               key={idx}
               src={url}
               alt="trip"
-              className={`w-full rounded-xl object-cover ${
+              className={cn(
+                "w-full rounded-xl object-cover",
                 idx === 0
                   ? "md:col-span-2 md:row-span-2 h-[330px]"
                   : "md:row-span-1 h-[150px]"
-              }`}
+              )}
             />
           ))}
         </section>
