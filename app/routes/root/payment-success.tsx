@@ -40,25 +40,23 @@ const PaymentSuccess = ({ loaderData }: Route.ComponentProps) => {
   };
 
   return (
-    <main className="flex flex-col gap-10 pb-20 wrapper items-center justify-center h-screen">
-      <section className="flex flex-col gap-5 justify-between w-full items-center">
-        <article className="flex flex-col gap-3.5 w-full items-center justify-center md:max-w-[488px]">
+    <main className="payment-success wrapper">
+      <section>
+        <article>
           <img
             src="/assets/icons/check.svg"
             alt="check-circle"
             className="size-24"
           />
-          <h1 className="text-xl md:text-3xl font-semibold text-dark-100">
-            Thank You & Weclome Aboard!
-          </h1>
-          <p className="text-gray-100 text-sm font-normal md:text-lg text-center">
+          <h1>Thank You & Weclome Aboard!</h1>
+          <p>
             Your trip’s booked — can’t wait to have you on this adventure! 🌍️
             Get ready to explore & make memories.✨
           </p>
           <Link to={`/travel/${loaderData?.tripId}`} className="w-full">
             <ButtonComponent
               type="button"
-              className="buttonClass !h-11 !w-full"
+              className="button-class !h-11 !w-full"
             >
               <img
                 src="/assets/icons/itinerary-button.svg"
@@ -73,7 +71,7 @@ const PaymentSuccess = ({ loaderData }: Route.ComponentProps) => {
           <Link to={`/`} className="w-full">
             <ButtonComponent
               type="button"
-              className="buttonClass-secondary !h-11 !w-full"
+              className="button-class-secondary !h-11 !w-full"
             >
               <img
                 src="/assets/icons/arrow-left.svg"

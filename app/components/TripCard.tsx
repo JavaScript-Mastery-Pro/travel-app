@@ -19,26 +19,18 @@ const TripCard = ({
   return (
     <Link
       to={path.pathname === "/" ? `/travel/${id}` : `/trips/${id}`}
-      className="shadow-300 bg-white rounded-[20px] flex-col w-full relative"
+      className="trip-card"
     >
-      <img
-        src={imageUrl}
-        alt={name}
-        className="w-full h-[160px] rounded-t-xl object-cover aspect-video"
-      />
-      <article className="flex flex-col gap-3 mt-4 pl-[18px] pr-3.5">
-        <h2 className="text-sm md:text-lg font-semibold text-dark-100 line-clamp-2">
-          {name}
-        </h2>
-        <figure className="flex items-center gap-2">
+      <img src={imageUrl} alt={name} />
+      <article>
+        <h2>{name}</h2>
+        <figure>
           <img
             src="/assets/icons/location-mark.svg"
             alt="location icon"
             className="size-4"
           />
-          <figcaption className="text-xs md:text-sm font-normal text-gray-100">
-            {location}
-          </figcaption>
+          <figcaption>{location}</figcaption>
         </figure>
       </article>
       <div className="flex gap-2 mt-5 pl-[18px] pr-3.5 pb-5">

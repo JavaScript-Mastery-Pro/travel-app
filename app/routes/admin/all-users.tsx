@@ -2,16 +2,12 @@ import {
   ColumnDirective,
   ColumnsDirective,
   GridComponent,
-  Page,
-  Inject,
 } from "@syncfusion/ej2-react-grids";
-import { useState } from "react";
 
 import { Header } from "~/components";
-import type { Route } from "../+types/all-users";
+import type { Route } from "./+types/all-users";
 import { getAllUsers } from "~/appwrite/auth";
 import { cn, formatDate } from "~/lib/utils";
-import type { LoaderFunctionArgs } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -20,13 +16,8 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  const url = new URL(request.url);
-  const page = parseInt(url.searchParams.get("page") || "1", 10);
-  const limit = 3;
-  const offset = (page - 1) * limit;
-
-  const { users, total } = await getAllUsers(limit, offset);
+export async function loader() {
+  const { users, total } = await getAllUsers(10, 0);
 
   const mappedUsers: UserData[] = users.map((user) => ({
     id: user.accountId,
@@ -43,39 +34,17 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 const AllUsers = ({ loaderData }: Route.ComponentProps) => {
-  const { users, total } = loaderData;
-  const url = new URL(window.location.href);
-  const initialPage = parseInt(url.searchParams.get("page") || "1", 10);
-  const [currentPage, setCurrentPage] = useState(initialPage);
-  const pageSize = 3;
+  const { users } = loaderData;
 
   console.log(JSON.stringify(users, null, 2));
 
   return (
-    <main className="w-full min-h-screen wrapper flex flex-col gap-10">
+    <main className="all-users wrapper">
       <Header
         title="Manage Users"
         description="Filter, sort, and access detailed user profiles"
       />
-      <GridComponent
-        dataSource={users}
-        gridLines="None"
-        // allowPaging={true}
-        // pageSettings={{
-        //   pageSize,
-        //   currentPage,
-        //   totalRecordsCount: total,
-        //   pageCount: 3,
-        // }}
-        // actionComplete={(args) => {
-        //   if (args.requestType === "paging") {
-        //     const newPage = args.currentPage;
-        //     const url = new URL(window.location.href);
-        //     url.searchParams.set("page", newPage.toString());
-        //     window.history.pushState({}, "", url.toString());
-        //   }
-        // }}
-      >
+      <GridComponent dataSource={users} gridLines="None">
         <ColumnsDirective>
           <ColumnDirective
             field="name"
@@ -147,7 +116,6 @@ const AllUsers = ({ loaderData }: Route.ComponentProps) => {
             }}
           />
         </ColumnsDirective>
-        {/* <Inject services={[Page]} /> */}
       </GridComponent>
     </main>
   );

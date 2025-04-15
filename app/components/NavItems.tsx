@@ -1,6 +1,7 @@
 import { Link, NavLink, useLoaderData, useNavigate } from "react-router";
 import { logoutUser } from "~/appwrite/auth";
 import { sidebarItems } from "~/constants";
+import { cn } from "~/lib/utils";
 
 const NavItems = ({ handleClick }: { handleClick?: () => void }) => {
   const user = useLoaderData();
@@ -13,14 +14,9 @@ const NavItems = ({ handleClick }: { handleClick?: () => void }) => {
 
   return (
     <section className="flex flex-col px-6 h-full">
-      <Link
-        to="/"
-        className="flex items-center gap-1.5 py-10 border-b border-light-100"
-      >
+      <Link to="/" className="link-logo">
         <img src="/assets/icons/logo.svg" alt="Logo" className="size-[30px]" />
-        <h1 className="text-base md:text-2xl font-bold text-dark-100">
-          Tourvisto
-        </h1>
+        <h1>Tourvisto</h1>
       </Link>
 
       <div className="flex flex-col justify-between h-full">
@@ -29,11 +25,9 @@ const NavItems = ({ handleClick }: { handleClick?: () => void }) => {
             <NavLink key={id} to={href}>
               {({ isActive }: { isActive: boolean }) => (
                 <div
-                  className={`group flex items-center text-xs md:text-lg font-normal cursor-pointer gap-2.5 py-[18px] px-3.5 rounded-lg ${
-                    isActive
-                      ? "bg-primary-100 text-white"
-                      : "text-dark-200 hover:bg-primary-100 hover:text-white"
-                  }`}
+                  className={cn("group nav-item", {
+                    "bg-primary-100 !text-white": isActive,
+                  })}
                   onClick={handleClick}
                 >
                   <img
@@ -50,19 +44,11 @@ const NavItems = ({ handleClick }: { handleClick?: () => void }) => {
           ))}
         </nav>
 
-        <footer className="flex items-center gap-2.5 pb-8">
-          <img
-            src={user?.imageUrl || "/assets/images/david.webp"}
-            alt="user"
-            className="size-10 rounded-full aspect-square"
-          />
-          <article className="flex flex-col gap-[2px] max-w-[115px]">
-            <h2 className="text-sm md:text-base font-semibold text-dark-200 truncate">
-              {user?.name}
-            </h2>
-            <p className="text-gray-100 text-xs md:text-sm font-normal truncate">
-              {user?.email}
-            </p>
+        <footer className="nav-footer">
+          <img src={user?.imageUrl || "/assets/images/david.webp"} alt="user" />
+          <article>
+            <h2>{user?.name}</h2>
+            <p>{user?.email}</p>
           </article>
           <button onClick={handleLogout} className="cursor-pointer">
             <img

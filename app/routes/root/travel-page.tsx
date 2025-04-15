@@ -89,14 +89,14 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
   };
   return (
     <main className="flex flex-col">
-      <section className="bg-hero bg-origin-content bg-cover">
-        <div className="flex flex-col bg-linear100 bg-cover">
-          <section className="wrapper py-48 justify-center items-start flex flex-col gap-6">
-            <article className="flex flex-col w-full md:max-w-[520px] gap-3.5">
+      <section className="travel-hero">
+        <div>
+          <section className="wrapper">
+            <article>
               <h1 className="p-72-bold text-dark-100">
                 Plan Your Trip with Ease
               </h1>
-              <p className="text-lg font-normal text-dark-400">
+              <p>
                 Customize your travel itinerary in minutes—pick your
                 destination, set your preferences, and explore with confidence.
               </p>
@@ -104,7 +104,7 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
             <Link to="#trips">
               <ButtonComponent
                 type="button"
-                className="buttonClass !h-11 !w-full md:!w-[240px]"
+                className="button-class !h-11 !w-full md:!w-[240px]"
               >
                 <span className="p-16-semibold text-white">Get Started</span>
               </ButtonComponent>
@@ -127,7 +127,7 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
               rating={3.5}
               activityCount={196}
             />
-            <div className="flex flex-col lg:flex-row gap-[30px] h-2/3 lg:h-1/2">
+            <div className="travel-featured">
               <FeaturedDestination
                 bigCard
                 bgImage="bg-[url('/assets/images/card-img-2.png')]"
@@ -174,7 +174,7 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
           title="Handpicked Trips"
           description="Browse well-planned trips designed for different travel styles and interests"
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-7">
+        <div className="trip-grid">
           {allTrips.map((trip) => (
             <TripCard
               key={trip.id}

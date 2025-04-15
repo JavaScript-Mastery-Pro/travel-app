@@ -142,3 +142,8 @@ declare interface TripsInterest {
   name: string;
   interest: string;
 }
+
+declare interface InfoPillProps {
+  text: string;
+  image: string;
+}
