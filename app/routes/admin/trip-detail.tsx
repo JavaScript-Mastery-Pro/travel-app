@@ -7,8 +7,8 @@ import {
 } from "@syncfusion/ej2-react-buttons";
 
 import { getTripById } from "~/appwrite/trips";
-import { Header } from "~/components";
-import type { Route } from "../+types/trip-detail";
+import { Header, InfoPill } from "~/components";
+import type { Route } from "./+types/trip-detail";
 import { cn, getFirstWord, parseTripData } from "~/lib/utils";
 
 export function meta() {
@@ -24,15 +24,6 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const trip = await getTripById(tripId);
   return trip?.$id ? trip : redirect("/trips");
 }
-
-const InfoPill = ({ text, image }: { text: string; image: string }) => (
-  <figure className="flex items-center gap-1.5">
-    <img src={image} alt="info icon" className="size-5" />
-    <figcaption className="text-sm md:text-lg font-normal truncate text-gray-100">
-      {text}
-    </figcaption>
-  </figure>
-);
 
 const TripDetail = ({ loaderData }: Route.ComponentProps) => {
   const imageUrls = loaderData?.imageUrls || [];
@@ -69,15 +60,15 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
   ];
 
   return (
-    <main className="flex flex-col gap-10 pb-20 wrapper">
+    <main className="trip-detail wrapper">
       <Header
         title="Trip Details"
         description="View and edit AI-generated travel plans"
       />
-      <section className="flex flex-col gap-9 mt-2.5 wrapper-md">
-        <header className="flex flex-col gap-6 overflow-hidden">
+      <section className="trip-detail__container wrapper-md">
+        <header>
           <h1 className="p-40-semibold text-dark-100">{name}</h1>
-          <div className="flex items-center gap-5">
+          <div>
             <InfoPill
               text={`${duration} day plan`}
               image="/assets/icons/calendar.svg"
@@ -93,7 +84,7 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
             />
           </div>
         </header>
-        <section className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-7 mt-1">
+        <section className="trip-detail__images">
           {imageUrls.map((url: string, idx: number) => (
             <img
               key={idx}
@@ -144,34 +135,29 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
             </li>
           </ul>
         </section>
-        <section className="flex justify-between gap-5">
-          <article className="flex flex-col gap-4">
-            <h1 className="text-xl md:text-3xl text-dark-100 font-semibold">
+        <section className="trip-detail__title">
+          <article>
+            <h1>
               {duration}-Day {country} {travelStyle} Trip
             </h1>
-            <p className="text-base md:text-2xl text-gray-100 font-normal">
+            <p>
               {budget}, {groupType} and {interests}
             </p>
           </article>
-          <h2 className="text-sm md:text-xl font-normal text-dark-100">
-            {estimatedPrice}
-          </h2>
+          <h2>{estimatedPrice}</h2>
         </section>
         <p className="text-sm md:text-lg font-normal text-dark-400">
           {description}
         </p>
-        <ul className="flex flex-col gap-9">
+        <ul className="trip-detail__itinerary">
           {itinerary?.map((dayPlan: DayPlan, index: number) => (
-            <li key={index} className="flex flex-col gap-4">
-              <h1 className="text-base md:text-xl font-semibold text-dark-400">
+            <li key={index}>
+              <h1>
                 Day {dayPlan.day}: {dayPlan.location}
               </h1>
-              <ul className="flex flex-col gap-3">
+              <ul>
                 {dayPlan.activities.map((activity: any, idx: number) => (
-                  <li
-                    key={idx}
-                    className="flex justify-between gap-7 text-sm md:text-lg font-normal text-dark-400 !list-disc"
-                  >
+                  <li key={idx}>
                     <span className="flex-shrink-0">{activity.time}</span>
                     <p className="flex-grow">{activity.description}</p>
                   </li>
@@ -181,17 +167,12 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
           ))}
         </ul>
         {visitTimeAndWeatherInfo.map((section, idx) => (
-          <section key={idx} className="flex flex-col gap-5">
-            <div className="flex flex-col gap-4">
-              <h2 className="text-base md:text-xl text-dark-400 font-semibold">
-                {section.title}
-              </h2>
-              <ul className="flex flex-col gap-3">
+          <section key={idx} className="trip-detail__visit">
+            <div>
+              <h2>{section.title}</h2>
+              <ul>
                 {section.items?.map((item, idx) => (
-                  <li
-                    key={idx}
-                    className="flex justify-between gap-7 text-sm md:text-lg font-normal text-dark-400 !list-disc"
-                  >
+                  <li key={idx}>
                     <p className="flex-grow">{item}</p>
                   </li>
                 ))}
@@ -201,7 +182,7 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
         ))}
       </section>
       <a href={paymentLink} className="flex wrapper-md">
-        <ButtonComponent type="submit" className="buttonClass !h-12 !w-full">
+        <ButtonComponent type="submit" className="button-class !h-12 !w-full">
           <span className="p-16-semibold text-white">Pay and join trip</span>
           <span className="price-pill">{estimatedPrice}</span>
         </ButtonComponent>

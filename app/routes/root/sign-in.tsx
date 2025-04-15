@@ -56,7 +56,7 @@ const SignIn = () => {
           <ButtonComponent
             type="button"
             iconCss="e-search-icon"
-            className="buttonClass !h-11 !w-full"
+            className="button-class !h-11 !w-full"
             onClick={handleSignIn}
           >
             <img

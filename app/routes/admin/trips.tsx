@@ -1,7 +1,7 @@
 import { getAllTrips } from "~/appwrite/trips";
 import { Header, TripCard } from "~/components";
 import { parseTripData } from "~/lib/utils";
-import type { Route } from "../+types/trips";
+import type { Route } from "./+types/trips";
 import { PagerComponent } from "@syncfusion/ej2-react-grids";
 import { useState } from "react";
 import type { LoaderFunctionArgs } from "react-router";
@@ -43,16 +43,16 @@ const Trips = ({ loaderData }: Route.ComponentProps) => {
   };
 
   return (
-    <main className="flex flex-col gap-10 pb-20 wrapper">
+    <main className="trip wrapper">
       <Header
         title="Trips"
         description="View and edit AI-generated travel plans"
         ctaText="Create a trip"
         ctaUrl="/trips/create"
       />
-      <section className="flex flex-col gap-5 mt-2.5">
+      <section>
         <h1 className="p-24-semibold text-dark-100">Manage Created Trips</h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-7">
+        <div className="trip-grid">
           {trips.map((trip) => (
             <TripCard
               key={trip.id}

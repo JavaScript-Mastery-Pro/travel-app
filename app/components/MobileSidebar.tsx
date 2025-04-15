@@ -8,8 +8,8 @@ const MobileSidebar = () => {
     sidebarObj.toggle();
   };
   return (
-    <div className="lg:hidden flex flex-col gap-5 wrapper">
-      <header className="flex justify-between items-center border-b border-light-100">
+    <div className="mobile-sidebar wrapper">
+      <header>
         <Link to="/" className="flex items-center gap-1.5 py-10 ">
           <img
             src="/assets/icons/logo.svg"
@@ -17,9 +17,7 @@ const MobileSidebar = () => {
             className="size-[30px]"
           />
 
-          <h1 className="text-base md:text-2xl font-bold text-dark-100">
-            Tourvisto
-          </h1>
+          <h1>Tourvisto</h1>
         </Link>
 
         <button onClick={buttonClick} className="">

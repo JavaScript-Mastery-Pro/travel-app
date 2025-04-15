@@ -16,7 +16,7 @@ import {
   GridComponent,
 } from "@syncfusion/ej2-react-grids";
 
-import type { Route } from "../+types/dashboard";
+import type { Route } from "./+types/dashboard";
 import { getAllUsers, getUser } from "~/appwrite/auth";
 import { Header, StatsCard, TripCard } from "~/components";
 import {
@@ -136,9 +136,9 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
             lastMonthCount={dashboardStats.userRole.lastMonth}
           />
         </div>
-        <section className="flex flex-col gap-5 mt-2.5">
-          <h1 className="text-xl font-semibold text-dark-100">Trips</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-7">
+        <section className="dashboard__trip-container">
+          <h1>Trips</h1>
+          <div className="trip-grid">
             {allTrips.map((trip) => (
               <TripCard
                 key={trip.id}

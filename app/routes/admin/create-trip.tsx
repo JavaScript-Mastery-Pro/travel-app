@@ -14,8 +14,9 @@ import {
   travelStyles,
 } from "~/constants";
 import { world_map } from "~/constants/world_map";
-import type { Route } from "../+types/create-trip";
+import type { Route } from "./+types/create-trip";
 import { account } from "~/appwrite/client";
+import { cn } from "~/lib/utils";
 
 export function meta() {
   return [
@@ -149,10 +150,7 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
         description="View and edit AI-generated travel plans"
       />
       <section className="mt-2.5 wrapper-md">
-        <form
-          className="flex flex-col gap-6 py-6 bg-white border border-light-200 rounded-xl shadow-100"
-          onSubmit={handleSubmit}
-        >
+        <form className="trip-form" onSubmit={handleSubmit}>
           <SelectDropdown
             data={countries}
             onValueChange={(value) => handleChange("country", value)}
@@ -160,16 +158,14 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
             label="Country"
             placeholder="Select a Country"
           />
-          <div className="flex flex-col gap-2.5 w-full px-6">
-            <label htmlFor="duration" className="formLabel">
-              Duration
-            </label>
+          <div>
+            <label htmlFor="duration">Duration</label>
             <input
               id="duration"
               name="duration"
               onChange={(e) => handleChange("duration", Number(e.target.value))}
               placeholder="Enter number of days (e.g., 5, 12)"
-              className="formInput placeholder:text-gray-100"
+              className="form-input placeholder:text-gray-100"
             />
           </div>
           {(
@@ -200,10 +196,8 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
               onValueChange={(value) => handleChange(key, value)}
             />
           ))}
-          <div className="w-full flex flex-col gap-2.5 px-6">
-            <label htmlFor="location" className="formLabel">
-              Location on map
-            </label>
+          <div>
+            <label htmlFor="location">Location on map</label>
             <MapsComponent>
               <LayersDirective>
                 <LayerDirective
@@ -225,13 +219,13 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
           <footer className="px-6 w-full">
             <ButtonComponent
               type="submit"
-              className="buttonClass !h-12 !w-full"
+              className="button-class !h-12 !w-full"
               disabled={loading}
             >
               <img
                 src={`/assets/icons/${loading ? "loader.svg" : "magic-star.svg"}`}
                 alt="magic star"
-                className={`size-5 ${loading ? "animate-spin" : ""}`}
+                className={cn("size-5", { "animate-spin": loading })}
               />
               <span className="p-16-semibold text-white">
                 {loading ? "Generating..." : "Generate Itinerary"}

@@ -71,16 +71,14 @@ const SelectDropdown = ({
   return (
     <div
       ref={dropdownRef}
-      className="flex flex-col gap-2.5 w-full px-6 relative items-start"
+      className="relative items-start"
       onKeyDown={handleKeyDown}
       tabIndex={0}
     >
-      <label htmlFor={id} className="formLabel">
-        {label}
-      </label>
+      <label htmlFor={id}>{label}</label>
       <button
         type="button"
-        className={`relative formInput w-full text-start ${
+        className={`relative form-input w-full text-start ${
           selectedValue && selectedValue !== placeholder
             ? "text-dark-100"
             : "!text-gray-100"

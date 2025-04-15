@@ -8,7 +8,7 @@ import {
 import { logoutUser } from "~/appwrite/auth";
 import { cn } from "~/lib/utils";
 
-const LandingNavbar = () => {
+const RootNavbar = () => {
   const user = useLoaderData();
   const location = useLocation();
   const params = useParams();
@@ -28,18 +28,16 @@ const LandingNavbar = () => {
         "w-full fixed"
       )}
     >
-      <header className="flex justify-between gap-4  items-center wrapper ">
-        <Link to="/" className="flex items-center gap-1.5 py-10">
+      <header className="root-nav__header wrapper ">
+        <Link to="/">
           <img
             src="/assets/icons/logo.svg"
             alt="Logo"
             className="size-[30px]"
           />
-          <h1 className="text-base md:text-2xl font-bold text-dark-100">
-            Tourvisto
-          </h1>
+          <h1>Tourvisto</h1>
         </Link>
-        <aside className="flex gap-4 items-center">
+        <aside>
           {user.status === "admin" && (
             <Link
               to="/dashboard"
@@ -51,11 +49,7 @@ const LandingNavbar = () => {
             </Link>
           )}
 
-          <img
-            src={user?.imageUrl || "/assets/images/david.webp"}
-            alt="user"
-            className="size-10 rounded-full aspect-square"
-          />
+          <img src={user?.imageUrl || "/assets/images/david.webp"} alt="user" />
           <button onClick={handleLogout} className="cursor-pointer">
             <img
               src="/assets/icons/logout.svg"
@@ -69,4 +63,4 @@ const LandingNavbar = () => {
   );
 };
 
-export default LandingNavbar;
+export default RootNavbar;
