@@ -3,11 +3,6 @@ import { Link, type LoaderFunctionArgs } from "react-router";
 import { getAllUsers, getUser } from "~/appwrite/auth";
 import { PagerComponent } from "@syncfusion/ej2-react-grids";
 import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
-import {
-  ColumnDirective,
-  ColumnsDirective,
-  GridComponent,
-} from "@syncfusion/ej2-react-grids";
 
 import { Header, TripCard } from "~/components";
 import { getAllTrips } from "~/appwrite/trips";
@@ -19,17 +14,12 @@ export async function clientLoader({ request }: LoaderFunctionArgs) {
   const page = parseInt(url.searchParams.get("page") || "1", 10);
   const limit = 8;
   const offset = (page - 1) * limit;
-  const [user, trips, allUsers] = await Promise.all([
+  const [user, trips] = await Promise.all([
     getUser(),
     getAllTrips(limit, offset),
     getAllUsers(4, 0),
   ]);
 
-  const mappedUsers: UsersItineraryCount[] = allUsers.users.map((user) => ({
-    imageUrl: user.imageUrl,
-    name: user.name,
-    count: user.itineraryCount,
-  }));
   return {
     user,
     allTrips: trips.allTrips.map(({ $id, tripDetail, imageUrls }) => ({
@@ -38,7 +28,6 @@ export async function clientLoader({ request }: LoaderFunctionArgs) {
       imageUrls: imageUrls ?? [],
     })),
     total: trips.total,
-    allUsers: mappedUsers,
   };
 }
 
@@ -93,12 +82,6 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
   const url = new URL(window.location.href);
   const initialPage = parseInt(url.searchParams.get("page") || "1", 10);
   const [currentPage, setCurrentPage] = useState(initialPage);
-  const allUsers = loaderData.allUsers;
-  const trips = allTrips.slice(0, 4).map((trip) => ({
-    imageUrl: trip.imageUrls[0],
-    name: trip.name,
-    interest: trip.interests,
-  }));
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -210,72 +193,6 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
           currentPage={currentPage}
           click={(args) => handlePageChange(args.currentPage)}
         />
-      </section>
-      <section className="pb-20 flex flex-col lg:flex-row gap-5 justify-between wrapper">
-        <div className="flex flex-col gap-5">
-          <h1 className="p-20-semibold text-dark-100">Latest user signups</h1>
-          <GridComponent dataSource={allUsers} gridLines="None">
-            <ColumnsDirective>
-              <ColumnDirective
-                field="name"
-                headerText="Name"
-                width="200"
-                textAlign="Left"
-                template={(props: UsersItineraryCount) => {
-                  return (
-                    <div className="flex items-center gap-1.5 px-4">
-                      <img
-                        src={props.imageUrl}
-                        alt="User"
-                        className="rounded-full size-8 aspect-square"
-                      />
-                      <span>{props.name}</span>
-                    </div>
-                  );
-                }}
-              />
-              <ColumnDirective
-                field="count"
-                headerText="Itinerary Created"
-                width="150"
-                textAlign="Left"
-              />
-            </ColumnsDirective>
-          </GridComponent>
-        </div>
-        <div className="flex flex-col gap-5">
-          <h1 className="p-20-semibold text-dark-100">
-            Trips based on interest
-          </h1>
-          <GridComponent dataSource={trips} gridLines="None">
-            <ColumnsDirective>
-              <ColumnDirective
-                field="name"
-                headerText="Name"
-                width="200"
-                textAlign="Left"
-                template={(props: TripsInterest) => {
-                  return (
-                    <div className="flex items-center gap-1.5 px-4">
-                      <img
-                        src={props.imageUrl}
-                        alt="User"
-                        className="rounded-full size-8 aspect-square"
-                      />
-                      <span>{props.name}</span>
-                    </div>
-                  );
-                }}
-              />
-              <ColumnDirective
-                field="interest"
-                headerText="Interests"
-                width="150"
-                textAlign="Left"
-              />
-            </ColumnsDirective>
-          </GridComponent>
-        </div>
       </section>
     </main>
   );

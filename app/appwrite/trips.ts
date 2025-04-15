@@ -1,6 +1,5 @@
 import { Query } from "appwrite";
-import { database } from "./client";
-import { appwriteConfig } from "./config";
+import { database, appwriteConfig } from "./client";
 
 export const getAllTrips = async (
   limit: number,

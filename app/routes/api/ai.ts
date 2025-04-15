@@ -1,6 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { account, database } from "~/appwrite/client";
-import { appwriteConfig } from "~/appwrite/config";
+import { database, appwriteConfig } from "~/appwrite/client";
 import { ID } from "appwrite";
 import { parseMarkdownToJson } from "~/lib/utils";
 import { data, type ActionFunctionArgs } from "react-router";

@@ -1,7 +1,7 @@
 import { getAllTrips } from "~/appwrite/trips";
 import { Header, TripCard } from "~/components";
 import { parseTripData } from "~/lib/utils";
-import type { Route } from "./+types/trips";
+import type { Route } from "../+types/trips";
 import { PagerComponent } from "@syncfusion/ej2-react-grids";
 import { useState } from "react";
 import type { LoaderFunctionArgs } from "react-router";

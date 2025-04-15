@@ -3,7 +3,6 @@ import {
   SeriesCollectionDirective,
   SeriesDirective,
   Inject,
-  Legend,
   Category,
   Tooltip,
   DataLabel,
@@ -11,9 +10,14 @@ import {
   type AxisModel,
   SplineAreaSeries,
 } from "@syncfusion/ej2-react-charts";
+import {
+  ColumnDirective,
+  ColumnsDirective,
+  GridComponent,
+} from "@syncfusion/ej2-react-grids";
 
-import type { Route } from "./+types/dashboard";
-import { getUser } from "~/appwrite/auth";
+import type { Route } from "../+types/dashboard";
+import { getAllUsers, getUser } from "~/appwrite/auth";
 import { Header, StatsCard, TripCard } from "~/components";
 import {
   getTripsByTravelStyle,
@@ -24,14 +28,21 @@ import { getAllTrips } from "~/appwrite/trips";
 import { parseTripData } from "~/lib/utils";
 
 export async function clientLoader() {
-  const [user, dashboardStats, trips, userGrowth, tripsByTravelStyle] =
-    await Promise.all([
-      getUser(),
-      getUsersAndTripsStats(),
-      getAllTrips(4, 0),
-      getUserGrowthPerDay(),
-      getTripsByTravelStyle(),
-    ]);
+  const [
+    user,
+    dashboardStats,
+    trips,
+    userGrowth,
+    tripsByTravelStyle,
+    allUsers,
+  ] = await Promise.all([
+    getUser(),
+    getUsersAndTripsStats(),
+    getAllTrips(4, 0),
+    getUserGrowthPerDay(),
+    getTripsByTravelStyle(),
+    getAllUsers(4, 0),
+  ]);
 
   const allTrips = trips.allTrips.map((trip) => {
     const tripData = parseTripData(trip.tripDetail);
@@ -41,6 +52,11 @@ export async function clientLoader() {
       imageUrls: trip.imageUrls ?? [],
     };
   });
+  const mappedUsers: UsersItineraryCount[] = allUsers.users.map((user) => ({
+    imageUrl: user.imageUrl,
+    name: user.name,
+    count: user.itineraryCount,
+  }));
 
   return {
     user,
@@ -48,6 +64,7 @@ export async function clientLoader() {
     allTrips,
     userGrowth,
     tripsByTravelStyle,
+    allUsers: mappedUsers,
   };
 }
 
@@ -64,6 +81,13 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
   const allTrips = loaderData.allTrips as Trip[];
   const userGrowth = loaderData.userGrowth;
   const tripsByTravelStyle = loaderData.tripsByTravelStyle;
+  const allUsers = loaderData.allUsers;
+  const trips = allTrips.map((trip) => ({
+    imageUrl: trip.imageUrls[0],
+    name: trip.name,
+    interest: trip.interests,
+  }));
+
   const userXAxis: AxisModel = { valueType: "Category", title: "Day" };
   const useryAxis: AxisModel = {
     minimum: 0,
@@ -189,6 +213,52 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
               ></SeriesDirective>
             </SeriesCollectionDirective>
           </ChartComponent>
+        </section>
+        <section className="pb-20 flex flex-col lg:flex-row gap-5 justify-between wrapper">
+          {[
+            {
+              title: "Latest user signups",
+              dataSource: allUsers,
+              field: "count",
+              headerText: "Itinerary Created",
+            },
+            {
+              title: "Trips based on interest",
+              dataSource: trips,
+              field: "interest",
+              headerText: "Interests",
+            },
+          ].map(({ title, dataSource, field, headerText }, idx) => (
+            <div key={idx} className="flex flex-col gap-5">
+              <h1 className="p-20-semibold text-dark-100">{title}</h1>
+              <GridComponent dataSource={dataSource} gridLines="None">
+                <ColumnsDirective>
+                  <ColumnDirective
+                    field="name"
+                    headerText="Name"
+                    width="200"
+                    textAlign="Left"
+                    template={(props: { imageUrl: string; name: string }) => (
+                      <div className="flex items-center gap-1.5 px-4">
+                        <img
+                          src={props.imageUrl}
+                          alt="User"
+                          className="rounded-full size-8 aspect-square"
+                        />
+                        <span>{props.name}</span>
+                      </div>
+                    )}
+                  />
+                  <ColumnDirective
+                    field={field}
+                    headerText={headerText}
+                    width="150"
+                    textAlign="Left"
+                  />
+                </ColumnsDirective>
+              </GridComponent>
+            </div>
+          ))}
         </section>
       </section>
     </main>

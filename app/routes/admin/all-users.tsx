@@ -8,7 +8,7 @@ import {
 import { useState } from "react";
 
 import { Header } from "~/components";
-import type { Route } from "./+types/all-users";
+import type { Route } from "../+types/all-users";
 import { getAllUsers } from "~/appwrite/auth";
 import { cn, formatDate } from "~/lib/utils";
 import type { LoaderFunctionArgs } from "react-router";

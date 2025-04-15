@@ -1,6 +1,5 @@
-import { parseMarkdownToJson, parseTripData } from "~/lib/utils";
-import { database } from "./client";
-import { appwriteConfig } from "./config";
+import { parseTripData } from "~/lib/utils";
+import { database, appwriteConfig } from "./client";
 
 interface Document {
   [key: string]: any;

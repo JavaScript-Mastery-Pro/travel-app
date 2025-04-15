@@ -8,7 +8,7 @@ import {
 
 import { getTripById } from "~/appwrite/trips";
 import { Header } from "~/components";
-import type { Route } from "./+types/trip-detail";
+import type { Route } from "../+types/trip-detail";
 import { cn, getFirstWord, parseTripData } from "~/lib/utils";
 
 export function meta() {

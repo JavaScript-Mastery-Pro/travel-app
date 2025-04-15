@@ -14,7 +14,7 @@ import {
   travelStyles,
 } from "~/constants";
 import { world_map } from "~/constants/world_map";
-import type { Route } from "./+types/create-trip";
+import type { Route } from "../+types/create-trip";
 import { account } from "~/appwrite/client";
 
 export function meta() {
