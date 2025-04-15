@@ -21,7 +21,7 @@ const UserTable = ({ data }: { data: UserData[] }) => {
                   <img
                     src={props.imageUrl}
                     alt="User"
-                    className="rounded-full size-8"
+                    className="rounded-full size-8 aspect-square"
                   />
                   <span>{props.name}</span>
                 </div>

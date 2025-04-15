@@ -89,7 +89,9 @@
   .p-24-semibold {
     @apply text-lg md:text-2xl font-semibold;
   }
-
+  .p-20-semibold {
+    @apply text-base md:text-[20xp] md:leading-7 font-semibold;
+  }
   .p-18-bold {
     @apply text-[14px] md:text-[18px] leading-[14px] md:leading-[16px] font-bold;
   }

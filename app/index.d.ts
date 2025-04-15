@@ -130,3 +130,15 @@ type GetAllTripsResponse = {
   allTrips: Models.Document[];
   total: number;
 };
+
+declare interface UsersItineraryCount {
+  imageUrl: string;
+  name: string;
+  count: number;
+}
+
+declare interface TripsInterest {
+  imageUrl: string;
+  name: string;
+  interest: string;
+}

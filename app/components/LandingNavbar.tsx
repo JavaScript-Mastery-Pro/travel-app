@@ -54,7 +54,7 @@ const LandingNavbar = () => {
           <img
             src={user?.imageUrl || "/assets/images/david.webp"}
             alt="user"
-            className="size-10 rounded-full"
+            className="size-10 rounded-full aspect-square"
           />
           <button onClick={handleLogout} className="cursor-pointer">
             <img

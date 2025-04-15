@@ -54,7 +54,7 @@ const NavItems = ({ handleClick }: { handleClick?: () => void }) => {
           <img
             src={user?.imageUrl || "/assets/images/david.webp"}
             alt="user"
-            className="size-10 rounded-full"
+            className="size-10 rounded-full aspect-square"
           />
           <article className="flex flex-col gap-[2px] max-w-[115px]">
             <h2 className="text-sm md:text-base font-semibold text-dark-200 truncate">
