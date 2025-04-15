@@ -17,15 +17,15 @@ export const getExistingUser = async (id: string) => {
   }
 };
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (limit: number, offset: number) => {
   try {
     const { documents: users, total } = await database.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
-      [Query.limit(10)]
+      [Query.limit(limit), Query.offset(offset)]
     );
 
-    if (total === 0) return [];
+    if (total === 0) return { users: [], total }; // Return total for pagination
 
     const usersWithItineraryCount = await Promise.all(
       users.map(async (user) => {
@@ -46,10 +46,10 @@ export const getAllUsers = async () => {
       })
     );
 
-    return usersWithItineraryCount;
+    return { users: usersWithItineraryCount, total };
   } catch (error) {
     console.error("Error fetching users with itinerary count:", error);
-    return [];
+    return { users: [], total: 0 };
   }
 };
 
