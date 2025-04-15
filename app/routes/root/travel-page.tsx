@@ -194,6 +194,25 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
           click={(args) => handlePageChange(args.currentPage)}
         />
       </section>
+      <footer className="h-28 bg-white">
+        <div className="wrapper footer-container">
+          <Link to="/">
+            <img
+              src="/assets/icons/logo.svg"
+              alt="Logo"
+              className="size-[30px]"
+            />
+            <h1>Tourvisto</h1>
+          </Link>
+          <div>
+            {["Terms & Condition", "Privacy Policy"].map((item) => (
+              <Link to="/" key={item}>
+                {item}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </footer>
     </main>
   );
 };

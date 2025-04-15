@@ -33,7 +33,7 @@ const TripCard = ({
           <figcaption>{location}</figcaption>
         </figure>
       </article>
-      <div className="flex gap-2 mt-5 pl-[18px] pr-3.5 pb-5">
+      <div className="mt-5 pl-[18px] pr-3.5 pb-5">
         <ChipListComponent id="travel-chip">
           <ChipsDirective>
             {tags.map((tag, index) => (

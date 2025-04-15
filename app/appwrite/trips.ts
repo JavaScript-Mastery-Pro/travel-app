@@ -8,7 +8,7 @@ export const getAllTrips = async (
   const allTrips = await database.listDocuments(
     appwriteConfig.databaseId,
     appwriteConfig.itineraryCollectionId,
-    [Query.limit(limit), Query.offset(offset)]
+    [Query.limit(limit), Query.offset(offset), Query.orderDesc("createdAt")]
   );
   if (allTrips.total === 0) {
     console.error("No trips found");
