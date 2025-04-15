@@ -25,7 +25,7 @@ const RootNavbar = () => {
         location.pathname === `/travel/${params.tripId}`
           ? "bg-white"
           : "glassmorphism",
-        "w-full fixed"
+        "w-full fixed z-50"
       )}
     >
       <header className="root-nav__header wrapper ">

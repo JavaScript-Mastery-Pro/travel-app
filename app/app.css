@@ -209,7 +209,10 @@
   }
 
   .travel-detail {
-    @apply flex flex-col md:flex-row gap-10 pb-20  pt-40;
+    @apply flex flex-col gap-10 pb-20  pt-40;
+    .travel-div {
+      @apply flex flex-col lg:flex-row gap-10;
+    }
     .back-link {
       @apply flex items-center justify-center gap-2.5 py-3 px-[30px] border-gray-200 rounded-lg shadow-500 bg-white h-[50px] w-[240px];
       img {
@@ -340,6 +343,21 @@
       }
     }
   }
+  .footer-container {
+    @apply flex justify-between items-center h-full gap-5;
+    a {
+      @apply flex items-center gap-1.5 py-10;
+      h1 {
+        @apply text-base md:text-2xl font-bold text-dark-100;
+      }
+    }
+    div {
+      @apply flex items-center gap-2 sm:gap-5;
+      a {
+        @apply text-sm md:text-base font-normal text-gray-100;
+      }
+    }
+  }
 }
 
 @layer utilities {
@@ -351,6 +369,9 @@
   }
   .flex-center {
     @apply flex justify-center items-center;
+  }
+  .flex-between {
+    @apply flex justify-between items-center;
   }
   .p-72-bold {
     @apply text-5xl md:text-7xl font-bold;
