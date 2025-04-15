@@ -19,7 +19,7 @@ const UserTable = ({ data }: { data: UserData[] }) => {
               return (
                 <div className="flex items-center gap-1.5 px-4">
                   <img
-                    src={props.img}
+                    src={props.imageUrl}
                     alt="User"
                     className="rounded-full size-8"
                   />

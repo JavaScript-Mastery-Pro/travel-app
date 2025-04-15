@@ -16,7 +16,7 @@ export async function loader() {
     id: user.accountId,
     name: user.name,
     email: user.email,
-    img: user.imageUrl,
+    imageUrl: user.imageUrl,
     dateJoined: formatDate(user.joinedAt),
     itineraryCreated:
       user.itineraryCount === 0 ? "not available" : user.itineraryCount,
