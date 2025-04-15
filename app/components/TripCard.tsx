@@ -1,7 +1,11 @@
 import { Link, useLocation } from "react-router";
 
-import Pill from "./Pill";
 import { getFirstWord } from "~/lib/utils";
+import {
+  ChipListComponent,
+  ChipsDirective,
+  ChipDirective,
+} from "@syncfusion/ej2-react-buttons";
 
 const TripCard = ({
   id,
@@ -38,14 +42,21 @@ const TripCard = ({
         </figure>
       </article>
       <div className="flex gap-2 mt-5 pl-[18px] pr-3.5 pb-5">
-        {tags.map((tag, index) => (
-          <Pill
-            key={index}
-            text={getFirstWord(tag)}
-            bgColor={index === 1 ? "bg-pink-50" : undefined}
-            textColor={index === 1 ? "text-pink-500" : undefined}
-          />
-        ))}
+        <ChipListComponent id="travel-chip">
+          <ChipsDirective>
+            {tags.map((tag, index) => (
+              <ChipDirective
+                key={index}
+                text={getFirstWord(tag)}
+                cssClass={`${
+                  index === 1
+                    ? "!bg-pink-50 !text-pink-500"
+                    : "!bg-success-50 !text-success-700"
+                }`}
+              />
+            ))}
+          </ChipsDirective>
+        </ChipListComponent>
       </div>
       <article className="tripCard-pill">{price}</article>
     </Link>

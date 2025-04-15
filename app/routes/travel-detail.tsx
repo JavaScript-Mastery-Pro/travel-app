@@ -1,14 +1,18 @@
 import { Link, redirect, type LoaderFunctionArgs } from "react-router";
-import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
+import {
+  ButtonComponent,
+  ChipDirective,
+  ChipListComponent,
+  ChipsDirective,
+} from "@syncfusion/ej2-react-buttons";
 
 import { getTripById } from "~/appwrite/trips";
-import { Header, Pill } from "~/components";
 import type { Route } from "./+types/trip-detail";
-import { cn, parseTripData } from "~/lib/utils";
+import { cn, getFirstWord, parseTripData } from "~/lib/utils";
 
 export function meta() {
   return [
-    { title: "Trip Detail" },
+    { title: "Travel Detail" },
     { name: "description", content: "Trip Details" },
   ];
 }
@@ -52,10 +56,10 @@ const TravelDetail = ({ loaderData }: Route.ComponentProps) => {
   } = tripData || {};
 
   const pillItems = [
-    { text: travelStyle, bg: "bg-pink-50", textColor: "text-pink-500" },
-    { text: groupType, bg: "bg-primary-50", textColor: "text-primary-500" },
-    { text: budget },
-    { text: interests, bg: "bg-navy-50", textColor: "text-navy-500" },
+    { text: travelStyle, bg: "!bg-pink-50 !text-pink-500" },
+    { text: groupType, bg: "!bg-primary-50 !text-primary-500" },
+    { text: budget, bg: "!bg-success-50 !text-success-700" },
+    { text: interests, bg: "!bg-navy-50 !text-navy-500" },
   ];
 
   const visitTimeAndWeatherInfo = [
@@ -111,14 +115,17 @@ const TravelDetail = ({ loaderData }: Route.ComponentProps) => {
           ))}
         </section>
         <section className="flex gap-3 md:gap-5 items-center flex-wrap">
-          {pillItems.map((pill, idx) => (
-            <Pill
-              key={idx}
-              text={pill.text || ""}
-              bgColor={pill.bg}
-              textColor={pill.textColor}
-            />
-          ))}
+          <ChipListComponent id="travel-chip">
+            <ChipsDirective>
+              {pillItems.map((pill, index) => (
+                <ChipDirective
+                  key={index}
+                  text={getFirstWord(pill.text)}
+                  cssClass={`${pill.bg} !text-base !font-medium !px-4`}
+                />
+              ))}
+            </ChipsDirective>
+          </ChipListComponent>
           <ul className="flex gap-1 items-center">
             {Array(5)
               .fill(null)
@@ -132,11 +139,14 @@ const TravelDetail = ({ loaderData }: Route.ComponentProps) => {
                 </li>
               ))}
             <li className="ml-1">
-              <Pill
-                text="4.9/5.0"
-                bgColor="bg-red-50"
-                textColor="text-red-500"
-              />
+              <ChipListComponent id="travel-chip">
+                <ChipsDirective>
+                  <ChipDirective
+                    text="4.9/5.0"
+                    cssClass="!bg-red-50 !text-red-500"
+                  />
+                </ChipsDirective>
+              </ChipListComponent>
             </li>
           </ul>
         </section>
