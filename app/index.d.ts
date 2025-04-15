@@ -125,3 +125,8 @@ declare interface DestinationProps {
   bgImage: string;
   title: string;
 }
+
+type GetAllTripsResponse = {
+  allTrips: Models.Document[];
+  total: number;
+};

@@ -1,12 +1,6 @@
 import { Query } from "appwrite";
 import { database } from "./client";
 import { appwriteConfig } from "./config";
-import type { Models } from "appwrite";
-
-type GetAllTripsResponse = {
-  allTrips: Models.Document[];
-  total: number;
-};
 
 export const getAllTrips = async (
   limit: number,

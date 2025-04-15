@@ -32,7 +32,7 @@ export const getAllUsers = async () => {
         const { total: itineraryCount } = await database.listDocuments(
           appwriteConfig.databaseId,
           appwriteConfig.itineraryCollectionId,
-          [Query.equal("users", user.$id)]
+          [Query.equal("userId", user.accountId)]
         );
         return {
           accountId: user.accountId,
