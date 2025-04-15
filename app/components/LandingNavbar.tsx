@@ -41,7 +41,12 @@ const LandingNavbar = () => {
         </Link>
         <aside className="flex gap-4 items-center">
           {user.status === "admin" && (
-            <Link to="/dashboard" className="text-base font-normal text-white">
+            <Link
+              to="/dashboard"
+              className={cn("text-base font-normal text-white", {
+                "text-dark-100": location.pathname.startsWith("/travel"),
+              })}
+            >
               Admin Panel
             </Link>
           )}
