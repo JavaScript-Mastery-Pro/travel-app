@@ -213,9 +213,7 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
       </section>
       <section className="pb-20 flex flex-col lg:flex-row gap-5 justify-between wrapper">
         <div className="flex flex-col gap-5">
-          <h1 className="p-20-semibold text-dark-100">
-            Trips based on interest
-          </h1>
+          <h1 className="p-20-semibold text-dark-100">Latest user signups</h1>
           <GridComponent dataSource={allUsers} gridLines="None">
             <ColumnsDirective>
               <ColumnDirective
@@ -246,7 +244,9 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
           </GridComponent>
         </div>
         <div className="flex flex-col gap-5">
-          <h1 className="p-20-semibold text-dark-100">Latest user signups</h1>
+          <h1 className="p-20-semibold text-dark-100">
+            Trips based on interest
+          </h1>
           <GridComponent dataSource={trips} gridLines="None">
             <ColumnsDirective>
               <ColumnDirective
