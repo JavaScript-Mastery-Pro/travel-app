@@ -15,6 +15,7 @@ import {
 } from "~/constants";
 import { world_map } from "~/constants/world_map";
 import type { Route } from "./+types/create-trip";
+import { account } from "~/appwrite/client";
 
 export function meta() {
   return [
@@ -48,13 +49,14 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
   const countries = loaderData as Country[];
   const [formData, setFormData] = useState<TripFormData>({
     country: countries[0]?.name || "",
-    travelStyle: "Adventure",
-    interest: "Historical Sites",
-    budget: "Budget",
-    duration: 5,
-    groupType: "Solo",
+    travelStyle: "",
+    interest: "",
+    budget: "",
+    duration: 0,
+    groupType: "",
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (key: keyof TripFormData, value: string | number) =>
     setFormData({ ...formData, [key]: value });
@@ -62,7 +64,48 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
+
+    if (
+      !formData.country ||
+      !formData.travelStyle ||
+      !formData.interest ||
+      !formData.budget ||
+      !formData.groupType
+    ) {
+      setError("Please provide input for all fields");
+      setLoading(false);
+      return;
+    }
+    if (formData.duration < 1 || formData.duration > 10) {
+      setError("Duration must be between 1 and 10 days");
+      setLoading(false);
+      return;
+    }
+
+    const user = await account.get();
+    if (!user.$id) {
+      console.error("User not authenticated");
+      setLoading(false);
+      return;
+    }
+
     try {
+      if (
+        !formData.country ||
+        !formData.travelStyle ||
+        !formData.interest ||
+        !formData.budget ||
+        !formData.groupType
+      ) {
+        setError("All fields are required");
+        setLoading(false);
+        return;
+      }
+      if (formData.duration < 1 || formData.duration > 10) {
+        setError("Duration must be between 1 and 10 days");
+        setLoading(false);
+        return;
+      }
       const response = await fetch("/api/create-trip", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -73,6 +116,7 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
           interests: formData.interest,
           budget: formData.budget,
           groupType: formData.groupType,
+          userId: user.$id,
         }),
       });
       const result: CreateTripResponse = await response.json();
@@ -173,6 +217,11 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
             </MapsComponent>
           </div>
           <div className="bg-gray-200 h-px w-full" />
+          {error && (
+            <div className="text-red-500 text-base font-medium text-center">
+              <p>{error}</p>
+            </div>
+          )}
           <footer className="px-6 w-full">
             <ButtonComponent
               type="submit"
