@@ -16,7 +16,7 @@ declare type User = BaseUser;
 declare interface Country {
   name: string;
   coordinates: [number, number];
-  flag: string;
+  value: string;
   openStreetMap?: string;
 }
 
@@ -146,4 +146,13 @@ declare interface TripsInterest {
 declare interface InfoPillProps {
   text: string;
   image: string;
+}
+
+declare interface TripFormData {
+  country: string;
+  travelStyle: string;
+  interest: string;
+  budget: string;
+  duration: number;
+  groupType: string;
 }

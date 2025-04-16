@@ -60,86 +60,27 @@ export const chartOneData: object[] = [
   },
 ];
 
-export const travelStyles: DropdownItem[] = [
-  {
-    name: "Relaxed",
-  },
-  {
-    name: "Luxury",
-  },
-  {
-    name: "Adventure",
-  },
-  {
-    name: "Cultural",
-  },
-  {
-    name: "Nature & Outdoors",
-  },
-  {
-    name: "City Exploration",
-  },
+export const travelStyles = [
+  "Relaxed",
+  "Luxury",
+  "Adventure",
+  "Cultural",
+  "Nature & Outdoors",
+  "City Exploration",
 ];
 
-export const interests: DropdownItem[] = [
-  {
-    name: "Food & Culinary",
-  },
-  {
-    name: "Historical Sites",
-  },
-  {
-    name: "Hiking & Nature Walks",
-  },
-  {
-    name: "Beaches & Water Activities",
-  },
-  {
-    name: "Museums & Art",
-  },
-  {
-    name: "Nightlife & Bars",
-  },
-  {
-    name: "Photography Spots",
-  },
-  {
-    name: "Shopping",
-  },
-  {
-    name: "Local Experiences",
-  },
+export const interests = [
+  "Food & Culinary",
+  "Historical Sites",
+  "Hiking & Nature Walks",
+  "Beaches & Water Activities",
+  "Museums & Art",
+  "Nightlife & Bars",
+  "Photography Spots",
+  "Shopping",
+  "Local Experiences",
 ];
 
-export const budgetOptions: DropdownItem[] = [
-  {
-    name: "Budget",
-  },
-  {
-    name: "Mid-range",
-  },
-  {
-    name: "Luxury",
-  },
-  {
-    name: "Premium",
-  },
-];
+export const budgetOptions = ["Budget", "Mid-range", "Luxury", "Premium"];
 
-export const groupTypes: DropdownItem[] = [
-  {
-    name: "Solo",
-  },
-  {
-    name: "Couple",
-  },
-  {
-    name: "Family",
-  },
-  {
-    name: "Friends",
-  },
-  {
-    name: "Business",
-  },
-];
+export const groupTypes = ["Solo", "Couple", "Family", "Friends", "Business"];
