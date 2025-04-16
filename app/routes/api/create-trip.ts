@@ -103,7 +103,7 @@ export async function action({ request }: ActionFunctionArgs) {
       tripPrice,
       result.$id
     );
-    const updatedPaymentLink = await database.updateDocument(
+    await database.updateDocument(
       appwriteConfig.databaseId,
       appwriteConfig.itineraryCollectionId,
       result.$id,

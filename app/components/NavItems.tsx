@@ -46,10 +46,12 @@ const NavItems = ({ handleClick }: { handleClick?: () => void }) => {
 
         <footer className="nav-footer">
           <img src={user?.imageUrl || "/assets/images/david.webp"} alt="user" />
+
           <article>
             <h2>{user?.name}</h2>
             <p>{user?.email}</p>
           </article>
+
           <button onClick={handleLogout} className="cursor-pointer">
             <img
               src="/assets/icons/logout.svg"

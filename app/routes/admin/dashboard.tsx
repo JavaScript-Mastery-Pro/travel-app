@@ -7,7 +7,6 @@ import {
   Tooltip,
   DataLabel,
   ColumnSeries,
-  type AxisModel,
   SplineAreaSeries,
 } from "@syncfusion/ej2-react-charts";
 import {
@@ -26,6 +25,7 @@ import {
 } from "~/appwrite/dashboard";
 import { getAllTrips } from "~/appwrite/trips";
 import { parseTripData } from "~/lib/utils";
+import { tripXAxis, tripyAxis, userXAxis, useryAxis } from "~/constants";
 
 export async function clientLoader() {
   const [
@@ -52,6 +52,7 @@ export async function clientLoader() {
       imageUrls: trip.imageUrls ?? [],
     };
   });
+
   const mappedUsers: UsersItineraryCount[] = allUsers.users.map((user) => ({
     imageUrl: user.imageUrl,
     name: user.name,
@@ -77,35 +78,14 @@ export function meta({}: Route.MetaArgs) {
 
 const Dashboard = ({ loaderData }: Route.ComponentProps) => {
   const user = loaderData.user as User | null;
-  const dashboardStats = loaderData.dashboardStats as DashboardStats;
-  const allTrips = loaderData.allTrips as Trip[];
-  const userGrowth = loaderData.userGrowth;
-  const tripsByTravelStyle = loaderData.tripsByTravelStyle;
-  const allUsers = loaderData.allUsers;
+  const { dashboardStats, allTrips, userGrowth, tripsByTravelStyle, allUsers } =
+    loaderData;
+
   const trips = allTrips.map((trip) => ({
     imageUrl: trip.imageUrls[0],
     name: trip.name,
     interest: trip.interests,
   }));
-
-  const userXAxis: AxisModel = { valueType: "Category", title: "Day" };
-  const useryAxis: AxisModel = {
-    minimum: 0,
-    maximum: 10,
-    interval: 2,
-    title: "Count",
-  };
-  const tripXAxis: AxisModel = {
-    valueType: "Category",
-    title: "Travel Styles",
-    majorGridLines: { width: 0 },
-  };
-  const tripyAxis: AxisModel = {
-    minimum: 0,
-    maximum: 10,
-    interval: 2,
-    title: "Count",
-  };
 
   const usersAndTrips = [
     {
@@ -125,11 +105,12 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
   return (
     <main className="dashboard wrapper">
       <Header
-        title={`Welcome ${user?.name ?? "Guest"} 👋`}
+        title={`Welcome ${user?.name || "Guest"} 👋`}
         description="Track activity, trends, and popular destinations in real time"
         ctaText="Create a trip"
         ctaUrl="/trips/create"
       />
+
       <section className="flex flex-col gap-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
           <StatsCard
@@ -151,6 +132,7 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
             lastMonthCount={dashboardStats.userRole.lastMonth}
           />
         </div>
+
         <section className="container">
           <h1 className="text-xl font-semibold text-dark-100">Trips</h1>
           <div className="trip-grid">
@@ -158,15 +140,16 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
               <TripCard
                 key={trip.id}
                 id={trip.id}
-                name={trip.name}
+                name={trip.name!}
                 imageUrl={trip.imageUrls[0]}
                 location={trip.itinerary?.[0]?.location ?? ""}
-                tags={[trip.interests, trip.travelStyle]}
-                price={trip.estimatedPrice}
+                tags={[trip.interests!, trip.travelStyle!]}
+                price={trip.estimatedPrice!}
               />
             ))}
           </div>
         </section>
+
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <ChartComponent
             id="chart-1"
@@ -184,6 +167,7 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
                 Tooltip,
               ]}
             />
+
             <SeriesCollectionDirective>
               <SeriesDirective
                 dataSource={userGrowth}
@@ -194,7 +178,7 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
                 fill="#4784EE"
                 columnWidth={0.3}
                 cornerRadius={{ topLeft: 10, topRight: 10 }}
-              ></SeriesDirective>
+              />
               <SeriesDirective
                 dataSource={userGrowth}
                 xName="day"
@@ -203,7 +187,7 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
                 name="Wave"
                 fill="rgba(71, 132, 238, 0.3)"
                 border={{ width: 2, color: "#4784EE" }}
-              ></SeriesDirective>
+              />
             </SeriesCollectionDirective>
           </ChartComponent>
 
@@ -215,6 +199,7 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
             tooltip={{ enable: true }}
           >
             <Inject services={[ColumnSeries, Category, DataLabel, Tooltip]} />
+
             <SeriesCollectionDirective>
               <SeriesDirective
                 dataSource={tripsByTravelStyle}
@@ -225,15 +210,17 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
                 fill="#4A3AFF"
                 cornerRadius={{ topLeft: 10, topRight: 10 }}
                 columnWidth={0.3}
-              ></SeriesDirective>
+              />
             </SeriesCollectionDirective>
           </ChartComponent>
         </section>
+
         <section className="user-trip wrapper">
           {usersAndTrips.map(
             ({ title, dataSource, field, headerText }, idx) => (
               <div key={idx} className="flex flex-col gap-5">
-                <h1 className="p-20-semibold text-dark-100">{title}</h1>
+                <h3 className="p-20-semibold text-dark-100">{title}</h3>
+
                 <GridComponent dataSource={dataSource} gridLines="None">
                   <ColumnsDirective>
                     <ColumnDirective
@@ -252,6 +239,7 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
                         </div>
                       )}
                     />
+
                     <ColumnDirective
                       field={field}
                       headerText={headerText}

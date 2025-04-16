@@ -22,6 +22,7 @@ const TripCard = ({
       className="trip-card"
     >
       <img src={imageUrl} alt={name} />
+
       <article>
         <h2>{name}</h2>
         <figure>
@@ -33,6 +34,7 @@ const TripCard = ({
           <figcaption>{location}</figcaption>
         </figure>
       </article>
+
       <div className="mt-5 pl-[18px] pr-3.5 pb-5">
         <ChipListComponent id="travel-chip">
           <ChipsDirective>
@@ -50,6 +52,7 @@ const TripCard = ({
           </ChipsDirective>
         </ChipListComponent>
       </div>
+
       <article className="tripCard-pill">{price}</article>
     </Link>
   );

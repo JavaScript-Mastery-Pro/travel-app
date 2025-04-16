@@ -11,6 +11,7 @@ interface HeaderProps {
 
 const Header = ({ title, description, ctaText, ctaUrl }: HeaderProps) => {
   const location = useLocation();
+
   return (
     <header className="header">
       <article>
@@ -24,6 +25,7 @@ const Header = ({ title, description, ctaText, ctaUrl }: HeaderProps) => {
         >
           {title}
         </h1>
+
         <p
           className={cn(
             "text-gray-100 font-normal",
@@ -35,6 +37,7 @@ const Header = ({ title, description, ctaText, ctaUrl }: HeaderProps) => {
           {description}
         </p>
       </article>
+
       {ctaText && ctaUrl && (
         <Link to={ctaUrl}>
           <ButtonComponent
@@ -42,6 +45,7 @@ const Header = ({ title, description, ctaText, ctaUrl }: HeaderProps) => {
             className="button-class !h-11 !w-full md:!w-[240px]"
           >
             <img src="/assets/icons/plus.svg" alt="google" className="size-5" />
+
             <span className="p-16-semibold text-white ">{ctaText}</span>
           </ButtonComponent>
         </Link>

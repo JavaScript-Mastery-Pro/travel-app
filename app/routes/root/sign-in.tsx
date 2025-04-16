@@ -42,17 +42,21 @@ const SignIn = () => {
                 className="size-[30px]"
               />
             </Link>
+
             <h1 className="p-28-bold text-dark-100">Tourvisto</h1>
           </header>
+
           <article>
             <h2 className="p-28-semibold text-dark-100 text-center">
               Start Your Travel Journey
             </h2>
+
             <p className="p-18-regular text-center text-gray-100 !leading-7">
               Sign in with Google to explore AI-generated itineraries, trending
               destinations, and much more
             </p>
           </article>
+
           <ButtonComponent
             type="button"
             iconCss="e-search-icon"
@@ -64,6 +68,7 @@ const SignIn = () => {
               alt="google"
               className="size-5"
             />
+
             <span className="p-18-semibold text-white">
               Sign in with Google
             </span>

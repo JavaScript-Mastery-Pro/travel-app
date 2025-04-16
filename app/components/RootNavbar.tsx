@@ -37,6 +37,7 @@ const RootNavbar = () => {
           />
           <h1>Tourvisto</h1>
         </Link>
+
         <aside>
           {user.status === "admin" && (
             <Link
@@ -50,6 +51,7 @@ const RootNavbar = () => {
           )}
 
           <img src={user?.imageUrl || "/assets/images/david.webp"} alt="user" />
+
           <button onClick={handleLogout} className="cursor-pointer">
             <img
               src="/assets/icons/logout.svg"

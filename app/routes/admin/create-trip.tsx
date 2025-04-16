@@ -25,6 +25,7 @@ export function meta() {
 export async function loader() {
   const response = await fetch("https://restcountries.com/v3.1/all");
   const data = await response.json();
+
   return data.map((country: any) => ({
     name: country.flag + country.name.common,
     coordinates: country.latlng,
@@ -36,6 +37,7 @@ export async function loader() {
 const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
   const navigate = useNavigate();
   const countries = loaderData as Country[];
+
   const [formData, setFormData] = useState<TripFormData>({
     country: countries[0]?.name || "",
     travelStyle: "",
@@ -44,6 +46,7 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
     duration: 0,
     groupType: "",
   });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -79,22 +82,6 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
     }
 
     try {
-      if (
-        !formData.country ||
-        !formData.travelStyle ||
-        !formData.interest ||
-        !formData.budget ||
-        !formData.groupType
-      ) {
-        setError("All fields are required");
-        setLoading(false);
-        return;
-      }
-      if (formData.duration < 1 || formData.duration > 10) {
-        setError("Duration must be between 1 and 10 days");
-        setLoading(false);
-        return;
-      }
       const response = await fetch("/api/create-trip", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -108,12 +95,11 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
           userId: user.$id,
         }),
       });
+
       const result: CreateTripResponse = await response.json();
-      if (result?.id) {
-        navigate(`/trips/${result.id}`);
-      } else {
-        console.error("Failed to generate itinerary");
-      }
+
+      if (result?.id) navigate(`/trips/${result.id}`);
+      else console.error("Failed to generate itinerary");
     } catch (error) {
       console.error("Error generating itinerary:", error);
     } finally {
@@ -142,6 +128,7 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
         title="Add a New Trip"
         description="View and edit AI-generated travel plans"
       />
+
       <section className="mt-2.5 wrapper-md">
         <form className="trip-form" onSubmit={handleSubmit}>
           <div>
@@ -173,6 +160,7 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
               }}
             />
           </div>
+
           <div>
             <label htmlFor="duration">Duration</label>
             <input
@@ -183,9 +171,11 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
               className="form-input placeholder:text-gray-100"
             />
           </div>
+
           {selectItems.map((key) => (
             <div key={key}>
               <label htmlFor={key}>{formatKey(key)}</label>
+
               <ComboBoxComponent
                 id={key}
                 dataSource={comboBoxItems[key].map((item) => ({
@@ -212,6 +202,7 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
               />
             </div>
           ))}
+
           <div>
             <label htmlFor="location">Location on map</label>
             <MapsComponent>
@@ -226,12 +217,15 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
               </LayersDirective>
             </MapsComponent>
           </div>
+
           <div className="bg-gray-200 h-px w-full" />
+
           {error && (
             <div className="error">
               <p>{error}</p>
             </div>
           )}
+
           <footer className="px-6 w-full">
             <ButtonComponent
               type="submit"

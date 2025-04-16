@@ -4,9 +4,11 @@ import { Link } from "react-router";
 
 const MobileSidebar = () => {
   let sidebarObj: SidebarComponent;
+
   const buttonClick = () => {
     sidebarObj.toggle();
   };
+
   return (
     <div className="mobile-sidebar wrapper">
       <header>
@@ -24,6 +26,7 @@ const MobileSidebar = () => {
           <img src="/assets/icons/menu.svg" alt="Menu" className="size-7" />
         </button>
       </header>
+
       <SidebarComponent
         width={270}
         // @ts-ignore

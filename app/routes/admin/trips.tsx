@@ -4,7 +4,7 @@ import { parseTripData } from "~/lib/utils";
 import type { Route } from "./+types/trips";
 import { PagerComponent } from "@syncfusion/ej2-react-grids";
 import { useState } from "react";
-import type { LoaderFunctionArgs } from "react-router";
+import { useSearchParams, type LoaderFunctionArgs } from "react-router";
 
 export function meta() {
   return [
@@ -14,9 +14,10 @@ export function meta() {
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  const limit = 8;
+
   const url = new URL(request.url);
   const page = parseInt(url.searchParams.get("page") || "1", 10);
-  const limit = 8;
   const offset = (page - 1) * limit;
 
   const { allTrips, total } = await getAllTrips(limit, offset);
@@ -33,8 +34,10 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 const Trips = ({ loaderData }: Route.ComponentProps) => {
   const trips = loaderData.trips as Trip[] | [];
-  const url = new URL(window.location.href);
-  const initialPage = parseInt(url.searchParams.get("page") || "1", 10);
+
+  const [searchParams] = useSearchParams();
+  const initialPage = parseInt(searchParams.get("page") || "1", 10);
+
   const [currentPage, setCurrentPage] = useState(initialPage);
 
   const handlePageChange = (page: number) => {
@@ -50,6 +53,7 @@ const Trips = ({ loaderData }: Route.ComponentProps) => {
         ctaText="Create a trip"
         ctaUrl="/trips/create"
       />
+
       <section>
         <h1 className="p-24-semibold text-dark-100">Manage Created Trips</h1>
         <div className="trip-grid">
@@ -65,6 +69,7 @@ const Trips = ({ loaderData }: Route.ComponentProps) => {
             />
           ))}
         </div>
+
         <PagerComponent
           totalRecordsCount={loaderData.total}
           pageSize={8}

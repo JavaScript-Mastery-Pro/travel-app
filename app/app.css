@@ -75,12 +75,15 @@
   .all-users {
     @apply w-full min-h-screen  flex flex-col gap-10;
   }
+
   .stats-card {
     @apply p-6 flex flex-col gap-6 bg-white shadow-400 rounded-20 text-dark-100;
+
     .content {
       @apply flex flex-row md:flex-col-reverse xl:flex-row xl:items-center gap-3 justify-between;
     }
   }
+
   .sign-in-card {
     @apply flex bg-white flex-col border border-light-100 md:max-w-[510px] rounded-[20px] py-10 px-6 w-full;
     header {
@@ -138,10 +141,13 @@
 
   .travel-hero {
     @apply bg-hero bg-origin-content bg-cover;
+
     div {
       @apply flex flex-col bg-linear100 bg-cover;
+
       section {
         @apply py-48 justify-center items-start flex flex-col gap-6;
+
         article {
           @apply flex flex-col w-full md:max-w-[520px] gap-3.5;
           p {
@@ -157,37 +163,49 @@
 
   .travel-detail {
     @apply flex flex-col gap-10 pb-20;
+
     .travel-div {
       @apply flex flex-col lg:flex-row gap-10;
     }
+
     .back-link {
       @apply flex items-center justify-center gap-2.5 py-3 px-[30px] border-gray-200 rounded-lg shadow-500 bg-white h-[50px] w-[240px];
+
       img {
         @apply size-[17px];
       }
+
       span {
         @apply text-base font-semibold text-dark-100;
       }
     }
+
     .container {
       @apply flex flex-col gap-9 mt-2.5;
+
       header {
         @apply flex flex-col gap-6 overflow-hidden;
+
         div {
           @apply flex items-center gap-5;
         }
       }
+
       .gallery {
         @apply grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-7 mt-1;
       }
     }
+
     .visit {
       @apply flex flex-col gap-5;
+
       div {
         @apply flex flex-col gap-4;
-        h2 {
+
+        h3 {
           @apply text-base md:text-xl text-dark-400 font-semibold;
         }
+
         ul {
           @apply flex flex-col gap-3;
           li {
@@ -196,32 +214,45 @@
         }
       }
     }
+
     .itinerary {
       @apply flex flex-col gap-9;
+
       li {
         @apply flex flex-col gap-4;
-        h1 {
+
+        h3 {
           @apply text-base md:text-xl font-semibold text-dark-400;
         }
+
         ul {
-          @apply flex flex-col gap-3;
+          @apply flex flex-col sm:gap-3 gap-7;
+
           li {
-            @apply flex justify-between gap-7 text-sm md:text-lg font-normal text-dark-400 !list-disc;
+            @apply flex max-sm:flex-col flex-row justify-between sm:gap-7 gap-3 text-sm md:text-lg font-normal text-dark-400 !list-disc;
+
+            span {
+              @apply w-[90px];
+            }
           }
         }
       }
     }
     .title {
       @apply flex justify-between gap-5;
+
       article {
         @apply flex flex-col gap-4;
-        h1 {
+
+        h3 {
           @apply text-xl md:text-3xl text-dark-100 font-semibold;
         }
+
         p {
           @apply text-base md:text-2xl text-gray-100 font-normal;
         }
       }
+
       h2 {
         @apply text-sm md:text-xl font-normal text-dark-100;
       }
@@ -333,9 +364,11 @@
   .user-trip {
     @apply pb-20 flex flex-col lg:flex-row gap-5 justify-between;
   }
+
   .status-column {
     @apply flex justify-center items-center gap-1 w-[65px] py-[2px]  rounded-2xl mix-blend-multiply;
   }
+
   .dashboard {
     @apply flex flex-col gap-10 w-full  pb-20;
 

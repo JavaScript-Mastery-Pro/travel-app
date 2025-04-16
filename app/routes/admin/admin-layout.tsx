@@ -11,9 +11,7 @@ export async function clientLoader() {
     if (!user?.$id) return redirect("/sign-in");
 
     const existingUser = await getExistingUser(user.$id);
-    if (existingUser?.status === "user") {
-      return redirect("/");
-    }
+    if (existingUser?.status === "user") return redirect("/");
 
     return existingUser?.$id ? existingUser : await storeUserData();
   } catch (error) {
@@ -25,11 +23,13 @@ export async function clientLoader() {
 const AdminLayout = () => (
   <div className="admin-layout">
     <MobileSidebar />
+
     <aside className="w-full max-w-[270px] hidden lg:block">
       <SidebarComponent width={270} enableGestures={false}>
         <NavItems />
       </SidebarComponent>
     </aside>
+
     <aside className="children">
       <Outlet />
     </aside>

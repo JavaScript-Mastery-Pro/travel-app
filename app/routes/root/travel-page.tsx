@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, type LoaderFunctionArgs } from "react-router";
+import { Link, useSearchParams, type LoaderFunctionArgs } from "react-router";
 import { getAllUsers, getUser } from "~/appwrite/auth";
 import { PagerComponent } from "@syncfusion/ej2-react-grids";
 import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
@@ -11,10 +11,12 @@ import type { Route } from "./+types/travel-page";
 import { footers } from "~/constants";
 
 export async function clientLoader({ request }: LoaderFunctionArgs) {
+  const limit = 8;
+
   const url = new URL(request.url);
   const page = parseInt(url.searchParams.get("page") || "1", 10);
-  const limit = 8;
   const offset = (page - 1) * limit;
+
   const [user, trips] = await Promise.all([
     getUser(),
     getAllTrips(limit, offset),
@@ -59,6 +61,7 @@ const FeaturedDestination = ({
         >
           {rating}
         </div>
+
         <article className="flex flex-col gap-3.5">
           <h2
             className={cn("text-lg font-semibold text-white", {
@@ -67,6 +70,7 @@ const FeaturedDestination = ({
           >
             {title}
           </h2>
+
           <figure className="flex gap-2 items-center">
             <img
               src="/assets/images/david.webp"
@@ -91,14 +95,17 @@ const FeaturedDestination = ({
 
 const TravelPage = ({ loaderData }: Route.ComponentProps) => {
   const allTrips = loaderData.allTrips as Trip[];
-  const url = new URL(window.location.href);
-  const initialPage = parseInt(url.searchParams.get("page") || "1", 10);
+
+  const [searchParams] = useSearchParams();
+  const initialPage = parseInt(searchParams.get("page") || "1", 10);
+
   const [currentPage, setCurrentPage] = useState(initialPage);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     window.location.search = `?page=${page}`;
   };
+
   return (
     <main className="flex flex-col">
       <section className="travel-hero">
@@ -108,11 +115,13 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
               <h1 className="p-72-bold text-dark-100">
                 Plan Your Trip with Ease
               </h1>
+
               <p>
                 Customize your travel itinerary in minutes—pick your
                 destination, set your preferences, and explore with confidence.
               </p>
             </article>
+
             <Link to="#trips">
               <ButtonComponent
                 type="button"
@@ -124,11 +133,13 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
           </section>
         </div>
       </section>
+
       <section className="pt-20 wrapper flex flex-col gap-10 h-full">
         <Header
           title="Featured Travel Destinations"
           description="Check out some of the best places you can visit around the world."
         />
+
         <div className="featured">
           <article>
             <FeaturedDestination
@@ -139,6 +150,7 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
               rating={3.5}
               activityCount={196}
             />
+
             <div className="travel-featured">
               <FeaturedDestination
                 bigCard
@@ -156,6 +168,7 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
               />
             </div>
           </article>
+
           <div className="flex flex-col gap-[30px]">
             <FeaturedDestination
               containerClass="w-full h-[240px]"
@@ -164,6 +177,7 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
               rating={3.8}
               activityCount={150}
             />
+
             <FeaturedDestination
               containerClass="w-full h-[240px]"
               bgImage={`bg-card-5`}
@@ -171,6 +185,7 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
               rating={4.0}
               activityCount={200}
             />
+
             <FeaturedDestination
               containerClass="w-full h-[240px]"
               bgImage={`bg-card-6`}
@@ -181,11 +196,13 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
           </div>
         </div>
       </section>
+
       <section id="trips" className="py-20 wrapper flex flex-col gap-10">
         <Header
           title="Handpicked Trips"
           description="Browse well-planned trips designed for different travel styles and interests"
         />
+
         <div className="trip-grid">
           {allTrips.map((trip) => (
             <TripCard
@@ -199,6 +216,7 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
             />
           ))}
         </div>
+
         <PagerComponent
           totalRecordsCount={loaderData.total}
           pageSize={8}
@@ -206,6 +224,7 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
           click={(args) => handlePageChange(args.currentPage)}
         />
       </section>
+
       <footer className="h-28 bg-white">
         <div className="wrapper footer-container">
           <Link to="/">
@@ -216,6 +235,7 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
             />
             <h1>Tourvisto</h1>
           </Link>
+
           <div>
             {footers.map((item) => (
               <Link to="/" key={item}>
