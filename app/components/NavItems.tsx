@@ -13,14 +13,14 @@ const NavItems = ({ handleClick }: { handleClick?: () => void }) => {
   };
 
   return (
-    <section className="flex flex-col px-6 h-full">
+    <section className="nav-items">
       <Link to="/" className="link-logo">
         <img src="/assets/icons/logo.svg" alt="Logo" className="size-[30px]" />
         <h1>Tourvisto</h1>
       </Link>
 
-      <div className="flex flex-col justify-between h-full">
-        <nav className="flex flex-col gap-3.5 pt-9">
+      <div className="container">
+        <nav>
           {sidebarItems.map(({ id, href, icon, label }) => (
             <NavLink key={id} to={href}>
               {({ isActive }: { isActive: boolean }) => (

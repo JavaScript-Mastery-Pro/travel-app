@@ -23,14 +23,14 @@ export async function clientLoader() {
 }
 
 const AdminLayout = () => (
-  <div className="flex flex-col lg:flex-row h-screen w-full">
+  <div className="admin-layout">
     <MobileSidebar />
     <aside className="w-full max-w-[270px] hidden lg:block">
       <SidebarComponent width={270} enableGestures={false}>
         <NavItems />
       </SidebarComponent>
     </aside>
-    <aside className="w-full h-full bg-light-200 pt-12 lg:pt-10">
+    <aside className="children">
       <Outlet />
     </aside>
   </div>

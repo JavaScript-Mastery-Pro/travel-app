@@ -8,6 +8,7 @@ import { Header, TripCard } from "~/components";
 import { getAllTrips } from "~/appwrite/trips";
 import { cn, parseTripData } from "~/lib/utils";
 import type { Route } from "./+types/travel-page";
+import { footers } from "~/constants";
 
 export async function clientLoader({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
@@ -41,21 +42,28 @@ const FeaturedDestination = ({
 }: DestinationProps) => (
   <section
     className={cn(
-      "rounded-[14px]  bg-cover bg-center size-full min-w-[280px]",
+      "rounded-[14px] overflow-hidden bg-cover bg-center size-full min-w-[280px]",
       containerClass,
       bgImage
     )}
   >
-    <div className="linear-gradient(39deg, rgba(3, 3, 3, 0.54) -3.66%, rgba(6, 6, 6, 0.00) 45.57%) h-full">
-      <article className="flex flex-col justify-between gap-3.5 p-[30px] min-h-[230px] h-full">
+    <div className="bg-linear200 h-full">
+      <article className="featured-card">
         <div
-          className={`bg-white rounded-20 font-bold text-red-100 w-fit ${bigCard ? "px-5 py-[2px] text-base" : "py-px px-3 text-sm"}`}
+          className={cn(
+            "bg-white rounded-20 font-bold text-red-100 w-fit py-px px-3 text-sm ",
+            {
+              "px-5 py-[2px] text-base": bigCard,
+            }
+          )}
         >
           {rating}
         </div>
         <article className="flex flex-col gap-3.5">
           <h2
-            className={`${bigCard && "p-30-bold"} text-lg font-semibold text-white`}
+            className={cn("text-lg font-semibold text-white", {
+              "p-30-bold": bigCard,
+            })}
           >
             {title}
           </h2>
@@ -63,10 +71,14 @@ const FeaturedDestination = ({
             <img
               src="/assets/images/david.webp"
               alt="user"
-              className={`${bigCard && "size-11"} size-4 rounded-full aspect-square`}
+              className={cn("size-4 rounded-full aspect-square", {
+                "size-11": bigCard,
+              })}
             />
             <p
-              className={`${bigCard ? "text-lg" : "text-xs"} font-normal text-white`}
+              className={cn("text-xs font-normal text-white", {
+                "text-lg": bigCard,
+              })}
             >
               {activityCount} activities
             </p>
@@ -117,10 +129,10 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
           title="Featured Travel Destinations"
           description="Check out some of the best places you can visit around the world."
         />
-        <div className="flex flex-col md:flex-row gap-[30px]">
-          <article className="flex flex-col gap-[30px] w-full">
+        <div className="featured">
+          <article>
             <FeaturedDestination
-              bgImage="bg-[url('/assets/images/card-img-1.png')]"
+              bgImage="bg-card-1"
               containerClass="h-1/3 lg:h-1/2"
               bigCard
               title="Barcelona Tour"
@@ -130,14 +142,14 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
             <div className="travel-featured">
               <FeaturedDestination
                 bigCard
-                bgImage="bg-[url('/assets/images/card-img-2.png')]"
+                bgImage="bg-card-2"
                 title="London, United States"
                 rating={4.5}
                 activityCount={310}
               />
               <FeaturedDestination
                 bigCard
-                bgImage="bg-[url('/assets/images/card-img-3.png')]"
+                bgImage="bg-card-3"
                 title="Australia Tour"
                 rating={4.0}
                 activityCount={250}
@@ -147,21 +159,21 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
           <div className="flex flex-col gap-[30px]">
             <FeaturedDestination
               containerClass="w-full h-[240px]"
-              bgImage={`bg-[url('/assets/images/card-img-4.png')]`}
+              bgImage={`bg-card-4`}
               title="Spain Tour"
               rating={3.8}
               activityCount={150}
             />
             <FeaturedDestination
               containerClass="w-full h-[240px]"
-              bgImage={`bg-[url('/assets/images/card-img-5.png')]`}
+              bgImage={`bg-card-5`}
               title="Japan Tour"
               rating={4.0}
               activityCount={200}
             />
             <FeaturedDestination
               containerClass="w-full h-[240px]"
-              bgImage={`bg-[url('/assets/images/card-img-6.png')]`}
+              bgImage={`bg-card-6`}
               title="Italy Tour"
               rating={3.2}
               activityCount={130}
@@ -205,7 +217,7 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
             <h1>Tourvisto</h1>
           </Link>
           <div>
-            {["Terms & Condition", "Privacy Policy"].map((item) => (
+            {footers.map((item) => (
               <Link to="/" key={item}>
                 {item}
               </Link>

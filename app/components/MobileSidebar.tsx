@@ -10,7 +10,7 @@ const MobileSidebar = () => {
   return (
     <div className="mobile-sidebar wrapper">
       <header>
-        <Link to="/" className="flex items-center gap-1.5 py-10 ">
+        <Link to="/">
           <img
             src="/assets/icons/logo.svg"
             alt="Logo"

@@ -68,13 +68,13 @@ const TravelDetail = ({ loaderData }: Route.ComponentProps) => {
   ];
 
   return (
-    <main className="travel-detail wrapper">
+    <main className="travel-detail pt-40 wrapper">
       <div className="travel-div">
         <Link to="/" className="back-link">
           <img src="/assets/icons/arrow-left.svg" alt="back icon" />
           <span>Go back</span>
         </Link>
-        <section className="travel-detail__container wrapper-md">
+        <section className="container wrapper-md">
           <header>
             <h1 className="p-40-semibold text-dark-100">{name}</h1>
             <div className="flex items-center gap-5">
@@ -93,7 +93,7 @@ const TravelDetail = ({ loaderData }: Route.ComponentProps) => {
               />
             </div>
           </header>
-          <section className="travel-detail__images">
+          <section className="gallery">
             {imageUrls.map((url: string, idx: number) => (
               <img
                 key={idx}
@@ -144,7 +144,7 @@ const TravelDetail = ({ loaderData }: Route.ComponentProps) => {
               </li>
             </ul>
           </section>
-          <section className="travel-detail__title">
+          <section className="title">
             <article>
               <h1>
                 {duration}-Day {country} {travelStyle} Trip
@@ -158,7 +158,7 @@ const TravelDetail = ({ loaderData }: Route.ComponentProps) => {
           <p className="text-sm md:text-lg font-normal text-dark-400">
             {description}
           </p>
-          <ul className="travel-detail__itinerary">
+          <ul className="itinerary">
             {itinerary?.map((dayPlan: DayPlan, index: number) => (
               <li key={index}>
                 <h1>
@@ -176,7 +176,7 @@ const TravelDetail = ({ loaderData }: Route.ComponentProps) => {
             ))}
           </ul>
           {visitTimeAndWeatherInfo.map((section, idx) => (
-            <section key={idx} className="travel-detail__visit">
+            <section key={idx} className="visit">
               <div>
                 <h2>{section.title}</h2>
                 <ul>

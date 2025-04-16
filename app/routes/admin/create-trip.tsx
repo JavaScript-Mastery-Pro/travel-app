@@ -9,16 +9,11 @@ import {
 } from "@syncfusion/ej2-react-maps";
 
 import { Header } from "~/components";
-import {
-  budgetOptions,
-  groupTypes,
-  interests,
-  travelStyles,
-} from "~/constants";
+import { comboBoxItems, selectItems } from "~/constants";
 import { world_map } from "~/constants/world_map";
 import type { Route } from "./+types/create-trip";
 import { account } from "~/appwrite/client";
-import { cn } from "~/lib/utils";
+import { cn, formatKey } from "~/lib/utils";
 
 export function meta() {
   return [
@@ -136,6 +131,11 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
     },
   ];
 
+  const countryData = countries.map((country) => ({
+    text: country.name,
+    value: country.value,
+  }));
+
   return (
     <main className="flex flex-col gap-10 pb-20 wrapper">
       <Header
@@ -148,10 +148,7 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
             <label htmlFor="country">Country</label>
             <ComboBoxComponent
               id="country"
-              dataSource={countries.map((country) => ({
-                text: country.name,
-                value: country.value,
-              }))}
+              dataSource={countryData}
               fields={{ text: "text", value: "value" }}
               placeholder="Select a Country"
               change={(e: { value: string | undefined }) => {
@@ -186,30 +183,15 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
               className="form-input placeholder:text-gray-100"
             />
           </div>
-          {(
-            [
-              "groupType",
-              "travelStyle",
-              "interest",
-              "budget",
-            ] as (keyof TripFormData)[]
-          ).map((key) => (
+          {selectItems.map((key) => (
             <div key={key}>
-              <label htmlFor={key}>
-                {key
-                  .replace(/([A-Z])/g, " $1")
-                  .replace(/^./, (str) => str.toUpperCase())}
-              </label>
+              <label htmlFor={key}>{formatKey(key)}</label>
               <ComboBoxComponent
                 id={key}
-                dataSource={(
-                  {
-                    groupType: groupTypes,
-                    travelStyle: travelStyles,
-                    interest: interests,
-                    budget: budgetOptions,
-                  } as Record<keyof TripFormData, string[]>
-                )[key].map((item) => ({ text: item, value: item }))}
+                dataSource={comboBoxItems[key].map((item) => ({
+                  text: item,
+                  value: item,
+                }))}
                 fields={{ text: "text", value: "value" }}
                 placeholder={`Select ${key}`}
                 change={(e: { value: string | undefined }) => {
@@ -221,14 +203,7 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
                 filtering={(e) => {
                   const query = e.text.toLowerCase();
                   e.updateData(
-                    (
-                      {
-                        groupType: groupTypes,
-                        travelStyle: travelStyles,
-                        interest: interests,
-                        budget: budgetOptions,
-                      } as Record<keyof TripFormData, string[]>
-                    )[key]
+                    comboBoxItems[key]
                       .filter((item) => item.toLowerCase().includes(query))
                       .map((item) => ({ text: item, value: item }))
                   );
@@ -253,7 +228,7 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
           </div>
           <div className="bg-gray-200 h-px w-full" />
           {error && (
-            <div className="text-red-500 text-base font-medium text-center">
+            <div className="error">
               <p>{error}</p>
             </div>
           )}

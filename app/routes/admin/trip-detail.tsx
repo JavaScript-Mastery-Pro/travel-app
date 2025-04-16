@@ -1,4 +1,4 @@
-import { redirect, type LoaderFunctionArgs } from "react-router";
+import { Link, type LoaderFunctionArgs } from "react-router";
 import {
   ButtonComponent,
   ChipDirective,
@@ -6,14 +6,14 @@ import {
   ChipsDirective,
 } from "@syncfusion/ej2-react-buttons";
 
-import { getTripById } from "~/appwrite/trips";
-import { Header, InfoPill } from "~/components";
+import { getAllTrips, getTripById } from "~/appwrite/trips";
 import type { Route } from "./+types/trip-detail";
 import { cn, getFirstWord, parseTripData } from "~/lib/utils";
+import { Header, InfoPill, TripCard } from "~/components";
 
 export function meta() {
   return [
-    { title: "Trip Detail" },
+    { title: "Travel Detail" },
     { name: "description", content: "Trip Details" },
   ];
 }
@@ -22,16 +22,23 @@ export async function loader({ params }: LoaderFunctionArgs) {
   const tripId = params.tripId;
   if (!tripId) throw new Error("Trip ID is required");
   const trip = await getTripById(tripId);
-  return trip?.$id ? trip : redirect("/trips");
+  const trips = await getAllTrips(4, 0);
+  return {
+    trip,
+    allTrips: trips.allTrips.map(({ $id, tripDetail, imageUrls }) => ({
+      id: $id,
+      ...parseTripData(tripDetail),
+      imageUrls: imageUrls ?? [],
+    })),
+  };
 }
 
 const TripDetail = ({ loaderData }: Route.ComponentProps) => {
-  const imageUrls = loaderData?.imageUrls || [];
+  const imageUrls = loaderData?.trip?.imageUrls || [];
 
-  // Parse the stored trip detail and get the flattened model
-  const tripData = parseTripData(loaderData?.tripDetail);
+  const tripData = parseTripData(loaderData?.trip?.tripDetail);
 
-  const paymentLink = loaderData?.payment_link;
+  const paymentLink = loaderData?.trip?.payment_link;
   const {
     name,
     duration,
@@ -46,6 +53,7 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
     weatherInfo,
     country,
   } = tripData || {};
+  const allTrips = loaderData.allTrips as Trip[] | [];
 
   const pillItems = [
     { text: travelStyle, bg: "!bg-pink-50 !text-pink-500" },
@@ -60,15 +68,15 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
   ];
 
   return (
-    <main className="trip-detail wrapper">
+    <main className="travel-detail wrapper">
       <Header
         title="Trip Details"
         description="View and edit AI-generated travel plans"
       />
-      <section className="trip-detail__container wrapper-md">
+      <section className="container wrapper-md">
         <header>
           <h1 className="p-40-semibold text-dark-100">{name}</h1>
-          <div>
+          <div className="flex items-center gap-5">
             <InfoPill
               text={`${duration} day plan`}
               image="/assets/icons/calendar.svg"
@@ -84,7 +92,7 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
             />
           </div>
         </header>
-        <section className="trip-detail__images">
+        <section className="gallery">
           {imageUrls.map((url: string, idx: number) => (
             <img
               key={idx}
@@ -135,7 +143,7 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
             </li>
           </ul>
         </section>
-        <section className="trip-detail__title">
+        <section className="title">
           <article>
             <h1>
               {duration}-Day {country} {travelStyle} Trip
@@ -149,7 +157,7 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
         <p className="text-sm md:text-lg font-normal text-dark-400">
           {description}
         </p>
-        <ul className="trip-detail__itinerary">
+        <ul className="itinerary">
           {itinerary?.map((dayPlan: DayPlan, index: number) => (
             <li key={index}>
               <h1>
@@ -167,7 +175,7 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
           ))}
         </ul>
         {visitTimeAndWeatherInfo.map((section, idx) => (
-          <section key={idx} className="trip-detail__visit">
+          <section key={idx} className="visit">
             <div>
               <h2>{section.title}</h2>
               <ul>
@@ -180,13 +188,30 @@ const TripDetail = ({ loaderData }: Route.ComponentProps) => {
             </div>
           </section>
         ))}
+        <a href={paymentLink} className="flex">
+          <ButtonComponent type="submit" className="button-class !h-12 !w-full">
+            <span className="p-16-semibold text-white">Pay and join trip</span>
+            <span className="price-pill">{estimatedPrice}</span>
+          </ButtonComponent>
+        </a>
       </section>
-      <a href={paymentLink} className="flex wrapper-md">
-        <ButtonComponent type="submit" className="button-class !h-12 !w-full">
-          <span className="p-16-semibold text-white">Pay and join trip</span>
-          <span className="price-pill">{estimatedPrice}</span>
-        </ButtonComponent>
-      </a>
+
+      <section className="flex flex-col gap-6">
+        <h1 className="p-24-semibold text-dark-100">Popular Trips</h1>
+        <div className="trip-grid">
+          {allTrips.map((trip) => (
+            <TripCard
+              key={trip.id}
+              id={trip.id}
+              name={trip.name}
+              imageUrl={trip.imageUrls[0]}
+              location={trip.itinerary?.[0]?.location ?? ""}
+              tags={[trip.interests, trip.travelStyle]}
+              price={trip.estimatedPrice}
+            />
+          ))}
+        </div>
+      </section>
     </main>
   );
 };
