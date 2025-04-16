@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { ButtonComponent } from "@syncfusion/ej2-react-buttons";
+import { ComboBoxComponent } from "@syncfusion/ej2-react-dropdowns";
 import {
   LayerDirective,
   LayersDirective,
   MapsComponent,
 } from "@syncfusion/ej2-react-maps";
-import { Header, SelectDropdown } from "~/components";
+
+import { Header } from "~/components";
 import {
   budgetOptions,
   groupTypes,
@@ -29,20 +31,11 @@ export async function loader() {
   const response = await fetch("https://restcountries.com/v3.1/all");
   const data = await response.json();
   return data.map((country: any) => ({
-    name: country.name.common,
+    name: country.flag + country.name.common,
     coordinates: country.latlng,
-    flag: country.flag,
+    value: country.name.common,
     openStreetMap: country.maps?.openStreetMaps,
   })) as Country[];
-}
-
-interface TripFormData {
-  country: string;
-  travelStyle: string;
-  interest: string;
-  budget: string;
-  duration: number;
-  groupType: string;
 }
 
 const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
@@ -151,13 +144,38 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
       />
       <section className="mt-2.5 wrapper-md">
         <form className="trip-form" onSubmit={handleSubmit}>
-          <SelectDropdown
-            data={countries}
-            onValueChange={(value) => handleChange("country", value)}
-            id="country"
-            label="Country"
-            placeholder="Select a Country"
-          />
+          <div>
+            <label htmlFor="country">Country</label>
+            <ComboBoxComponent
+              id="country"
+              dataSource={countries.map((country) => ({
+                text: country.name,
+                value: country.value,
+              }))}
+              fields={{ text: "text", value: "value" }}
+              placeholder="Select a Country"
+              change={(e: { value: string | undefined }) => {
+                if (e.value) {
+                  handleChange("country", e.value);
+                }
+              }}
+              className="combo-box"
+              allowFiltering={true}
+              filtering={(e) => {
+                const query = e.text.toLowerCase();
+                e.updateData(
+                  countries
+                    .filter((country) =>
+                      country.name.toLowerCase().includes(query)
+                    )
+                    .map((country) => ({
+                      text: country.name,
+                      value: country.value,
+                    }))
+                );
+              }}
+            />
+          </div>
           <div>
             <label htmlFor="duration">Duration</label>
             <input
@@ -176,25 +194,48 @@ const CreateTrip = ({ loaderData }: Route.ComponentProps) => {
               "budget",
             ] as (keyof TripFormData)[]
           ).map((key) => (
-            <SelectDropdown
-              key={key}
-              id={key}
-              label={key
-                .replace(/([A-Z])/g, " $1")
-                .replace(/^./, (str) => str.toUpperCase())}
-              placeholder={`Select ${key}`}
-              data={
-                (
+            <div key={key}>
+              <label htmlFor={key}>
+                {key
+                  .replace(/([A-Z])/g, " $1")
+                  .replace(/^./, (str) => str.toUpperCase())}
+              </label>
+              <ComboBoxComponent
+                id={key}
+                dataSource={(
                   {
                     groupType: groupTypes,
                     travelStyle: travelStyles,
                     interest: interests,
                     budget: budgetOptions,
-                  } as Record<keyof TripFormData, DropdownItem[]>
-                )[key] || []
-              }
-              onValueChange={(value) => handleChange(key, value)}
-            />
+                  } as Record<keyof TripFormData, string[]>
+                )[key].map((item) => ({ text: item, value: item }))}
+                fields={{ text: "text", value: "value" }}
+                placeholder={`Select ${key}`}
+                change={(e: { value: string | undefined }) => {
+                  if (e.value) {
+                    handleChange(key, e.value);
+                  }
+                }}
+                allowFiltering={true}
+                filtering={(e) => {
+                  const query = e.text.toLowerCase();
+                  e.updateData(
+                    (
+                      {
+                        groupType: groupTypes,
+                        travelStyle: travelStyles,
+                        interest: interests,
+                        budget: budgetOptions,
+                      } as Record<keyof TripFormData, string[]>
+                    )[key]
+                      .filter((item) => item.toLowerCase().includes(query))
+                      .map((item) => ({ text: item, value: item }))
+                  );
+                }}
+                className="combo-box"
+              />
+            </div>
           ))}
           <div>
             <label htmlFor="location">Location on map</label>

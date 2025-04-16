@@ -5,6 +5,7 @@
 @import "../node_modules/@syncfusion/ej2-react-grids/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-react-navigations/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-react-splitbuttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-dropdowns/styles/material.css";
 @import "tailwindcss";
 
 @theme {
@@ -121,18 +122,7 @@
         }
       }
     }
-    .trip-detail__container {
-      @apply flex flex-col gap-9 mt-2.5;
-      header {
-        @apply flex flex-col gap-6 overflow-hidden;
-        div {
-          @apply flex items-center gap-5;
-        }
-      }
-      .trip-detail__images {
-        @apply grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-7 mt-1;
-      }
-    }
+
     .trip-detail__visit {
       @apply flex flex-col gap-5;
       div {
@@ -183,10 +173,22 @@
   .trip-form {
     @apply flex flex-col gap-6 py-6 bg-white border border-light-200 rounded-xl shadow-100;
     div {
-      @apply w-full flex flex-col gap-2.5 px-6;
+      @apply w-full flex flex-col gap-2.5 px-6 relative;
     }
     label {
       @apply text-sm font-normal text-gray-100;
+    }
+  }
+  .trip-detail__container {
+    @apply flex flex-col gap-9 mt-2.5;
+    header {
+      @apply flex flex-col gap-6 overflow-hidden;
+      div {
+        @apply flex items-center gap-5;
+      }
+    }
+    .trip-detail__images {
+      @apply grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-7 mt-1;
     }
   }
   .travel-hero {
@@ -434,6 +436,9 @@
   .nav-item {
     @apply flex items-center text-xs md:text-lg font-normal cursor-pointer gap-2.5 py-[18px] px-3.5 rounded-lg text-dark-200 hover:bg-primary-100 hover:text-white;
   }
+  .combo-box {
+    @apply !p-3.5 !border w-full !border-light-400 !rounded-xl !text-base !text-dark-300 !font-normal;
+  }
 }
 
 html,
@@ -502,17 +507,10 @@ body {
   padding-left: 36px;
   padding-right: 36px;
 }
+/* e-input-group-icon e-ddl-icon e-search-icon */
 
-/* select overrides */
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url("/assets/icons/arrow-down.svg");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 20px;
-}
-select option {
-  background-color: dodgerblue;
+.e-input-group-icon {
+  position: absolute;
+  top: 45px;
+  right: 40px;
 }
