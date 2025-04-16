@@ -12,8 +12,8 @@ interface HeaderProps {
 const Header = ({ title, description, ctaText, ctaUrl }: HeaderProps) => {
   const location = useLocation();
   return (
-    <header className="flex flex-col gap-5 md:flex-row justify-between w-full">
-      <article className="flex flex-col gap-3.5 w-full">
+    <header className="header">
+      <article>
         <h1
           className={cn(
             "text-dark-100",

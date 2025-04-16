@@ -1,5 +1,3 @@
-import type { ItemModel } from "@syncfusion/ej2-react-navigations";
-
 export const sidebarItems = [
   {
     id: 1,
@@ -84,3 +82,19 @@ export const interests = [
 export const budgetOptions = ["Budget", "Mid-range", "Luxury", "Premium"];
 
 export const groupTypes = ["Solo", "Couple", "Family", "Friends", "Business"];
+
+export const footers = ["Terms & Condition", "Privacy Policy"];
+
+export const selectItems = [
+  "groupType",
+  "travelStyle",
+  "interest",
+  "budget",
+] as (keyof TripFormData)[];
+
+export const comboBoxItems = {
+  groupType: groupTypes,
+  travelStyle: travelStyles,
+  interest: interests,
+  budget: budgetOptions,
+} as Record<keyof TripFormData, string[]>;

@@ -31,7 +31,7 @@ const SignIn = () => {
   };
 
   return (
-    <main className="w-full h-screen flex bg-auth bg-cover bg-no-repeat">
+    <main className="auth">
       <section className="size-full glassmorphism flex-center px-6">
         <div className="sign-in-card">
           <header className="header">

@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router";
 
-import { getFirstWord } from "~/lib/utils";
+import { cn, getFirstWord } from "~/lib/utils";
 import {
   ChipListComponent,
   ChipsDirective,
@@ -40,11 +40,11 @@ const TripCard = ({
               <ChipDirective
                 key={index}
                 text={getFirstWord(tag)}
-                cssClass={`${
+                cssClass={cn(
                   index === 1
                     ? "!bg-pink-50 !text-pink-500"
                     : "!bg-success-50 !text-success-700"
-                }`}
+                )}
               />
             ))}
           </ChipsDirective>

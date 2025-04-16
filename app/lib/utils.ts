@@ -62,3 +62,9 @@ export const calculateTrendPercentage = (
     return { trend: "no change", percentage: 0 };
   }
 };
+
+export const formatKey = (key: keyof TripFormData) => {
+  return key
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, (str) => str.toUpperCase());
+};

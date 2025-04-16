@@ -107,8 +107,23 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
     title: "Count",
   };
 
+  const usersAndTrips = [
+    {
+      title: "Latest user signups",
+      dataSource: allUsers,
+      field: "count",
+      headerText: "Itinerary Created",
+    },
+    {
+      title: "Trips based on interest",
+      dataSource: trips,
+      field: "interest",
+      headerText: "Interests",
+    },
+  ];
+
   return (
-    <main className="flex flex-col gap-10 w-full wrapper pb-20">
+    <main className="dashboard wrapper">
       <Header
         title={`Welcome ${user?.name ?? "Guest"} 👋`}
         description="Track activity, trends, and popular destinations in real time"
@@ -136,8 +151,8 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
             lastMonthCount={dashboardStats.userRole.lastMonth}
           />
         </div>
-        <section className="dashboard__trip-container">
-          <h1>Trips</h1>
+        <section className="container">
+          <h1 className="text-xl font-semibold text-dark-100">Trips</h1>
           <div className="trip-grid">
             {allTrips.map((trip) => (
               <TripCard
@@ -214,51 +229,40 @@ const Dashboard = ({ loaderData }: Route.ComponentProps) => {
             </SeriesCollectionDirective>
           </ChartComponent>
         </section>
-        <section className="pb-20 flex flex-col lg:flex-row gap-5 justify-between wrapper">
-          {[
-            {
-              title: "Latest user signups",
-              dataSource: allUsers,
-              field: "count",
-              headerText: "Itinerary Created",
-            },
-            {
-              title: "Trips based on interest",
-              dataSource: trips,
-              field: "interest",
-              headerText: "Interests",
-            },
-          ].map(({ title, dataSource, field, headerText }, idx) => (
-            <div key={idx} className="flex flex-col gap-5">
-              <h1 className="p-20-semibold text-dark-100">{title}</h1>
-              <GridComponent dataSource={dataSource} gridLines="None">
-                <ColumnsDirective>
-                  <ColumnDirective
-                    field="name"
-                    headerText="Name"
-                    width="200"
-                    textAlign="Left"
-                    template={(props: { imageUrl: string; name: string }) => (
-                      <div className="flex items-center gap-1.5 px-4">
-                        <img
-                          src={props.imageUrl}
-                          alt="User"
-                          className="rounded-full size-8 aspect-square"
-                        />
-                        <span>{props.name}</span>
-                      </div>
-                    )}
-                  />
-                  <ColumnDirective
-                    field={field}
-                    headerText={headerText}
-                    width="150"
-                    textAlign="Left"
-                  />
-                </ColumnsDirective>
-              </GridComponent>
-            </div>
-          ))}
+        <section className="user-trip wrapper">
+          {usersAndTrips.map(
+            ({ title, dataSource, field, headerText }, idx) => (
+              <div key={idx} className="flex flex-col gap-5">
+                <h1 className="p-20-semibold text-dark-100">{title}</h1>
+                <GridComponent dataSource={dataSource} gridLines="None">
+                  <ColumnsDirective>
+                    <ColumnDirective
+                      field="name"
+                      headerText="Name"
+                      width="200"
+                      textAlign="Left"
+                      template={(props: { imageUrl: string; name: string }) => (
+                        <div className="flex items-center gap-1.5 px-4">
+                          <img
+                            src={props.imageUrl}
+                            alt="User"
+                            className="rounded-full size-8 aspect-square"
+                          />
+                          <span>{props.name}</span>
+                        </div>
+                      )}
+                    />
+                    <ColumnDirective
+                      field={field}
+                      headerText={headerText}
+                      width="150"
+                      textAlign="Left"
+                    />
+                  </ColumnsDirective>
+                </GridComponent>
+              </div>
+            )
+          )}
         </section>
       </section>
     </main>

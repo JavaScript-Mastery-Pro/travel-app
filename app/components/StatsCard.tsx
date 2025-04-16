@@ -1,4 +1,4 @@
-import { calculateTrendPercentage } from "~/lib/utils";
+import { calculateTrendPercentage, cn } from "~/lib/utils";
 
 const StatsCard = ({
   headerTitle,
@@ -26,7 +26,10 @@ const StatsCard = ({
                 alt="directional arrow"
               />
               <figcaption
-                className={`text-sm font-medium ${isDecrement ? "text-red-500" : "text-success-700"}`}
+                className={cn(
+                  "text-sm font-medium",
+                  isDecrement ? "text-red-500" : "text-success-700"
+                )}
               >
                 {Math.round(percentage)}%
               </figcaption>

@@ -36,8 +36,6 @@ export async function loader() {
 const AllUsers = ({ loaderData }: Route.ComponentProps) => {
   const { users } = loaderData;
 
-  console.log(JSON.stringify(users, null, 2));
-
   return (
     <main className="all-users wrapper">
       <Header
@@ -91,7 +89,7 @@ const AllUsers = ({ loaderData }: Route.ComponentProps) => {
               return (
                 <article
                   className={cn(
-                    "flex-center gap-1 w-[65px] py-[2px]  rounded-2xl mix-blend-multiply",
+                    "status-column",
                     props.status === "user" ? " bg-success-50" : "bg-light-300"
                   )}
                 >

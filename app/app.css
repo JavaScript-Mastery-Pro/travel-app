@@ -40,6 +40,12 @@
 
   --background-image-auth: url("/assets/images/auth-img.webp");
   --background-image-hero: url("/assets/images/hero-img.png");
+  --background-image-card-1: url("/assets/images/card-img-1.png");
+  --background-image-card-2: url("/assets/images/card-img-2.png");
+  --background-image-card-3: url("/assets/images/card-img-3.png");
+  --background-image-card-4: url("/assets/images/card-img-4.png");
+  --background-image-card-5: url("/assets/images/card-img-5.png");
+  --background-image-card-6: url("/assets/images/card-img-6.png");
   --background-image-linear100: linear-gradient(
     105deg,
     rgba(207, 241, 255, 0.8) 14.17%,
@@ -63,6 +69,9 @@
 }
 
 @layer components {
+  .error {
+    @apply text-red-500 text-base font-medium text-center;
+  }
   .all-users {
     @apply w-full min-h-screen  flex flex-col gap-10;
   }
@@ -90,68 +99,15 @@
       @apply text-sm md:text-lg font-normal truncate text-gray-100;
     }
   }
-  .trip-detail {
-    @apply flex flex-col gap-10 pb-20;
-    .trip-detail__title {
-      @apply flex justify-between gap-5;
-      article {
-        @apply flex flex-col gap-4;
-        h1 {
-          @apply text-xl md:text-3xl text-dark-100 font-semibold;
-        }
-        p {
-          @apply text-base md:text-2xl text-gray-100 font-normal;
-        }
-      }
-      h2 {
-        @apply text-sm md:text-xl font-normal text-dark-100;
-      }
-    }
-    .trip-detail__itinerary {
-      @apply flex flex-col gap-9;
-      li {
-        @apply flex flex-col gap-4;
-        h1 {
-          @apply text-base md:text-xl font-semibold text-dark-400;
-        }
-        ul {
-          @apply flex flex-col gap-3;
-          li {
-            @apply flex justify-between gap-7 text-sm md:text-lg font-normal text-dark-400 !list-disc;
-          }
-        }
-      }
-    }
-
-    .trip-detail__visit {
-      @apply flex flex-col gap-5;
-      div {
-        @apply flex flex-col gap-4;
-        h2 {
-          @apply text-base md:text-xl text-dark-400 font-semibold;
-        }
-        ul {
-          @apply flex flex-col gap-3;
-          li {
-            @apply flex justify-between gap-7 text-sm md:text-lg font-normal text-dark-400 !list-disc;
-          }
-        }
-      }
-    }
-  }
-
-  .dashboard__trip-container {
-    @apply flex flex-col gap-5 mt-2.5;
-    h1 {
-      @apply text-xl font-semibold text-dark-100;
-    }
-  }
 
   .trip {
     @apply flex flex-col gap-10 pb-20;
     section {
       @apply flex flex-col gap-5 mt-2.5;
     }
+  }
+  .auth {
+    @apply w-full h-screen flex bg-auth bg-cover bg-no-repeat;
   }
 
   .payment-success {
@@ -179,18 +135,7 @@
       @apply text-sm font-normal text-gray-100;
     }
   }
-  .trip-detail__container {
-    @apply flex flex-col gap-9 mt-2.5;
-    header {
-      @apply flex flex-col gap-6 overflow-hidden;
-      div {
-        @apply flex items-center gap-5;
-      }
-    }
-    .trip-detail__images {
-      @apply grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-7 mt-1;
-    }
-  }
+
   .travel-hero {
     @apply bg-hero bg-origin-content bg-cover;
     div {
@@ -211,7 +156,7 @@
   }
 
   .travel-detail {
-    @apply flex flex-col gap-10 pb-20  pt-40;
+    @apply flex flex-col gap-10 pb-20;
     .travel-div {
       @apply flex flex-col lg:flex-row gap-10;
     }
@@ -224,7 +169,7 @@
         @apply text-base font-semibold text-dark-100;
       }
     }
-    .travel-detail__container {
+    .container {
       @apply flex flex-col gap-9 mt-2.5;
       header {
         @apply flex flex-col gap-6 overflow-hidden;
@@ -232,11 +177,11 @@
           @apply flex items-center gap-5;
         }
       }
-      .travel-detail__images {
+      .gallery {
         @apply grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-7 mt-1;
       }
     }
-    .travel-detail__visit {
+    .visit {
       @apply flex flex-col gap-5;
       div {
         @apply flex flex-col gap-4;
@@ -251,7 +196,7 @@
         }
       }
     }
-    .travel-detail__itinerary {
+    .itinerary {
       @apply flex flex-col gap-9;
       li {
         @apply flex flex-col gap-4;
@@ -266,7 +211,7 @@
         }
       }
     }
-    .travel-detail__title {
+    .title {
       @apply flex justify-between gap-5;
       article {
         @apply flex flex-col gap-4;
@@ -328,9 +273,12 @@
       h1 {
         @apply text-base md:text-2xl font-bold text-dark-100;
       }
+      a {
+        @apply flex items-center gap-1.5 py-10;
+      }
     }
   }
-  .root-nav__header {
+  .root-nav {
     @apply flex justify-between gap-4  items-center;
     a {
       @apply flex items-center gap-1.5 py-10;
@@ -358,6 +306,53 @@
       a {
         @apply text-sm md:text-base font-normal text-gray-100;
       }
+    }
+  }
+  .header {
+    @apply flex flex-col gap-5 md:flex-row justify-between w-full;
+    article {
+      @apply flex flex-col gap-3.5 w-full;
+    }
+  }
+  .nav-items {
+    @apply flex flex-col px-6 h-full;
+    .container {
+      @apply flex flex-col justify-between h-full;
+      nav {
+        @apply flex flex-col gap-3.5 pt-9;
+      }
+    }
+  }
+
+  .admin-layout {
+    @apply flex flex-col lg:flex-row h-screen w-full;
+    .children {
+      @apply w-full h-full bg-light-200 pt-12 lg:pt-10;
+    }
+  }
+  .user-trip {
+    @apply pb-20 flex flex-col lg:flex-row gap-5 justify-between;
+  }
+  .status-column {
+    @apply flex justify-center items-center gap-1 w-[65px] py-[2px]  rounded-2xl mix-blend-multiply;
+  }
+  .dashboard {
+    @apply flex flex-col gap-10 w-full  pb-20;
+
+    .container {
+      @apply flex flex-col gap-5 mt-2.5;
+      h1 {
+        @apply text-xl font-semibold text-dark-100;
+      }
+    }
+  }
+  .featured-card {
+    @apply flex flex-col justify-between gap-3.5 p-[30px] min-h-[230px] h-full;
+  }
+  .featured {
+    @apply flex flex-col md:flex-row gap-[30px];
+    article {
+      @apply flex flex-col gap-[30px] w-full;
     }
   }
 }
