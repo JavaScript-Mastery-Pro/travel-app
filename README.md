@@ -1009,6 +1009,7 @@ declare interface TripFormData {
   groupType: string;
 }
 ```
+</details>
 
 ## <a name="links">🔗 Assets</a>
 
@@ -1022,5 +1023,5 @@ Enjoyed creating this project? Dive deeper into our PRO courses for a richer lea
 detailed explanations, cool features, and exercises to boost your skills. Give it a go!
 
 <a href="https://beta.jsmastery.pro/" target="_blank">
-  <img src="public/images/readme-bottom.png" alt="Project Banner">
+  <img src="public/assets/images/readme-bottom.jpg" alt="Project Banner">
 </a>
