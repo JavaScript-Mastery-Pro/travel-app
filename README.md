@@ -1,6 +1,7 @@
 <div align="center">
   <br />
     <a href="" target="_blank">
-      <img src="=https://github.com/user-attachments/assets/75bca9df-71c2-49a2-82b8-38d6aadc17c9" alt="Project Banner">
+      ![image](https://github.com/user-attachments/assets/bb34b69c-237c-47d8-b754-ec11fab67b0c)
     </a>
 </div>
+
