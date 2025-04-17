@@ -5,7 +5,8 @@
     </a>
   <br />
   <div>
-    <img alt="Static Badge" src="https://img.shields.io/badge/React-def8f7?style=flat&logo=react">
+    <img alt="Static Badge" src="https://img.shields.io/badge/React-4c84f3?style=for-the-badge&logo=react&logoColor=white">
+    <img alt="Static Badge" src="https://img.shields.io/badge/Syncfusion-181758?style=for-the-badge&logoColor=white">
     <img src="https://img.shields.io/badge/-Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
   </div>
   <h3 align="center">Travel Agency Platform</h3>
