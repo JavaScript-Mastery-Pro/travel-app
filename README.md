@@ -60,13 +60,13 @@ If you're getting started and need assistance or face any bugs, join our active 
 
 👉 Trip booking functionality on the public site
 
-👉 Admin dashboard with trip and user management
+👉 Admin dashboard with trip and user status
 
 👉 User growth stats and trip analytics
 
 👉 Interactive charts and trip stats table
 
-👉 Detailed trip view with booking insights
+👉 Detailed trip view 
 
 👉 Responsive UI with modern design
 
