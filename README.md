@@ -4,7 +4,9 @@
       <img src="public/assets/images/readme.png" alt="Project Banner">
     </a>
   <br />
-
+  <div>
+    <img src="https://img.shields.io/badge/-Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+  </div>
   <h3 align="center">Travel Agency Platform</h3>
 </div>
 
