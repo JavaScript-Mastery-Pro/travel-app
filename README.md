@@ -1013,7 +1013,10 @@ declare interface TripFormData {
 
 ## <a name="links">🔗 Assets</a>
 
-- Assets used in the project can be found [here](https://drive.google.com/drive/folders/1WOPJdkvDV9bmqRZEdyO_-CKCu-fO6y7V?usp=sharing)
+- Assets used in the project can be found [here](https://jsm.dev/tourvisto-kit)
+<a href="https://jsm.dev/tourvisto-kit" target="_blank">
+  <img src="public/assets/images/readme-video-kit.jpg" alt="Video Kit Banner">
+</a>
 
 ## <a name="more">🚀 More</a>
 
