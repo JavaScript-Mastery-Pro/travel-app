@@ -469,23 +469,22 @@
   }
 }
 
+@layer base {
+  .glassmorphism {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    -moz-backdrop-filter: blur(2px);
+    -o-backdrop-filter: blur(2px);
+    -ms-backdrop-filter: blur(2px);
+  }
+}
+
 html,
 body {
   font-family: "Figtree", sans-serif;
   background-color: #f9fbfc;
   scroll-behavior: smooth;
-}
-
-.glassmorphism {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  -moz-backdrop-filter: blur(2px);
-  -o-backdrop-filter: blur(2px);
-  -ms-backdrop-filter: blur(2px);
-  transform: translateZ(0);
-  will-change: backdrop-filter;
-  isolation: isolate;
 }
 
 /* ======== css overrides for syncfusion ========= */
