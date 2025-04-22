@@ -483,6 +483,8 @@ body {
   -moz-backdrop-filter: blur(2px);
   -o-backdrop-filter: blur(2px);
   -ms-backdrop-filter: blur(2px);
+  transform: translateZ(0);
+  will-change: backdrop-filter;
 }
 
 /* ======== css overrides for syncfusion ========= */
