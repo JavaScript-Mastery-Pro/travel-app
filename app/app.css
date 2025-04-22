@@ -485,6 +485,7 @@ body {
   -ms-backdrop-filter: blur(2px);
   transform: translateZ(0);
   will-change: backdrop-filter;
+  isolation: isolate;
 }
 
 /* ======== css overrides for syncfusion ========= */
