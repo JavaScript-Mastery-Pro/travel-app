@@ -9,6 +9,11 @@ import { getAllTrips } from "~/appwrite/trips";
 import { cn, parseTripData } from "~/lib/utils";
 import type { Route } from "./+types/travel-page";
 import { footers } from "~/constants";
+import * as Sentry from "@sentry/react-router";
+
+// export async function loader() {
+//   throw new Error("some error thrown in a loader");
+// }
 
 export async function clientLoader({ request }: LoaderFunctionArgs) {
   const limit = 8;
@@ -121,15 +126,26 @@ const TravelPage = ({ loaderData }: Route.ComponentProps) => {
                 destination, set your preferences, and explore with confidence.
               </p>
             </article>
-
-            <Link to="#trips">
-              <ButtonComponent
-                type="button"
-                className="button-class !h-11 !w-full md:!w-[240px]"
-              >
-                <span className="p-16-semibold text-white">Get Started</span>
-              </ButtonComponent>
-            </Link>
+            <ButtonComponent
+              type="button"
+              className="button-class !h-11 !w-full md:!w-[240px]"
+              onClick={() => {
+                alert("Thowing error");
+                Sentry.captureException(
+                  new Error("some error thrown in a button")
+                );
+              }}
+            >
+              <span className="p-16-semibold text-white">Get Started</span>
+            </ButtonComponent>
+            <button
+              className="cursor-pointer"
+              onClick={() => {
+                throw new Error("This is your first error!");
+              }}
+            >
+              Break the world
+            </button>
           </section>
         </div>
       </section>
